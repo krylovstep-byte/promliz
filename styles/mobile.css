@@ -391,10 +391,10 @@ body.has-mobile-nav {
     display: none;
   }
 
-  /* === HERO — V42: премиум look + reorder + минимум padding === */
+  /* === HERO — V42+V48: премиум look. Чуть-кремовый фон для контраста с белой carbon card === */
   .hero {
-    padding-block: 10px 4px !important;
-    background: #FFFFFF !important;
+    padding-block: 10px 16px !important;
+    background: #F4F7FB !important;
     overflow: visible;
   }
 
@@ -571,17 +571,18 @@ body.has-mobile-nav {
     flex-shrink: 0;
   }
 
-  /* V46+V47: hero__unit — единая карточка с глубокой тенью (объём) */
+  /* V48: hero__unit — драматичная многоуровневая тень для "парящей" карточки */
   .hero__unit {
-    margin-top: 4px;
+    margin-top: 8px;
     display: flex !important;
     flex-direction: column;
     border-radius: 24px;
     overflow: hidden;
     box-shadow:
-      0 2px 4px -2px rgba(15, 30, 49, 0.06),
-      0 8px 20px -6px rgba(15, 30, 49, 0.12),
-      0 28px 56px -18px rgba(0, 137, 203, 0.28) !important;
+      0 4px 8px -4px rgba(15, 30, 49, 0.10),
+      0 16px 32px -8px rgba(15, 30, 49, 0.18),
+      0 48px 96px -24px rgba(0, 137, 203, 0.42) !important;
+    transform: translateZ(0);
   }
 
   /* Фото — полноразмерное, объект в фокусе */
@@ -635,15 +636,11 @@ body.has-mobile-nav {
     display: none !important;
   }
 
-  /* V47: beam-rotate использует @property --beam-angle (Houdini), не работает в
-     старых iOS Safari → beam застывает. Перебиваем через transform: rotate. */
+  /* V48: beam-обводка управляется через JS (scripts/hero-beam.js) —
+     обновляет --beam-angle через rAF, работает на iOS Safari < 16.4
+     где @property не поддерживается. Просто оставляем ::before видимым. */
   .hero__unit.beam-wrap::before {
     display: block !important;
-    animation: beam-rotate-mobile 6s linear infinite !important;
-  }
-  @keyframes beam-rotate-mobile {
-    from { transform: rotate(0deg); }
-    to   { transform: rotate(360deg); }
   }
 
   /* V42: премиум-карточка калькулятора + убрать тёмную тень .hero__unit (источник чёрных уголков) */
