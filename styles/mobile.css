@@ -534,20 +534,24 @@ body.has-mobile-nav {
     gap: 1px;
   }
 
+  /* V43: ещё меньше шрифт чтобы буквы не наезжали в узких 4-в-ряд ячейках */
   .hero__trust-row--grid strong {
-    font-size: 13px;
+    font-size: 11.5px;
     line-height: 1.1;
     letter-spacing: -0.01em;
     font-weight: 700;
     color: var(--color-text-main);
+    word-break: keep-all;
+    white-space: nowrap;
   }
 
   .hero__trust-row--grid span {
-    font-size: 8.5px;
-    line-height: 1.05;
-    letter-spacing: 0.03em;
+    font-size: 8px;
+    line-height: 1.1;
+    letter-spacing: 0.04em;
     text-transform: uppercase;
     opacity: 0.62;
+    white-space: nowrap;
   }
 
   /* === HERO QUICK CALC — soft border, без чёрных граней === */
@@ -559,18 +563,19 @@ body.has-mobile-nav {
     margin-top: 4px;
   }
 
-  /* V40: жёстко отключаем beam::before и любые декорации, дающие "чёрные уголки" */
-  .hero__unit.beam-wrap::before,
+  /* V43: оживить beam-обводку калькулятора (orbital orange beam из components.css).
+     Чёрные уголки уже зафикшены через box-shadow:none на .hero__unit в V42 —
+     beam-rotate теперь не даёт чёрного эффекта. */
   .hero__unit-calc.beam-wrap::before,
   .hero__unit::before,
   .hero__unit::after,
   .hero__unit-calc::before,
-  .hero__unit-calc::after,
   .hero__unit-tax-accent::before,
   .hero__unit-result::before,
   .hero__unit-result::after {
     display: none !important;
   }
+  /* .hero__unit.beam-wrap::before — остаётся видимым, бегает оранжевая обводка */
 
   /* V42: премиум-карточка калькулятора + убрать тёмную тень .hero__unit (источник чёрных уголков) */
   .hero__unit {
@@ -606,33 +611,44 @@ body.has-mobile-nav {
     pointer-events: none;
   }
 
+  /* V43: «Калькулятор лизинга» становится главным заголовком, «Предварительный расчёт» — eyebrow ниже */
   .hero__unit-calc-head {
-    margin-bottom: 12px;
+    margin-bottom: 14px;
+    display: flex;
+    flex-direction: column-reverse;
+    gap: 2px;
+    align-items: flex-start;
   }
 
   .hero__unit-calc-head h2 {
-    font-size: 17px;
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    opacity: 0.5;
+    color: var(--color-text-main);
   }
 
-  /* V39: eyebrow двойной — скрываем desktop вариант, показываем mobile */
   .hero__unit-calc-head__eyebrow--desktop {
     display: none !important;
   }
 
+  /* «Калькулятор лизинга» — крупный, яркий, главный */
   .hero__unit-calc-head__eyebrow--mobile {
     display: inline-block;
-    font-size: 14px;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
+    font-size: 20px;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    text-transform: none;
     color: var(--color-blue-brand);
     opacity: 1;
-    margin-bottom: 0;
+    margin: 0;
+    line-height: 1.1;
   }
 
   .hero__unit-calc-head .eyebrow {
-    font-size: 10px;
-    opacity: 0.5;
+    font-size: inherit;
+    opacity: inherit;
   }
 
   .mini-calc {
@@ -723,30 +739,32 @@ body.has-mobile-nav {
     width: 100%;
   }
 
-  /* V42: убрали !important у animation, чтобы JS partners-marquee.js мог перебить через setProperty(important).
-     CSS animation остаётся как fallback если JS не загрузится. */
+  /* V43: больше gap между лого, фиксированная ширина li — лого больше не наезжают */
   .partners__track {
     display: flex !important;
     width: max-content !important;
-    gap: 32px !important;
+    gap: 48px !important;
     animation: partners-marquee 35s linear infinite;
     padding: 0 !important;
     margin: 0 !important;
+    align-items: center;
   }
 
   .partners__track li {
     height: 28px;
     flex-shrink: 0;
-    width: auto !important;
-    display: flex;
+    width: 80px !important;        /* фиксированная ширина — лого не наезжают */
+    display: flex !important;
     align-items: center;
     justify-content: center;
+    overflow: hidden;
   }
 
   .partners__track img {
     max-height: 22px;
-    max-width: 92px;
+    max-width: 76px !important;
     width: auto !important;
+    object-fit: contain;
   }
 
   /* === APPLY — форма выше антивозражений === */
@@ -812,14 +830,21 @@ body.has-mobile-nav {
   }
 
   .apply__card-list {
-    gap: 2px;
+    gap: 4px;
   }
 
+  /* V43: восстановить padding-left для буллетов (V42 случайно сбросил shorthand'ом) */
   .apply__card-list li {
-    font-size: 12.5px;
-    gap: 6px;
-    padding: 1px 0;
-    line-height: 1.3;
+    font-size: 13px;
+    padding-left: 14px !important;
+    padding-block: 2px;
+    line-height: 1.35;
+  }
+
+  .apply__card-list li::before {
+    top: 9px;
+    width: 4px;
+    height: 4px;
   }
 
   .apply__channels {
@@ -846,15 +871,18 @@ body.has-mobile-nav {
     display: block;
   }
 
-  /* Email SVG — тонкий envelope, нужен padding чтобы визуально совпадать с TG/MAX (заполненные круги) */
+  /* V43: email — белый envelope на оранжевом круге (синий на оранжевом плохо читался) */
   .apply__channels-icon--email {
-    background: var(--color-blue-soft, rgba(0, 148, 222, 0.08));
+    background: var(--color-orange, #FF9545) !important;
     border-radius: 50%;
-    color: var(--color-blue-brand);
+    color: #FFFFFF !important;
+    border: 0 !important;
   }
   .apply__channels-icon--email svg {
     padding: 14px;
     box-sizing: border-box;
+    color: #FFFFFF !important;
+    stroke: #FFFFFF !important;
   }
 
   .apply__row {
@@ -1088,31 +1116,50 @@ body.has-mobile-nav {
     display: none;
   }
 
+  /* V43: process этапы компактнее */
   .process-step {
     flex: initial !important;
     width: 100% !important;
     max-width: 100% !important;
     scroll-snap-align: none !important;
     margin: 0 !important;
-    padding: 16px 18px;
+    padding: 12px 14px;
+    border-radius: 14px;
   }
 
   .process-step__head {
-    gap: 12px;
+    gap: 10px;
+    margin-bottom: 4px;
   }
 
   .process-step__num {
-    font-size: 26px;
+    font-size: 22px;
+  }
+
+  .process-step__icon {
+    width: 28px;
+    height: 28px;
+  }
+
+  .process-step__icon svg {
+    width: 14px;
+    height: 14px;
+  }
+
+  .process-step__time {
+    font-size: 11px;
+    padding: 2px 8px;
   }
 
   .process-step__title {
-    font-size: 17px;
+    font-size: 15px;
     line-height: 1.2;
+    margin: 2px 0;
   }
 
   .process-step__desc {
-    font-size: 14px;
-    line-height: 1.45;
+    font-size: 13px;
+    line-height: 1.4;
   }
 
   /* Process CTA wrapper */
@@ -1161,20 +1208,21 @@ body.has-mobile-nav {
     padding-block: 40px;
   }
 
+  /* V43: естественный порядок — form сверху (настройки), result снизу (платёж) */
   .calc__grid {
     display: grid !important;
     grid-template-columns: 1fr !important;
     gap: 16px;
   }
 
-  .calc__result {
-    order: -1;
+  .calc__form {
+    order: 1;
     padding: 18px 16px !important;
     border-radius: 20px;
   }
 
-  .calc__form {
-    order: 1;
+  .calc__result {
+    order: 2;
     padding: 18px 16px !important;
     border-radius: 20px;
   }
@@ -1214,17 +1262,32 @@ body.has-mobile-nav {
     line-height: 1.1;
   }
 
-  /* Главный платёж — первая ячейка span 2 кол + крупная */
+  /* V43: убрали span 2 — все 4 ячейки в ровной 2×2 сетке без пустых мест.
+     Главный платёж выделен фоном + цветом, не размером span. */
+  .result__cell {
+    padding: 12px 10px;
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.05);
+    text-align: left;
+    min-width: 0;
+  }
+
   .result__cell--primary {
-    grid-column: 1 / -1;
-    text-align: center;
+    background: rgba(255, 149, 69, 0.12);
+    border: 1px solid rgba(255, 149, 69, 0.4);
   }
 
   .result__cell--primary .result__cell-value,
   .result__cell--primary strong {
-    font-size: 34px !important;
+    font-size: 22px !important;
     font-weight: 800;
     line-height: 1.05;
+    color: var(--color-orange, #FF9545);
+  }
+
+  .result__cell--accent .result__cell-value,
+  .result__cell--accent strong {
+    color: var(--color-orange, #FF9545);
   }
 
   .result__brief {
