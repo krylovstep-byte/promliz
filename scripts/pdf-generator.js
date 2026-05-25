@@ -140,7 +140,7 @@
     '.pdf-doc .pdf-logo-block{display:block;line-height:0;}' +
     '.pdf-doc .pdf-logo-block svg{display:block;height:42px;width:auto;}' +
     '.pdf-doc .pdf-slogan{font-size:11px;color:#04384F;margin-top:6px;font-weight:700;}' +
-    '.pdf-doc .pdf-contacts{font-size:10px;color:#0094DE;margin-top:4px;text-decoration:underline;letter-spacing:0.01em;}' +
+    '.pdf-doc .pdf-contacts{font-size:10px;color:#0094DE;margin-top:4px;text-decoration:none;letter-spacing:0.01em;}' +
     /* Голубая плашка справа */
     '.pdf-doc .pdf-hr-badge{background:#0094DE !important;color:#FFFFFF !important;padding:10px 14px 12px;text-align:right;font-size:11px;line-height:1.5;}' +
     '.pdf-doc .pdf-hr-badge strong{display:block;font-size:13px;font-weight:700;color:#FFFFFF !important;}' +
@@ -150,7 +150,7 @@
     /* ====== ЗАГОЛОВКИ ====== */
     '.pdf-doc h1{font-size:24px;text-align:center;margin:20px 0 12px;font-weight:700;color:#04384F;}' +
     '.pdf-doc h1.pdf-h1-left{text-align:left;margin:14px 0 12px;font-size:22px;color:#04384F;}' +
-    '.pdf-doc h2{font-size:16px;text-align:center;color:#04384F;text-transform:uppercase;letter-spacing:0.08em;margin:14px 0 8px;font-weight:700;}' +
+    '.pdf-doc h2{font-size:16px;text-align:center;color:#04384F;text-transform:uppercase;letter-spacing:0.08em;margin:10px 0 16px;font-weight:700;}' +
     /* ====== СВОДНАЯ ТАБЛИЦА ====== */
     '.pdf-doc table.pdf-summary{width:1067px;table-layout:fixed;border-collapse:collapse;}' +
     '.pdf-doc table.pdf-summary th{background:#0094DE !important;color:#FFFFFF !important;padding:11px 8px;font-size:12px;font-weight:600;text-align:center;border:1px solid #0094DE;line-height:1.35;}' +
