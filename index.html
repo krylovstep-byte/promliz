@@ -122,12 +122,12 @@
   }
   </script>
 
-  <link rel="stylesheet" href="styles/tokens.css?v=92">
-  <link rel="stylesheet" href="styles/base.css?v=92">
-  <link rel="stylesheet" href="styles/layout.css?v=92">
-  <link rel="stylesheet" href="styles/components.css?v=92">
-  <link rel="stylesheet" href="styles/sections.css?v=92">
-  <link rel="stylesheet" href="styles/mobile.css?v=92">
+  <link rel="stylesheet" href="styles/tokens.css?v=94">
+  <link rel="stylesheet" href="styles/base.css?v=94">
+  <link rel="stylesheet" href="styles/layout.css?v=94">
+  <link rel="stylesheet" href="styles/components.css?v=94">
+  <link rel="stylesheet" href="styles/sections.css?v=94">
+  <link rel="stylesheet" href="styles/mobile.css?v=94">
 </head>
 <body>
 
@@ -1078,6 +1078,55 @@
           <span class="lease-vs-credit__cell lease-vs-credit__cell--credit">Отражается как&nbsp;кредитное обязательство</span>
         </div>
       </div>
+
+      <!-- V38: Mobile-cards для лизинг vs кредит (показывается только на ≤640px) -->
+      <div class="lease-vs-credit__mobile" aria-hidden="false">
+        <article class="vs-card">
+          <h4 class="vs-card__title">Налоговая нагрузка</h4>
+          <div class="vs-card__row vs-card__row--lease">
+            <span class="vs-card__badge">Лизинг</span>
+            <p>Все платежи в&nbsp;расходы + возврат НДС</p>
+          </div>
+          <div class="vs-card__row vs-card__row--credit">
+            <span class="vs-card__badge vs-card__badge--muted">Кредит</span>
+            <p>Только проценты в&nbsp;расходы, без&nbsp;НДС</p>
+          </div>
+        </article>
+        <article class="vs-card">
+          <h4 class="vs-card__title">Скорость сделки</h4>
+          <div class="vs-card__row vs-card__row--lease">
+            <span class="vs-card__badge">Лизинг</span>
+            <p>До&nbsp;3&nbsp;рабочих дней</p>
+          </div>
+          <div class="vs-card__row vs-card__row--credit">
+            <span class="vs-card__badge vs-card__badge--muted">Кредит</span>
+            <p>2-4&nbsp;недели + залоговая оценка</p>
+          </div>
+        </article>
+        <article class="vs-card">
+          <h4 class="vs-card__title">Обеспечение</h4>
+          <div class="vs-card__row vs-card__row--lease">
+            <span class="vs-card__badge">Лизинг</span>
+            <p>Только предмет лизинга</p>
+          </div>
+          <div class="vs-card__row vs-card__row--credit">
+            <span class="vs-card__badge vs-card__badge--muted">Кредит</span>
+            <p>Залог имущества + поручительство</p>
+          </div>
+        </article>
+        <article class="vs-card">
+          <h4 class="vs-card__title">Баланс компании</h4>
+          <div class="vs-card__row vs-card__row--lease">
+            <span class="vs-card__badge">Лизинг</span>
+            <p>Не&nbsp;увеличивает долговую нагрузку</p>
+          </div>
+          <div class="vs-card__row vs-card__row--credit">
+            <span class="vs-card__badge vs-card__badge--muted">Кредит</span>
+            <p>Отражается как&nbsp;кредитное обязательство</p>
+          </div>
+        </article>
+      </div>
+
       <p class="lease-vs-credit__note"><a href="#calc">Посчитать на&nbsp;калькуляторе →</a></p>
     </div>
   </div>
@@ -1205,6 +1254,7 @@
         </div>
       </article>
     </div>
+    <p class="cases__hint" aria-hidden="true">← Листайте кейсы →</p>
 
 </div>
 </section>
@@ -1749,7 +1799,7 @@
   </div>
 </div>
 
-<script src="scripts/calculator.js?v=92"></script>
+<script src="scripts/calculator.js?v=94"></script>
 <!-- V25: Лайтбокс для категорийных галерей -->
 <div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Галерея фото" hidden>
   <button type="button" class="lightbox__close" aria-label="Закрыть галерею">
@@ -1770,11 +1820,11 @@
   </figure>
 </div>
 
-<script src="scripts/form.js?v=92"></script>
-<script src="scripts/faq.js?v=92"></script>
-<script src="scripts/cookie.js?v=92"></script>
-<script src="scripts/main.js?v=92"></script>
-<script src="scripts/mobile-nav.js?v=92" defer></script>
+<script src="scripts/form.js?v=94"></script>
+<script src="scripts/faq.js?v=94"></script>
+<script src="scripts/cookie.js?v=94"></script>
+<script src="scripts/main.js?v=94"></script>
+<script src="scripts/mobile-nav.js?v=94" defer></script>
 
 </body>
 </html>

@@ -1,19 +1,52 @@
 /* ==========================================================================
-   V35: Mobile styles for Промлизинг (≤ 640px)
-   Подключается ПОСЛЕ sections.css. Все правила — внутри одного MQ.
+   V38: Mobile rebuild для Промлизинг (≤ 640px)
+   - Header 64 sticky (вместо fixed)
+   - Реордер секций через CSS order на <main>
+   - Hero компакт, pill nowrap
+   - Quick calc без чёрных граней, soft border
+   - Apply: форма выше антивозражений
+   - Partners 4×2 grid (8 лого max)
+   - Big calc: тёмный result сверху, slider thumb круглый, chips ровные
+   - Лизинг vs Кредит: 4 mobile-карточки
+   - Docs: фикс overflow, табы, 1-кол контент
+   - Process CTA: width 100, fluid font, no overflow
+   Подключается ПОСЛЕ sections.css.
    ========================================================================== */
 
-/* ============ BURGER + MOBILE NAV — базовые правила (доступны >640px тоже,
-   но скрыты через display:none на десктопе) ============ */
+/* ============ GLOBAL SAFETY — всегда ============ */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  max-width: 100%;
+}
+
+img,
+svg,
+video {
+  max-width: 100%;
+  height: auto;
+}
+
+/* Mobile vs-card блок — скрыт на десктопе */
+.lease-vs-credit__mobile {
+  display: none;
+}
+
+/* ============ BURGER + MOBILE NAV (V35 базовые) ============ */
 
 .header__burger {
   display: none;
-  width: 40px;
-  height: 40px;
+  width: 48px;
+  height: 48px;
   padding: 0;
   background: transparent;
   border: 1px solid var(--color-border);
-  border-radius: 10px;
+  border-radius: 12px;
   cursor: pointer;
   place-items: center;
   align-content: center;
@@ -26,7 +59,7 @@
 
 .header__burger span {
   display: block;
-  width: 20px;
+  width: 22px;
   height: 2px;
   background: currentColor;
   border-radius: 2px;
@@ -105,8 +138,8 @@
 }
 
 .mobile-nav__close {
-  width: 40px;
-  height: 40px;
+  width: 44px;
+  height: 44px;
   border-radius: 50%;
   border: 1px solid var(--color-border);
   background: transparent;
@@ -139,6 +172,7 @@
   color: var(--color-text-main);
   text-decoration: none;
   transition: background 180ms;
+  min-height: 44px;
 }
 
 .mobile-nav__links a:hover,
@@ -199,9 +233,9 @@
 
 .mobile-nav__cta {
   margin-top: 12px;
+  min-height: 52px;
 }
 
-/* Body lock when nav open */
 body.has-mobile-nav {
   overflow: hidden;
 }
@@ -212,39 +246,85 @@ body.has-mobile-nav {
 
 @media (max-width: 640px) {
 
+  /* === SAFETY === */
+  body {
+    overflow-x: hidden;
+    width: 100%;
+  }
+
+  .container,
+  .section,
+  .hero,
+  .hero__grid,
+  .hero__unit,
+  .hero__unit-calc,
+  .calc__grid,
+  .calc__form,
+  .calc__result,
+  .cards-grid,
+  .docs__layout,
+  .apply__grid,
+  .apply__form,
+  .docs-downloads,
+  .docs-download-card,
+  .docs-tabs,
+  .docs-pane {
+    min-width: 0;
+  }
+
+  /* === РЕОРДЕР СЕКЦИЙ через CSS order на <main> === */
+  main {
+    display: flex !important;
+    flex-direction: column;
+  }
+  .hero { order: 1; }
+  .partners { order: 2; }
+  #apply { order: 3; }
+  #docs { order: 4; }
+  #process { order: 5; }
+  #calc { order: 6; }
+  #benefits { order: 7; }
+  #cases { order: 8; }
+  #assets { order: 9; }
+  #articles { order: 10; }
+  #faq { order: 11; }
+  #office { order: 12; }
+
   /* === ГЛОБАЛЬНЫЕ === */
   :root {
     --container-pad: 16px;
   }
 
   html {
-    scroll-padding-top: 64px;
+    scroll-padding-top: 88px;
   }
 
   section[id] {
-    scroll-margin-top: 64px;
+    scroll-margin-top: 88px;
   }
 
   .section {
-    padding-block: 32px;
+    padding-block: 40px;
   }
 
   .section--tight {
-    padding-block: 24px;
+    padding-block: 28px;
   }
 
   h2,
   .section__head h2 {
-    font-size: 26px;
+    font-size: 28px;
     line-height: 1.15;
+    letter-spacing: -0.02em;
   }
 
   h3 {
     font-size: 18px;
+    line-height: 1.2;
   }
 
   .section__head {
-    margin-bottom: 20px;
+    margin-bottom: 22px;
   }
 
   .section__head .lead,
@@ -257,14 +337,30 @@ body.has-mobile-nav {
     font-size: 11px;
   }
 
-  /* === HEADER === */
-  .header__inner {
-    height: 56px;
-    gap: 10px;
+  /* === HEADER — 64 sticky, не fixed === */
+  .header,
+  .header.is-scrolled {
+    position: sticky !important;
+    top: 0 !important;
+    background: #fff !important;
+    border-bottom: 1px solid rgba(15, 30, 49, 0.08) !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    box-shadow: none !important;
+    z-index: 100;
   }
 
-  .header__logo-img {
-    height: 32px;
+  .header__inner,
+  .header.is-scrolled .header__inner {
+    height: 64px !important;
+    padding: 8px 16px !important;
+    gap: 12px;
+  }
+
+  .header__logo-img,
+  .header.is-scrolled .header__logo-img {
+    height: 36px !important;
+    max-width: 220px;
     width: auto;
   }
 
@@ -274,22 +370,21 @@ body.has-mobile-nav {
   }
 
   .header__burger {
-    display: grid;
+    display: grid !important;
     margin-left: auto;
   }
 
   .header__cta {
-    /* Header CTA скрыт на mobile — есть бургер с CTA внутри */
     display: none;
   }
 
-  /* === HERO === */
+  /* === HERO — компакт, sticky header в потоке = маленький pt === */
   .hero {
-    padding-block: 24px 28px;
+    padding-block: 16px 8px !important;
   }
 
   .hero__grid {
-    gap: 20px;
+    gap: 12px;
   }
 
   .hero__credentials,
@@ -298,63 +393,101 @@ body.has-mobile-nav {
   }
 
   .hero__pill {
-    font-size: 10px;
-    padding: 5px 10px;
+    font-size: 11px;
+    line-height: 1;
+    padding: 8px 12px;
+    border-radius: 999px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 100%;
+    width: fit-content;
     margin-bottom: 12px;
+    letter-spacing: 0.04em;
   }
 
   .hero__title {
-    font-size: 28px;
-    line-height: 1.08;
-    letter-spacing: -0.015em;
+    font-size: clamp(28px, 8.2vw, 40px);
+    line-height: 1.06;
+    letter-spacing: -0.02em;
+    margin-bottom: 14px;
   }
 
   .hero__sub {
-    font-size: 13px;
+    font-size: 15px;
     line-height: 1.4;
-    margin-top: 8px;
+    margin-top: 0;
+    margin-bottom: 16px;
   }
 
   .hero__cta {
     flex-direction: column;
     gap: 8px;
-    margin-top: 16px;
-  }
-
-  .hero__cta .btn--ghost {
-    display: none;
+    margin-top: 0;
+    margin-bottom: 14px;
   }
 
   .hero__cta .btn {
     width: 100%;
+    min-height: 56px;
   }
 
+  .hero__cta .btn--primary,
+  .hero__cta .btn--accent {
+    width: 100%;
+    min-height: 58px;
+    border-radius: 999px;
+    font-size: 16px;
+    font-weight: 700;
+    margin-bottom: 0;
+  }
+
+  .hero__cta .btn--ghost {
+    background: transparent;
+    border: 0;
+    text-decoration: underline;
+    text-underline-offset: 4px;
+    font-size: 14px;
+    opacity: 0.75;
+    min-height: 0;
+    padding: 6px;
+    width: auto;
+    align-self: center;
+  }
+
+  /* === HERO STATS 2×2 компакт === */
   .hero__trust-row--grid {
-    grid-template-columns: repeat(4, 1fr) !important;
-    gap: 6px;
-    margin-top: 16px;
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    gap: 8px !important;
+    margin-top: 0;
+    margin-bottom: 16px;
   }
 
   .hero__trust-row--grid li {
-    padding: 8px 6px;
+    padding: 8px 8px;
+    min-height: 58px;
+    min-width: 0;
+    border-radius: 10px;
     text-align: center;
     display: flex;
     flex-direction: column;
+    justify-content: center;
     gap: 2px;
   }
 
   .hero__trust-row--grid strong {
-    font-size: 12px;
-    line-height: 1.15;
+    font-size: 20px;
+    line-height: 1.1;
+    letter-spacing: -0.01em;
   }
 
   .hero__trust-row--grid span {
-    font-size: 9px;
-    line-height: 1.15;
+    font-size: 10px;
+    line-height: 1.1;
     letter-spacing: 0.02em;
   }
 
-  /* На мобиле скрываем фото-ротатор хиро — есть marquee партнёров ниже */
+  /* === HERO QUICK CALC — soft border, без чёрных граней === */
   .hero__unit-photo {
     display: none;
   }
@@ -364,12 +497,16 @@ body.has-mobile-nav {
   }
 
   .hero__unit-calc {
-    padding: 14px 14px 16px;
-    border-radius: var(--radius-md);
+    padding: 20px 16px !important;
+    border-radius: 24px;
+    border: 1px solid rgba(0, 137, 203, 0.25);
+    box-shadow: 0 12px 32px -16px rgba(15, 30, 49, 0.18);
+    max-width: 100%;
+    overflow: hidden;
   }
 
   .hero__unit-calc-head {
-    margin-bottom: 10px;
+    margin-bottom: 12px;
   }
 
   .hero__unit-calc-head h2 {
@@ -378,33 +515,45 @@ body.has-mobile-nav {
 
   .hero__unit-calc-head .eyebrow {
     font-size: 10px;
+    opacity: 0.5;
   }
 
   .mini-calc {
-    gap: 10px;
+    gap: 12px;
   }
 
   .mini-calc__field label {
-    font-size: 11px;
+    font-size: 12px;
   }
 
   .mini-calc__field input[type="text"] {
-    padding: 10px 12px;
-    font-size: 15px;
+    min-height: 52px;
+    padding: 12px 14px;
+    font-size: 16px;
   }
 
   .hero__unit-result {
-    padding-top: 10px;
-    gap: 8px;
+    padding-top: 14px;
+    gap: 10px;
+  }
+
+  .hero__unit-result-main {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
   }
 
   .hero__unit-result-label {
     font-size: 11px;
+    letter-spacing: 0.02em;
   }
 
   .hero__unit-result-value,
   .hero__unit-result-main .money__amount {
-    font-size: 26px;
+    font-size: 34px !important;
+    font-weight: 800;
+    line-height: 1.05;
+    white-space: nowrap;
   }
 
   .hero__unit-tax-accent {
@@ -423,7 +572,7 @@ body.has-mobile-nav {
   }
 
   .hero__unit-tax-label {
-    font-size: 10px;
+    font-size: 11px;
   }
 
   .hero__unit-result-meta {
@@ -431,58 +580,71 @@ body.has-mobile-nav {
   }
 
   .hero__unit-cta {
-    padding: 12px 18px;
-    font-size: 14px;
+    width: 100%;
+    min-height: 56px;
+    border-radius: 999px;
+    font-size: 16px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 
-  /* === PARTNERS (marquee) === */
+  /* === PARTNERS — grid 4×2, без marquee === */
   .partners {
-    padding-block: 16px;
+    padding-block: 24px;
+  }
+
+  .partners::before,
+  .partners::after {
+    display: none !important;
+  }
+
+  .partners__viewport {
+    overflow: visible !important;
+    mask-image: none !important;
+    -webkit-mask-image: none !important;
+  }
+
+  .partners__track {
+    display: grid !important;
+    grid-template-columns: repeat(4, 1fr) !important;
+    gap: 14px 12px !important;
+    animation: none !important;
+    transform: none !important;
+    padding: 0 !important;
+    width: 100% !important;
+    list-style: none;
+    place-items: center;
+  }
+
+  .partners__track li {
+    width: 100%;
+    height: auto !important;
+    min-width: 0;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 
   .partners__track img {
-    max-height: 24px;
-    max-width: 100px;
+    max-height: 24px !important;
+    max-width: 100% !important;
+    width: auto;
+    object-fit: contain;
+    opacity: 0.6;
+    filter: grayscale(0.4);
   }
 
-  /* === CALC (большой) === */
-  .calc__grid {
-    grid-template-columns: 1fr !important;
-    gap: 16px;
+  .partners__track > li:nth-child(n+9) {
+    display: none;
   }
 
-  .calc__form,
-  .calc__result {
-    padding: 16px;
-  }
-
-  .calc__results-grid {
-    grid-template-columns: 1fr 1fr;
-    gap: 10px;
-  }
-
-  .calc__result-value,
-  .calc__money,
-  .calc__results-grid .money__amount {
-    font-size: 22px;
-  }
-
-  .calc__chips {
-    gap: 6px;
-  }
-
-  .calc__chips .chip span {
-    font-size: 13px;
-  }
-
-  .step-selector button {
-    padding: 8px 10px;
-    font-size: 13px;
-  }
-
-  /* === APPLY (форма) === */
+  /* === APPLY — форма выше антивозражений === */
   .apply {
     padding-block: 32px;
+    padding-bottom: 80px;
   }
 
   .apply__bg-logo {
@@ -490,12 +652,27 @@ body.has-mobile-nav {
   }
 
   .apply__grid {
+    display: grid !important;
     grid-template-columns: 1fr !important;
-    gap: 24px;
+    gap: 28px;
+  }
+
+  .apply__form {
+    order: 1;
+    margin-top: 0;
+    padding: 20px 16px;
+    border-radius: 24px;
+    max-width: 100%;
+    overflow: hidden;
+  }
+
+  .apply__copy {
+    order: 2;
   }
 
   .apply__copy h2 {
     font-size: 24px;
+    line-height: 1.15;
   }
 
   .apply__cards {
@@ -504,7 +681,18 @@ body.has-mobile-nav {
   }
 
   .apply__card {
-    padding: 14px 16px;
+    padding: 16px;
+    border-radius: 16px;
+  }
+
+  .apply__card-head strong {
+    font-size: 15px;
+  }
+
+  .apply__card-list li {
+    font-size: 14px;
+    gap: 6px;
+    padding: 4px 0;
   }
 
   .apply__channels {
@@ -515,26 +703,191 @@ body.has-mobile-nav {
     font-size: 24px;
   }
 
-  .apply__form {
-    padding: 20px 16px;
-  }
-
   .apply__row {
     grid-template-columns: 1fr !important;
     gap: 14px;
   }
 
   .field input,
-  .field textarea,
   .field select,
   .input-suffix input {
+    min-height: 52px;
     padding: 12px 14px;
-    font-size: 15px;
+    font-size: 16px;
+    border-radius: 10px;
   }
 
-  /* === PROCESS — swipe carousel === */
+  .field textarea {
+    min-height: 96px;
+    padding: 12px 14px;
+    font-size: 16px;
+    border-radius: 10px;
+  }
+
+  .apply__submit,
+  .apply__form button[type="submit"],
+  #a-submit {
+    width: 100%;
+    min-height: 56px;
+    border-radius: 999px;
+    font-size: 16px;
+    font-weight: 700;
+  }
+
+  /* === DOCS — фикс overflow + табы + 1 кол === */
+  #docs,
+  #docs * {
+    max-width: 100%;
+  }
+
+  #docs .container {
+    padding-inline: 16px;
+  }
+
+  .docs__layout {
+    grid-template-columns: 1fr !important;
+    gap: 20px;
+  }
+
+  /* Downloads card */
+  .docs-downloads {
+    padding: 16px;
+    border-radius: 16px;
+    width: 100%;
+  }
+
+  .docs-downloads__title {
+    font-size: 17px;
+  }
+
+  .docs-downloads__sub {
+    font-size: 13px;
+  }
+
+  .docs-download-card {
+    display: grid !important;
+    grid-template-columns: 48px minmax(0, 1fr) 28px !important;
+    gap: 12px;
+    align-items: center;
+    padding: 12px;
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .docs-download-card__ico {
+    width: 48px;
+    height: 48px;
+    font-size: 12px;
+  }
+
+  .docs-download-card__body {
+    min-width: 0;
+  }
+
+  .docs-download-card__body strong {
+    font-size: 15px;
+    line-height: 1.3;
+    display: block;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .docs-download-card__body span {
+    font-size: 13px;
+  }
+
+  /* Tabs */
+  .docs-tabs,
+  .docs__tabs {
+    display: flex !important;
+    overflow-x: auto;
+    flex-wrap: nowrap;
+    gap: 8px;
+    padding: 0 16px 6px !important;
+    margin-inline: -16px;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    position: static !important;
+  }
+
+  .docs-tabs::-webkit-scrollbar,
+  .docs__tabs::-webkit-scrollbar {
+    display: none;
+  }
+
+  .docs-tab,
+  .docs__tab {
+    flex: 0 0 auto;
+    white-space: nowrap;
+    font-size: 14px;
+    padding: 10px 16px;
+    min-height: 44px;
+  }
+
+  /* Panes */
+  .docs-pane {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .docs-pane__head {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: 4px;
+  }
+
+  .docs-pane__head h3 {
+    font-size: 17px;
+    line-height: 1.2;
+  }
+
+  .docs-pane__note {
+    font-size: 13px;
+    color: var(--color-text-muted);
+    margin: 0;
+  }
+
+  .docs-list {
+    list-style: none;
+    padding: 0;
+  }
+
+  .docs-list li {
+    display: grid !important;
+    grid-template-columns: 24px minmax(0, 1fr);
+    gap: 10px;
+    padding: 12px 0;
+    font-size: 14px;
+    align-items: start;
+  }
+
+  .docs-list li svg {
+    margin-top: 2px;
+    flex-shrink: 0;
+  }
+
+  .docs-list li div {
+    min-width: 0;
+  }
+
+  .docs-list li strong {
+    font-size: 15px;
+    display: block;
+  }
+
+  .docs-list li span {
+    font-size: 13px;
+    display: block;
+    color: var(--color-text-muted);
+  }
+
+  /* === PROCESS — vertical list + CTA fix === */
   .process {
-    padding-block: 32px;
+    padding-block: 40px;
+  }
+
+  .process-track__line {
+    display: none;
   }
 
   .process-track,
@@ -543,16 +896,14 @@ body.has-mobile-nav {
   }
 
   .process-track__steps {
-    display: flex !important;
-    flex-wrap: nowrap !important;
-    gap: 12px;
-    overflow-x: auto;
-    overflow-y: visible;
-    scroll-snap-type: x mandatory;
-    -webkit-overflow-scrolling: touch;
-    padding: 4px 16px 16px;
-    margin-inline: -16px;
-    scrollbar-width: none;
+    display: grid !important;
+    grid-template-columns: 1fr !important;
+    gap: 12px !important;
+    overflow-x: visible !important;
+    overflow-y: visible !important;
+    scroll-snap-type: none !important;
+    padding: 0 !important;
+    margin: 0 !important;
   }
 
   .process-track__steps::-webkit-scrollbar {
@@ -560,79 +911,498 @@ body.has-mobile-nav {
   }
 
   .process-step {
-    flex: 0 0 78%;
-    max-width: 280px;
-    scroll-snap-align: start;
+    flex: initial !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    scroll-snap-align: none !important;
+    margin: 0 !important;
+    padding: 16px 18px;
+  }
+
+  .process-step__head {
+    gap: 12px;
+  }
+
+  .process-step__num {
+    font-size: 26px;
+  }
+
+  .process-step__title {
+    font-size: 17px;
+    line-height: 1.2;
+  }
+
+  .process-step__desc {
+    font-size: 14px;
+    line-height: 1.45;
+  }
+
+  /* Process CTA wrapper */
+  .process-track__cta {
+    display: flex !important;
+    flex-direction: column;
+    gap: 18px;
+    margin-top: 20px;
+    padding: 18px;
+  }
+
+  .process-track__cta-text {
+    width: 100%;
+  }
+
+  .process-track__cta-text p {
+    font-size: 14px;
+    line-height: 1.45;
     margin: 0;
   }
 
-  .process-track__line {
+  .process-track__cta-eyebrow {
+    font-size: 11px;
+  }
+
+  /* Кнопка "Начать с предварительного расчёта" — фикс overflow */
+  .process-track__cta .btn,
+  .process-track__cta .btn--accent,
+  .process-track__cta .btn--lg {
+    width: 100%;
+    min-height: 58px;
+    padding: 0 18px;
+    font-size: clamp(13px, 3.6vw, 16px);
+    line-height: 1.2;
+    white-space: normal;
+    text-align: center;
+    border-radius: 999px;
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+  }
+
+  /* === BIG CALC — переписан: тёмный result сверху, slider круглый === */
+  .calc {
+    padding-block: 40px;
+  }
+
+  .calc__grid {
+    display: grid !important;
+    grid-template-columns: 1fr !important;
+    gap: 16px;
+  }
+
+  .calc__result {
+    order: -1;
+    padding: 18px 16px !important;
+    border-radius: 20px;
+  }
+
+  .calc__form {
+    order: 1;
+    padding: 18px 16px !important;
+    border-radius: 20px;
+  }
+
+  .calc__result-head {
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-bottom: 14px;
+  }
+
+  /* Результат: 2-кол grid, главный платёж в первой ячейке крупнее */
+  .result__grid,
+  .calc__results-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+
+  .result__cell,
+  .calc__results-grid > div {
+    min-width: 0;
+  }
+
+  .result__cell-label,
+  .calc__results-grid div span {
+    font-size: 11px;
+    line-height: 1.2;
+  }
+
+  .result__cell-value,
+  .result__cell strong,
+  .calc__result-value,
+  .calc__money,
+  .calc__results-grid .money__amount {
+    font-size: 20px !important;
+    font-weight: 700;
+    line-height: 1.1;
+  }
+
+  /* Главный платёж — первая ячейка span 2 кол + крупная */
+  .result__cell--primary {
+    grid-column: 1 / -1;
+    text-align: center;
+  }
+
+  .result__cell--primary .result__cell-value,
+  .result__cell--primary strong {
+    font-size: 34px !important;
+    font-weight: 800;
+    line-height: 1.05;
+  }
+
+  .result__brief {
+    flex-wrap: wrap;
+    gap: 6px 10px;
+    font-size: 12px;
+    margin-top: 14px;
+  }
+
+  .result__brief-dot {
+    opacity: 0.4;
+  }
+
+  .result__cta {
+    display: flex !important;
+    flex-direction: column;
+    gap: 8px;
+    margin-top: 16px;
+  }
+
+  .result__cta-row {
+    display: flex !important;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .result__cta .btn,
+  .calc__cta .btn,
+  .calc__actions .btn {
+    width: 100%;
+    min-height: 56px;
+    font-size: 15px;
+    border-radius: 999px;
+  }
+
+  .result__cta .btn--primary {
+    font-size: 16px;
+    font-weight: 700;
+  }
+
+  .result__cta .btn--ghost {
+    opacity: 0.85;
+    font-size: 13px;
+  }
+
+  /* Inputs */
+  .calc__form input[type="text"],
+  .calc__form .input-suffix input {
+    min-height: 52px;
+    padding: 12px 14px;
+    font-size: 17px;
+    border-radius: 10px;
+  }
+
+  /* Range slider — thumb круглый, не овальный */
+  .calc__form input[type="range"],
+  .range,
+  input[type="range"].range {
+    appearance: none;
+    -webkit-appearance: none;
+    width: 100%;
+    height: 48px;
+    background: transparent;
+    padding: 0;
+    margin: 0;
+  }
+
+  .calc__form input[type="range"]::-webkit-slider-runnable-track,
+  .range::-webkit-slider-runnable-track {
+    height: 8px;
+    border-radius: 999px;
+    background: rgba(0, 137, 203, 0.15);
+  }
+
+  .calc__form input[type="range"]::-moz-range-track,
+  .range::-moz-range-track {
+    height: 8px;
+    border-radius: 999px;
+    background: rgba(0, 137, 203, 0.15);
+  }
+
+  .calc__form input[type="range"]::-webkit-slider-thumb,
+  .range::-webkit-slider-thumb {
+    appearance: none;
+    -webkit-appearance: none;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background: var(--color-orange, #FF9545);
+    border: 2px solid #fff;
+    box-shadow: 0 2px 6px rgba(15, 30, 49, 0.2);
+    margin-top: -8px;
+    transform: none;
+  }
+
+  .calc__form input[type="range"]::-moz-range-thumb,
+  .range::-moz-range-thumb {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background: var(--color-orange, #FF9545);
+    border: 2px solid #fff;
+    box-shadow: 0 2px 6px rgba(15, 30, 49, 0.2);
+  }
+
+  /* Step-selector (срок) — равные кнопки */
+  .step-selector {
+    gap: 4px;
+  }
+
+  .step-selector button {
+    padding: 10px 8px;
+    font-size: 13px;
+    min-height: 44px;
+    border-radius: 10px;
+  }
+
+  /* ОСНО / УСН — 2 равные кнопки */
+  .step-selector--wide,
+  #c-tax-mode {
+    display: grid !important;
+    grid-template-columns: 1fr 1fr !important;
+    gap: 6px;
+  }
+
+  .step-selector--wide button,
+  #c-tax-mode button {
+    min-height: 44px;
+    font-size: 13px;
+    padding: 10px 8px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  /* Chips — круглые, ровные, min 44 */
+  .chips {
+    display: flex !important;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  /* Тип имущества — grid 2 кол */
+  .calc__form fieldset:nth-of-type(1) .chips {
+    display: grid !important;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 8px;
+  }
+
+  .chip {
+    min-height: 44px;
+    border-radius: 999px;
+    padding: 0;
+    display: flex;
+    align-items: stretch;
+    justify-content: stretch;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .chip span {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 14px;
+    font-size: 13px;
+    line-height: 1.2;
+    white-space: nowrap;
+    width: 100%;
+    text-align: center;
+  }
+
+  .calc__chart {
     display: none;
   }
 
-  .process__cta {
-    margin-top: 20px;
+  .calc__help-trigger {
+    min-height: 32px;
+    width: 32px;
+    font-size: 14px;
   }
 
-  /* === BENEFITS / lease-vs-credit === */
+  .calc__note {
+    font-size: 12px;
+    line-height: 1.45;
+  }
+
+  /* === BENEFITS / Лизинг vs Кредит — карточки на mobile === */
+  .lease-vs-credit__head {
+    margin-bottom: 16px;
+  }
+
+  .lease-vs-credit__table {
+    display: none !important;
+  }
+
+  .lease-vs-credit__mobile {
+    display: flex !important;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .vs-card {
+    padding: 14px 16px;
+    border-radius: 16px;
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .vs-card__title {
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: rgba(255, 255, 255, 0.7);
+    margin: 0;
+    font-weight: 600;
+  }
+
+  .vs-card__row {
+    display: grid;
+    grid-template-columns: 64px minmax(0, 1fr);
+    gap: 12px;
+    align-items: center;
+    padding: 10px 12px;
+    border-radius: 10px;
+  }
+
+  .vs-card__row--lease {
+    background: rgba(255, 149, 69, 0.12);
+    border-left: 3px solid var(--color-orange, #FF9545);
+  }
+
+  .vs-card__row--credit {
+    background: rgba(255, 255, 255, 0.04);
+    opacity: 0.88;
+  }
+
+  .vs-card__badge {
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: var(--color-orange, #FF9545);
+    letter-spacing: 0.05em;
+  }
+
+  .vs-card__badge--muted {
+    color: rgba(255, 255, 255, 0.5);
+  }
+
+  .vs-card__row p {
+    font-size: 13px;
+    line-height: 1.4;
+    margin: 0;
+    color: #fff;
+  }
+
   .benefits-asymm__grid,
   .benefits__grid {
     grid-template-columns: 1fr !important;
     gap: 16px;
   }
 
-  .lease-vs-credit {
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
+  /* === CASES — horizontal swipe (V37) === */
+  .cards-grid--3 {
+    display: flex !important;
+    overflow-x: auto !important;
+    scroll-snap-type: x mandatory !important;
+    grid-template-columns: none !important;
+    gap: 16px !important;
+    padding: 4px 16px 8px !important;
     margin-inline: -16px;
-    padding-inline: 16px;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
   }
 
-  .lease-vs-credit__table,
-  .lease-vs-credit__grid {
-    min-width: 460px;
+  .cards-grid--3::-webkit-scrollbar {
+    display: none;
   }
 
-  /* === CASES === */
-  .cases__grid,
-  .cases-grid {
-    grid-template-columns: 1fr !important;
-    gap: 14px;
-  }
-
-  .case-card {
-    padding: 0;
+  .cards-grid--3 > .case-card {
+    flex: 0 0 calc(100vw - 48px) !important;
+    max-width: calc(100vw - 48px);
+    scroll-snap-align: start;
+    margin: 0 !important;
+    padding: 0 !important;
   }
 
   .case-card__photo {
-    height: 180px;
+    height: 200px;
+  }
+
+  .case-card__photo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .case-card__badge {
+    font-size: 11px;
+    padding: 6px 10px;
   }
 
   .case-card__body {
-    padding: 14px 16px 18px;
+    padding: 16px 18px 18px;
     gap: 10px;
   }
 
   .case-card h3,
   .case-card__title {
-    font-size: 17px;
+    font-size: 20px;
+    line-height: 1.2;
   }
 
-  .case-card__metrics div span {
+  .case-card__stats {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 10px;
+  }
+
+  .case-card__stats div span {
     font-size: 11px;
   }
 
-  .case-card__metrics div strong {
-    font-size: 15px;
+  .case-card__stats div strong {
+    font-size: 16px;
   }
 
-  blockquote {
+  .case-card blockquote {
     font-size: 14px;
+    line-height: 1.45;
   }
 
-  /* === ASSETS === */
-  .assets__grid,
-  .assets-grid {
+  .case-card cite {
+    font-size: 12px;
+  }
+
+  .case-card__cta {
+    font-size: 14px;
+    min-height: 44px;
+    padding: 12px 14px;
+  }
+
+  .cases__hint {
+    display: block;
+    margin-top: 14px;
+    font-size: 12px;
+    color: var(--color-text-muted);
+    text-align: center;
+    opacity: 0.7;
+    letter-spacing: 0.02em;
+  }
+
+  /* === ASSETS (cards-grid--6) === */
+  .cards-grid--6 {
     grid-template-columns: 1fr !important;
     gap: 14px;
   }
@@ -653,63 +1423,19 @@ body.has-mobile-nav {
     padding: 6px 16px 12px;
   }
 
-  /* === DOCS === */
-  .docs {
-    padding-block: 32px;
-  }
-
-  .docs__layout,
-  .docs-grid {
-    grid-template-columns: 1fr !important;
-    gap: 20px;
-  }
-
-  .docs__tabs,
-  .docs-tabs {
-    overflow-x: auto;
-    scroll-snap-type: x mandatory;
-    flex-wrap: nowrap;
-    padding-bottom: 6px;
-    margin-inline: -16px;
-    padding-inline: 16px;
-    -webkit-overflow-scrolling: touch;
-    scrollbar-width: none;
-  }
-
-  .docs__tabs::-webkit-scrollbar,
-  .docs-tabs::-webkit-scrollbar {
-    display: none;
-  }
-
-  .docs-tab,
-  .docs__tab {
-    flex: 0 0 auto;
-    white-space: nowrap;
-    scroll-snap-align: start;
-    font-size: 13px;
-    padding: 8px 12px;
-  }
-
-  .docs-list li {
-    padding: 10px 0;
-    font-size: 14px;
-  }
-
-  .docs-list li strong {
-    font-size: 14px;
-  }
-
   /* === FAQ === */
   .faq-item summary,
   .faq-item__summary {
     font-size: 15px;
     padding: 14px 16px;
+    min-height: 44px;
   }
 
   .faq-item__body,
   .faq-item[open] > div {
     padding: 0 16px 14px;
     font-size: 14px;
+    line-height: 1.5;
   }
 
   /* === ARTICLES === */
@@ -733,6 +1459,7 @@ body.has-mobile-nav {
 
   .article-card h3 {
     font-size: 16px;
+    line-height: 1.25;
   }
 
   /* === OFFICE === */
@@ -753,7 +1480,7 @@ body.has-mobile-nav {
 
   /* === FOOTER === */
   .footer {
-    padding-block: 32px 20px;
+    padding-block: 40px 24px;
   }
 
   .footer__grid {
@@ -782,11 +1509,11 @@ body.has-mobile-nav {
     font-size: 12px;
   }
 
-  /* === COOKIE BANNER === */
+  /* === COOKIE === */
   .cookie {
     left: 12px;
     right: 12px;
-    bottom: 12px;
+    bottom: calc(12px + env(safe-area-inset-bottom));
     max-width: none;
     padding: 14px 16px;
   }
@@ -795,36 +1522,77 @@ body.has-mobile-nav {
     font-size: 13px;
   }
 
-  /* === MESSENGER FAB — чуть ниже чтобы не мешать cookie === */
+  /* === MESSENGER FAB === */
   .messenger-fab {
-    right: 12px;
-    bottom: 12px;
+    right: 16px !important;
+    bottom: calc(16px + env(safe-area-inset-bottom)) !important;
+    z-index: 90;
+    width: 56px;
+    height: 56px;
   }
 }
 
 /* ==========================================================================
-   EDGE CASE — iPhone SE / Galaxy S22 (≤ 380px)
+   EDGE CASE — iPhone SE / маленькие Android (≤ 380px)
    ========================================================================== */
 
 @media (max-width: 380px) {
+  .hero__pill {
+    font-size: 10.5px;
+    padding: 6px 10px;
+  }
+
   .hero__title {
-    font-size: 26px;
+    font-size: 28px;
   }
 
   h2,
   .section__head h2 {
-    font-size: 22px;
+    font-size: 24px;
   }
 
   .hero__trust-row--grid strong {
-    font-size: 13px;
+    font-size: 18px;
   }
 
   .hero__trust-row--grid span {
-    font-size: 10px;
+    font-size: 9.5px;
   }
 
-  .process-step {
-    flex-basis: 82%;
+  .hero__unit-result-value,
+  .hero__unit-result-main .money__amount {
+    font-size: 30px !important;
+  }
+
+  .result__cell--primary .result__cell-value,
+  .result__cell--primary strong {
+    font-size: 30px !important;
+  }
+
+  .case-card__photo {
+    height: 180px;
+  }
+
+  .case-card h3 {
+    font-size: 18px;
+  }
+
+  .cards-grid--3 > .case-card {
+    flex: 0 0 calc(100vw - 40px) !important;
+    max-width: calc(100vw - 40px);
+  }
+
+  .partners__track {
+    gap: 12px 8px !important;
+  }
+
+  .partners__track img {
+    max-height: 22px !important;
+  }
+
+  .docs-tab,
+  .docs__tab {
+    padding: 8px 12px;
+    font-size: 13px;
   }
 }
