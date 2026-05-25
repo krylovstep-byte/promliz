@@ -571,18 +571,19 @@ body.has-mobile-nav {
     flex-shrink: 0;
   }
 
-  /* V48: hero__unit — драматичная многоуровневая тень для "парящей" карточки */
+  /* V49b: hero__unit — flex-обёртка для calc + photo. БЕЗ overflow:hidden
+     (он обрезал beam-обводку), БЕЗ box-shadow (тень теперь на .hero__unit-calc).
+     position:relative нужен для абсолютного позиционирования ::before beam. */
   .hero__unit {
     margin-top: 8px;
     display: flex !important;
     flex-direction: column;
     border-radius: 24px;
-    overflow: hidden;
-    box-shadow:
-      0 4px 8px -4px rgba(15, 30, 49, 0.10),
-      0 16px 32px -8px rgba(15, 30, 49, 0.18),
-      0 48px 96px -24px rgba(0, 137, 203, 0.42) !important;
+    background: transparent !important;
+    box-shadow: none !important;
+    position: relative;
     transform: translateZ(0);
+    overflow: visible !important;
   }
 
   /* Фото — полноразмерное, объект в фокусе */
@@ -643,11 +644,8 @@ body.has-mobile-nav {
     display: block !important;
   }
 
-  /* V42: премиум-карточка калькулятора + убрать тёмную тень .hero__unit (источник чёрных уголков) */
-  .hero__unit {
-    box-shadow: none !important;
-    background: transparent !important;
-  }
+  /* V49b: V42-фикс «чёрных уголков» теперь зашит в основную декларацию .hero__unit выше
+     (box-shadow:none + background:transparent). Дубль удалён. */
 
   .hero__unit-calc {
     padding: 18px 16px !important;
@@ -656,14 +654,20 @@ body.has-mobile-nav {
     border-bottom: 0 !important;
     background: linear-gradient(180deg, #FFFFFF 0%, #FAFCFE 100%) !important;
     order: 1;
-    /* V47: больше объёма — глубокая тень, не сливается с фото-полоской снизу */
+    /* V49b: ДРАМАТИЧНЫЙ объём — 4 слоя тени:
+       1. inner highlight (премиум-блеск сверху)
+       2. близкий контактный shadow (контур карточки)
+       3. средняя глубина (общая «парит над фоном»)
+       4. дальняя navy-тень (драматичный объём)
+       5. тёплый orange glow вокруг (фирменное тепло) */
     position: relative;
     z-index: 2;
     box-shadow:
-      0 1px 0 rgba(15, 30, 49, 0.04),
-      0 18px 44px -22px rgba(0, 137, 203, 0.22),
-      inset 0 1px 0 rgba(255, 255, 255, 0.9) !important;
-    position: relative;
+      inset 0 1px 0 rgba(255, 255, 255, 0.95),
+      0 2px 4px -1px rgba(15, 30, 49, 0.08),
+      0 12px 24px -8px rgba(15, 30, 49, 0.18),
+      0 32px 64px -16px rgba(0, 60, 90, 0.28),
+      0 64px 96px -32px rgba(255, 122, 31, 0.22) !important;
     max-width: 100%;
     overflow: hidden;
   }

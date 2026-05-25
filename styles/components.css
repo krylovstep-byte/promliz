@@ -203,9 +203,12 @@
 }
 
 /* ============ BEAM, SHINE, MARQUEE, NOISE ============ */
+/* V49b: inherits: true — нужно чтобы JS-обновление --beam-angle на .hero__unit
+   (hero-beam.js, iOS Safari < 16.4) наследовалось в ::before pseudo-element.
+   На десктопе CSS-animation работает на самом ::before — inherits не мешает. */
 @property --beam-angle {
   syntax: '<angle>';
-  inherits: false;
+  inherits: true;
   initial-value: 0deg;
 }
 
