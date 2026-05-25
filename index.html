@@ -33,7 +33,8 @@
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,600;12..96,700&family=Onest:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <!-- V56: урезано 8 файлов шрифтов → 4 (Bricolage 600/700 для display, Onest 400/600 для body) — экономия ~100KB и render-blocking time -->
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700&family=Onest:wght@400;600&display=swap" rel="stylesheet">
 
   <link rel="preload" as="image" href="assets/photos/hero-rotator/1.webp" fetchpriority="high">
 
@@ -126,12 +127,12 @@
   <link rel="preconnect" href="https://mc.yandex.ru" crossorigin>
   <link rel="dns-prefetch" href="https://mc.yandex.ru">
 
-  <link rel="stylesheet" href="styles/tokens.css?v=117">
-  <link rel="stylesheet" href="styles/base.css?v=117">
-  <link rel="stylesheet" href="styles/layout.css?v=117">
-  <link rel="stylesheet" href="styles/components.css?v=117">
-  <link rel="stylesheet" href="styles/sections.css?v=117">
-  <link rel="stylesheet" href="styles/mobile.css?v=117">
+  <link rel="stylesheet" href="styles/tokens.css?v=118">
+  <link rel="stylesheet" href="styles/base.css?v=118">
+  <link rel="stylesheet" href="styles/layout.css?v=118">
+  <link rel="stylesheet" href="styles/components.css?v=118">
+  <link rel="stylesheet" href="styles/sections.css?v=118">
+  <link rel="stylesheet" href="styles/mobile.css?v=118">
 </head>
 <body>
 
@@ -1152,7 +1153,7 @@
     <div class="cards-grid cards-grid--3">
       <article class="case-card" data-case-type="transport">
         <div class="case-card__photo">
-          <img src="assets/photos/case-truck.webp" alt="Седельный тягач — кейс лизинга для перевозок" loading="lazy">
+          <img src="assets/photos/case-truck.webp" alt="Седельный тягач — кейс лизинга для перевозок" loading="lazy" width="800" height="600">
           <span class="case-card__badge">Перевозки · Ярославль</span>
         </div>
         <div class="case-card__body">
@@ -1171,7 +1172,7 @@
 
       <article class="case-card" data-case-type="equipment">
         <div class="case-card__photo">
-          <img src="assets/photos/case-cnc.webp" alt="Линия шиномонтажа — кейс лизинга оборудования" loading="lazy">
+          <img src="assets/photos/case-cnc.webp" alt="Линия шиномонтажа — кейс лизинга оборудования" loading="lazy" width="800" height="600">
           <span class="case-card__badge">Шиномонтаж · Ярославль</span>
         </div>
         <div class="case-card__body">
@@ -1190,7 +1191,7 @@
 
       <article class="case-card" data-case-type="transport">
         <div class="case-card__photo">
-          <img src="assets/photos/case-fleet.webp" alt="Автопарк и оборудование — кейс лизинга для завода" loading="lazy">
+          <img src="assets/photos/case-fleet.webp" alt="Автопарк и оборудование — кейс лизинга для завода" loading="lazy" width="800" height="600">
           <span class="case-card__badge">Производство · Ярославль</span>
         </div>
         <div class="case-card__body">
@@ -1209,7 +1210,7 @@
 
       <article class="case-card" data-case-type="realty">
         <div class="case-card__photo">
-          <img src="assets/photos/cat-realty.webp" alt="Коммерческая недвижимость — кейс лизинга" loading="lazy">
+          <img src="assets/photos/cat-realty.webp" alt="Коммерческая недвижимость — кейс лизинга" loading="lazy" width="800" height="600">
           <span class="case-card__badge">Логистика · Ярославль</span>
         </div>
         <div class="case-card__body">
@@ -1228,7 +1229,7 @@
 
       <article class="case-card" data-case-type="agro">
         <div class="case-card__photo">
-          <img src="assets/photos/cat-agro.webp" alt="Сельхозтехника — кейс лизинга трактора" loading="lazy">
+          <img src="assets/photos/cat-agro.webp" alt="Сельхозтехника — кейс лизинга трактора" loading="lazy" width="800" height="600">
           <span class="case-card__badge">Агро · Воронежская обл.</span>
         </div>
         <div class="case-card__body">
@@ -1247,7 +1248,7 @@
 
       <article class="case-card" data-case-type="special">
         <div class="case-card__photo">
-          <img src="assets/photos/cat-special.webp" alt="Фронтальный погрузчик — кейс лизинга спецтехники" loading="lazy">
+          <img src="assets/photos/cat-special.webp" alt="Фронтальный погрузчик — кейс лизинга спецтехники" loading="lazy" width="800" height="600">
           <span class="case-card__badge">Склад · Ярославль</span>
         </div>
         <div class="case-card__body">
@@ -1279,7 +1280,7 @@
     <div class="cards-grid cards-grid--6">
       <article class="card card--photo">
         <a class="card__photo" href="seo/lizing-transporta.html" data-asset="transport" aria-label="Рассчитать лизинг транспорта">
-          <img loading="lazy" decoding="async" src="assets/photos/cat-transport.webp" alt="Грузовой транспорт в лизинг">
+          <img loading="lazy" decoding="async" src="assets/photos/cat-transport.webp" alt="Грузовой транспорт в лизинг" width="800" height="600">
           <span class="card__meta-pill">Аванс от&nbsp;10%</span>
         </a>
         <div class="card__thumbs" data-gallery="transport">
@@ -1297,7 +1298,7 @@
 
       <article class="card card--photo">
         <a class="card__photo" href="seo/lizing-spectehniki.html" data-asset="special" aria-label="Рассчитать лизинг спецтехники">
-          <img loading="lazy" decoding="async" src="assets/photos/cat-special.webp" alt="Спецтехника в лизинг">
+          <img loading="lazy" decoding="async" src="assets/photos/cat-special.webp" alt="Спецтехника в лизинг" width="800" height="600">
           <span class="card__meta-pill">Аванс от&nbsp;15%</span>
         </a>
         <div class="card__thumbs" data-gallery="special">
@@ -1315,7 +1316,7 @@
 
       <article class="card card--photo">
         <a class="card__photo" href="seo/lizing-selhoztehniki.html" data-asset="agro" aria-label="Рассчитать лизинг сельхозтехники">
-          <img loading="lazy" decoding="async" src="assets/photos/cat-agro.webp" alt="Сельхозтехника в лизинг">
+          <img loading="lazy" decoding="async" src="assets/photos/cat-agro.webp" alt="Сельхозтехника в лизинг" width="800" height="600">
           <span class="card__meta-pill">Сезонный график</span>
         </a>
         <div class="card__thumbs" data-gallery="agro">
@@ -1333,7 +1334,7 @@
 
       <article class="card card--photo">
         <a class="card__photo" href="seo/lizing-oborudovaniya.html" data-asset="equipment" aria-label="Рассчитать лизинг оборудования">
-          <img loading="lazy" decoding="async" src="assets/photos/cat-equipment.webp" alt="Производственное оборудование в лизинг">
+          <img loading="lazy" decoding="async" src="assets/photos/cat-equipment.webp" alt="Производственное оборудование в лизинг" width="800" height="600">
           <span class="card__meta-pill">До&nbsp;60&nbsp;месяцев</span>
         </a>
         <div class="card__thumbs" data-gallery="equipment">
@@ -1351,7 +1352,7 @@
 
       <article class="card card--photo">
         <a class="card__photo" href="seo/lizing-nedvizhimosti.html" data-asset="realty" aria-label="Рассчитать лизинг недвижимости">
-          <img loading="lazy" decoding="async" src="assets/photos/cat-realty.webp" alt="Коммерческая недвижимость в лизинг">
+          <img loading="lazy" decoding="async" src="assets/photos/cat-realty.webp" alt="Коммерческая недвижимость в лизинг" width="800" height="600">
           <span class="card__meta-pill">До&nbsp;100&nbsp;млн&nbsp;₽</span>
         </a>
         <div class="card__thumbs" data-gallery="realty">
@@ -1369,7 +1370,7 @@
 
       <article class="card card--photo">
         <a class="card__photo" href="seo/lizing-bu-tehniki.html" data-asset="used" aria-label="Рассчитать лизинг б/у техники">
-          <img loading="lazy" decoding="async" src="assets/photos/cat-used.webp" alt="Б/у техника в лизинг">
+          <img loading="lazy" decoding="async" src="assets/photos/cat-used.webp" alt="Б/у техника в лизинг" width="800" height="600">
           <span class="card__meta-pill">До&nbsp;10&nbsp;лет</span>
         </a>
         <div class="card__thumbs" data-gallery="used">
@@ -1809,7 +1810,7 @@
   </div>
 </div>
 
-<script src="scripts/calculator.js?v=117" defer></script>
+<script src="scripts/calculator.js?v=118" defer></script>
 <!-- V25: Лайтбокс для категорийных галерей -->
 <div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Галерея фото" hidden>
   <button type="button" class="lightbox__close" aria-label="Закрыть галерею">
@@ -1830,15 +1831,15 @@
   </figure>
 </div>
 
-<script src="scripts/form.js?v=117" defer></script>
-<script src="scripts/faq.js?v=117" defer></script>
-<script src="scripts/cookie.js?v=117" defer></script>
-<script src="scripts/main.js?v=117" defer></script>
-<script src="scripts/mobile-nav.js?v=117" defer></script>
-<script src="scripts/partners-marquee.js?v=117" defer></script>
-<script src="scripts/hero-beam.js?v=117" defer></script>
-<script src="scripts/haptic.js?v=117" defer></script>
-<script src="scripts/pdf-generator.js?v=117" defer></script>
+<script src="scripts/form.js?v=118" defer></script>
+<script src="scripts/faq.js?v=118" defer></script>
+<script src="scripts/cookie.js?v=118" defer></script>
+<script src="scripts/main.js?v=118" defer></script>
+<script src="scripts/mobile-nav.js?v=118" defer></script>
+<script src="scripts/partners-marquee.js?v=118" defer></script>
+<script src="scripts/hero-beam.js?v=118" defer></script>
+<script src="scripts/haptic.js?v=118" defer></script>
+<!-- V56: pdf-generator.js загружается лениво в calculator.js при первом клике на «Скачать график PDF» — экономия 28KB initial JS -->
 
 </body>
 </html>

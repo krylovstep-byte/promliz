@@ -239,25 +239,7 @@
   pointer-events: none;
 }
 
-.hero__unit-tag {
-  position: absolute;
-  top: var(--space-3);
-  left: var(--space-4);
-  z-index: 3;
-  display: inline-flex;
-  align-items: center;
-  padding: 6px 12px;
-  background: rgba(0, 60, 90, 0.6);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
-  border: 1px solid rgba(255, 149, 69, 0.4);
-  border-radius: var(--radius-pill);
-  font-size: 11px;
-  font-weight: var(--fw-semibold);
-  color: var(--color-accent);
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
-}
+/* V56: .hero__unit-tag удалён — HTML-класс убран в V12, CSS был мёртвым */
 
 .hero__unit-chips {
   position: absolute;
@@ -846,24 +828,7 @@
   flex-shrink: 0;
 }
 
-.live-pill {
-  display: inline-flex;
-  align-items: center;
-  gap: var(--space-2);
-  padding: 6px 12px 6px 10px;
-  border-radius: var(--radius-pill);
-  background: rgba(79, 203, 123, 0.08);
-  border: 1px solid rgba(79, 203, 123, 0.32);
-  font-size: var(--fs-mini);
-  font-weight: var(--fw-medium);
-  color: #9FE3B5;
-  letter-spacing: 0.01em;
-}
-
-.live-pill strong {
-  color: #fff;
-  font-weight: var(--fw-semibold);
-}
+/* V56: .live-pill удалён — HTML-класс не используется */
 
 .mini-calc {
   display: flex;
@@ -1159,66 +1124,7 @@
   letter-spacing: 0.01em;
 }
 
-/* ============ TRUST STRIP ============ */
-.trust-strip {
-  background: var(--color-bg);
-  border-top: 1px solid var(--color-border);
-  border-bottom: 1px solid var(--color-border);
-  padding-block: var(--space-6);
-}
-
-.trust-strip__inner {
-  display: block;
-}
-
-.trust-strip__facts {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: var(--space-5);
-}
-
-.trust-strip__fact {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-1);
-  padding-left: var(--space-5);
-  border-left: 2px solid var(--color-accent);
-}
-
-.trust-strip__num {
-  font-family: var(--font-display);
-  font-size: 36px;
-  font-weight: 500;
-  color: var(--color-primary);
-  letter-spacing: var(--tracking-tight);
-  line-height: 1.05;
-  display: inline-flex;
-  align-items: baseline;
-  white-space: nowrap;
-}
-
-.trust-strip__num small {
-  font-family: var(--font-sans);
-  font-size: 13px;
-  font-weight: var(--fw-medium);
-  color: var(--color-text-muted);
-  margin-left: 6px;
-  letter-spacing: 0;
-}
-
-.trust-strip__label {
-  font-size: 13px;
-  color: var(--color-text-muted);
-  line-height: 1.4;
-}
-
-@media (max-width: 720px) {
-  .trust-strip__facts {
-    grid-template-columns: 1fr;
-    gap: var(--space-4);
-  }
-  .trust-strip__num { font-size: 30px; }
-}
+/* V56: .trust-strip удалён — HTML-секция была убрана в V13 C, CSS был мёртвым */
 
 /* ============ PROCESS TRACK (КАК ПРОХОДИТ СДЕЛКА) ============ */
 .process-track {

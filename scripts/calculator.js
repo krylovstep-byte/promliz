@@ -353,7 +353,7 @@
   }
 
   document.querySelectorAll('.result__cta [data-action]').forEach((btn) => {
-    btn.addEventListener('click', (e) => {
+    btn.addEventListener('click', async (e) => {
       const action = btn.dataset.action;
       const applyForm = document.getElementById('apply-form');
 
@@ -368,9 +368,20 @@
           alert('Не удалось рассчитать. Проверьте параметры калькулятора');
           return;
         }
+        // V56: ленивая загрузка pdf-generator.js при первом клике (-28KB initial JS).
+        // На повторных кликах скрипт уже в памяти / browser cache.
         if (!window.generateLeasingPdf) {
-          alert('Генератор PDF ещё загружается, попробуйте через секунду…');
-          return;
+          const cacheVer = (document.querySelector('script[src*="calculator.js?"]')?.src || '').match(/v=(\d+)/)?.[1] || '1';
+          await new Promise((resolve, reject) => {
+            const s = document.createElement('script');
+            s.src = 'scripts/pdf-generator.js?v=' + cacheVer;
+            s.onload = resolve;
+            s.onerror = () => reject(new Error('Не удалось загрузить генератор PDF'));
+            document.head.appendChild(s);
+          }).catch((err) => {
+            alert(err.message || 'Не удалось загрузить генератор PDF. Проверьте интернет.');
+          });
+          if (!window.generateLeasingPdf) return;
         }
         const advancePct = parseInt(advanceEl.value, 10);
         const advance = Math.round(price * advancePct / 100);

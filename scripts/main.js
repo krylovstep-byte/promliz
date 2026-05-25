@@ -1,7 +1,8 @@
 (function () {
   // ============ SCROLL REVEAL ============
   // Auto-tag key containers
-  const autoRevealSelector = '.section__head, .case-card, .card, .benefit, .review, .process-track, .process-step, .scenarios, .docs__inner, .faq-item, .apply__form, .trust-strip__inner, .hero__signals, .hero__free, .process-track__cta';
+  // V56: убраны мёртвые селекторы .trust-strip__inner / .hero__signals / .hero__free
+  const autoRevealSelector = '.section__head, .case-card, .card, .benefit, .review, .process-track, .process-step, .scenarios, .docs__inner, .faq-item, .apply__form, .process-track__cta';
   document.querySelectorAll(autoRevealSelector).forEach((el) => el.classList.add('reveal'));
 
   // Auto-tag photo containers for hover-zoom
