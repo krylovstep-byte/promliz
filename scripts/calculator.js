@@ -257,16 +257,18 @@
     const monthly = principal * (i * Math.pow(1 + i, n)) / (Math.pow(1 + i, n) - 1);
     const total = monthly * n + advance;
 
-    // V29: актуальные ставки 2026 — НДС 22%, налог на прибыль 25% (ОСНО), УСН 15%
+    // V55: актуальные ставки 2026 — НДС 22%, налог на прибыль 25% (ОСНО), УСН 15%
+    // ВАЖНО: налог на прибыль уменьшается от расходов БЕЗ НДС (НДС возмещается отдельно
+    // через возврат и не влияет на налоговую базу по прибыли).
     let vatReturn, profitSaving;
     if (mode === 'osno') {
       // Возврат НДС со ВСЕХ лизинговых платежей (а не только с цены покупки):
       // лизинговая компания каждый месяц выставляет счёт-фактуру с НДС 22%
       vatReturn = total * 0.22 / 1.22;
-      // Все лизинговые платежи относятся на расходы 1:1 → экономия налога на прибыль 25%
-      profitSaving = total * 0.25;
+      // Экономия налога на прибыль 25% от расходов БЕЗ НДС (правильная бух-логика)
+      profitSaving = (total - vatReturn) * 0.25;
     } else {
-      // УСН «Доходы минус расходы»: НДС не возмещается, налог 15% от расходов
+      // УСН «Доходы минус расходы»: НДС не возмещается, налог 15% от расходов с НДС
       vatReturn = 0;
       profitSaving = total * 0.15;
     }
@@ -284,7 +286,10 @@
       monthly: Math.round(monthly),
       total: Math.round(total),
       rate: rate,
-      taxSaving: Math.round(taxSaving),
+      // V55: для PDF возвращаем с копейками (2 знака), для сайта fmt сам округлит до целого
+      vatReturn: Math.round(vatReturn * 100) / 100,
+      profitSaving: Math.round(profitSaving * 100) / 100,
+      taxSaving: Math.round(taxSaving * 100) / 100,
       leasingBenefit: Math.round(leasingBenefit),
     };
   }
@@ -371,10 +376,9 @@
         const advance = Math.round(price * advancePct / 100);
         const n = getCTerm();
         const mode = getTaxMode();
-        const vatReturn = mode === 'osno' ? Math.round(r.total * 0.22 / 1.22) : 0;
-        const profitSaving = Math.round(r.total * (mode === 'osno' ? 0.25 : 0.15));
         const years = n / 12;
         const annualMarkup = (((r.total - price) / price / years) * 100).toFixed(2).replace('.', ',');
+        // V55: vatReturn/profitSaving/taxSaving берём из calculate() — единая логика, с копейками
         window.generateLeasingPdf({
           price: price,
           advance: advance,
@@ -382,8 +386,8 @@
           n: n,
           monthly: r.monthly,
           total: r.total,
-          vatReturn: vatReturn,
-          profitSaving: profitSaving,
+          vatReturn: r.vatReturn,
+          profitSaving: r.profitSaving,
           taxSaving: r.taxSaving,
           annualMarkup: annualMarkup,
           taxMode: mode
@@ -468,8 +472,10 @@
       const i = 0.20 / 12;
       const monthly = principal * (i * Math.pow(1 + i, n)) / (Math.pow(1 + i, n) - 1);
       const total = monthly * n + advance;
-      // V29: HERO mini-calc — те же актуальные формулы (предполагаем ОСНО)
-      const taxSaving = total * 0.22 / 1.22 + total * 0.25;
+      // V55: HERO mini-calc — те же актуальные формулы (предполагаем ОСНО),
+      // profitSaving = (total - vatReturn) × 0.25 (правильная бух-логика)
+      const vatRet = total * 0.22 / 1.22;
+      const taxSaving = vatRet + (total - vatRet) * 0.25;
 
       setSimpleMoney(mMonthly, Math.round(monthly), '<small class="money__suffix">₽ / мес</small>');
       setMoneyValue(mTotal, Math.round(total));
