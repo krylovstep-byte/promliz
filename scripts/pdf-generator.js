@@ -94,10 +94,11 @@
     const date = todayStr();
     const cols = buildScheduleColumns(d.monthly, d.n, d.advance, d.total);
 
+    // 297mm × 210mm A4 landscape = 1123 × 794 px (при 96 dpi: 1mm = 3.7795px)
     return [
       '<style>',
-      '.pdf-doc { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; color: #04384F; width: 297mm; }',
-      '.pdf-doc .page { width: 297mm; height: 210mm; padding: 12mm 14mm; box-sizing: border-box; page-break-after: always; position: relative; background: #FFF; }',
+      '.pdf-doc { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; color: #04384F; width: 1123px; background: #FFFFFF; }',
+      '.pdf-doc .page { width: 1123px; height: 794px; padding: 45px 53px; box-sizing: border-box; page-break-after: always; position: relative; background: #FFFFFF; overflow: hidden; }',
       '.pdf-doc .page:last-child { page-break-after: auto; }',
       '.pdf-doc .header { display: flex; justify-content: space-between; align-items: flex-start; padding-bottom: 5mm; border-bottom: 2px solid #0094DE; position: relative; }',
       '.pdf-doc .header::after { content: ""; position: absolute; left: 0; bottom: -2px; width: 72%; height: 2px; background: #0094DE; }',
@@ -118,7 +119,8 @@
       '.pdf-doc .summary td.client { font-weight: 600; }',
       '.pdf-doc .summary td.tax-benefit { color: #2A8556; font-weight: 700; }',
       '.pdf-doc .note-line { font-size: 10px; font-style: italic; margin: 2mm 0 0; color: #5A6B7A; }',
-      '.pdf-doc .sched-wrap { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 4mm; margin-top: 2mm; }',
+      '.pdf-doc .sched-wrap { display: table; width: 100%; border-collapse: separate; border-spacing: 15px 0; margin-top: 8px; margin-left: -15px; }',
+      '.pdf-doc .sched-wrap > table { display: table-cell; width: 33.33%; vertical-align: top; }',
       '.pdf-doc .sched { width: 100%; border-collapse: collapse; font-size: 10px; }',
       '.pdf-doc .sched th { background: #F5F9FC; color: #04384F; font-weight: 600; padding: 5px 4px; font-size: 9.5px; border-bottom: 1px solid #C0CCD7; text-align: center; }',
       '.pdf-doc .sched th:first-child { width: 28px; }',
@@ -129,7 +131,8 @@
       '.pdf-doc .sched .row-header td { background: #F5F9FC; font-weight: 700; color: #0094DE; text-align: center; }',
       '.pdf-doc .sched .row-header td.num { color: #0094DE; }',
       '.pdf-doc .footer { position: absolute; bottom: 7mm; left: 14mm; right: 14mm; text-align: center; font-size: 10px; color: #0094DE; font-weight: 600; }',
-      '.pdf-doc .twocols { display: grid; grid-template-columns: 1fr 1fr; gap: 8mm; margin-top: 4mm; }',
+      '.pdf-doc .twocols { display: table; width: 100%; border-collapse: separate; border-spacing: 30px 0; margin-top: 15px; margin-left: -30px; }',
+      '.pdf-doc .twocols > div { display: table-cell; width: 50%; vertical-align: top; }',
       '.pdf-doc .panel-title { font-size: 12px; font-weight: 700; margin-bottom: 3mm; color: #04384F; }',
       '.pdf-doc .params, .pdf-doc .tax-eff { border-collapse: separate; border-spacing: 0; width: 100%; font-size: 11px; }',
       '.pdf-doc .params th { background: #E8F1F8; padding: 8px; font-weight: 700; text-align: center; color: #04384F; border: 1px solid #C0CCD7; }',
@@ -256,26 +259,64 @@
     ].join('');
   }
 
+  function makeOverlay() {
+    const overlay = document.createElement('div');
+    overlay.style.cssText = 'position:fixed;inset:0;background:rgba(255,255,255,0.95);' +
+      'z-index:2147483647;display:flex;align-items:center;justify-content:center;' +
+      'font-family:system-ui,sans-serif;font-size:18px;color:#04384F;font-weight:600;';
+    overlay.innerHTML =
+      '<div style="text-align:center;">' +
+        '<div style="width:48px;height:48px;border:4px solid #E0E6EB;border-top-color:#0094DE;' +
+          'border-radius:50%;animation:pdf-spin 0.9s linear infinite;margin:0 auto 16px;"></div>' +
+        'Генерация PDF…' +
+      '</div>' +
+      '<style>@keyframes pdf-spin{to{transform:rotate(360deg)}}</style>';
+    return overlay;
+  }
+
   async function generatePdf(data) {
     let wrap = null;
+    let overlay = null;
     try {
+      // Lazy-load lib пока юзер ждёт спиннер
+      overlay = makeOverlay();
+      document.body.appendChild(overlay);
+
       const html2pdf = await loadHtml2pdf();
+
+      // Создаём wrap. ВАЖНО: элемент должен быть ВИДИМЫМ (не left:-99999, не z-index:-1,
+      // не visibility:hidden) — иначе html2canvas рендерит белый лист.
+      // Кладём за пределы viewport ВЕРТИКАЛЬНО (top: -20000px). У html2canvas
+      // нет проблем с отрицательным top, в отличие от left.
       wrap = document.createElement('div');
       wrap.innerHTML = buildHtml(data);
-      wrap.style.cssText = 'position:fixed;left:-99999px;top:0;width:297mm;z-index:-1;';
+      wrap.style.cssText = 'position:absolute;top:-20000px;left:0;width:1123px;' +
+        'background:#FFFFFF;pointer-events:none;';
       document.body.appendChild(wrap);
-      const node = wrap.firstElementChild;
-      // .pdf-doc — это последний child (style идёт первым в строке, его не считаем)
+
       const pdfRoot = wrap.querySelector('.pdf-doc');
       if (!pdfRoot) throw new Error('PDF root not found');
+
+      // Ждём 2 RAF чтобы стили из inline <style> применились и layout посчитался
+      await new Promise(r => requestAnimationFrame(() => requestAnimationFrame(r)));
 
       const fileName = 'Расчет-лизинга-' + todayStr() + '.pdf';
       await html2pdf().from(pdfRoot).set({
         margin: 0,
         filename: fileName,
         image: { type: 'jpeg', quality: 0.95 },
-        html2canvas: { scale: 2, useCORS: true, letterRendering: true, backgroundColor: '#FFFFFF' },
-        jsPDF: { unit: 'mm', format: 'a4', orientation: 'landscape' },
+        html2canvas: {
+          scale: 2,
+          useCORS: true,
+          allowTaint: true,
+          letterRendering: true,
+          backgroundColor: '#FFFFFF',
+          windowWidth: 1123,
+          scrollX: 0,
+          scrollY: 0,
+          logging: false
+        },
+        jsPDF: { unit: 'mm', format: 'a4', orientation: 'landscape', compress: true },
         pagebreak: { mode: ['css', 'legacy'] }
       }).save();
     } catch (e) {
@@ -283,6 +324,7 @@
       alert('Не удалось сгенерировать PDF. Проверьте интернет и попробуйте снова.');
     } finally {
       if (wrap && wrap.parentNode) wrap.parentNode.removeChild(wrap);
+      if (overlay && overlay.parentNode) overlay.parentNode.removeChild(overlay);
     }
   }
 
