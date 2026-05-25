@@ -571,13 +571,17 @@ body.has-mobile-nav {
     flex-shrink: 0;
   }
 
-  /* V46: hero__unit = единая карточка (calc + photo стыкуются) */
+  /* V46+V47: hero__unit — единая карточка с глубокой тенью (объём) */
   .hero__unit {
     margin-top: 4px;
     display: flex !important;
     flex-direction: column;
     border-radius: 24px;
     overflow: hidden;
+    box-shadow:
+      0 2px 4px -2px rgba(15, 30, 49, 0.06),
+      0 8px 20px -6px rgba(15, 30, 49, 0.12),
+      0 28px 56px -18px rgba(0, 137, 203, 0.28) !important;
   }
 
   /* Фото — полноразмерное, объект в фокусе */
@@ -615,30 +619,12 @@ body.has-mobile-nav {
     display: none !important;
   }
 
-  /* Orange pill badge: «Транспорт в лизинг» (синхронизируется JS-ом из main.js) */
+  /* V47: pill «Транспорт в лизинг» убран — на мобиле раздувался в большое пятно */
   .hero__unit-category {
-    display: block !important;
-    position: absolute;
-    left: 16px;
-    bottom: 14px;
-    z-index: 3;
-    padding: 6px 12px;
-    background: rgba(255, 149, 69, 0.95);
-    border-radius: 999px;
-    box-shadow: 0 4px 12px -4px rgba(255, 122, 31, 0.5);
+    display: none !important;
   }
 
-  .hero__unit-category-title {
-    font-size: 12px;
-    font-weight: 700;
-    letter-spacing: 0.02em;
-    color: #FFFFFF;
-    text-transform: uppercase;
-  }
-
-  /* V43: оживить beam-обводку калькулятора (orbital orange beam из components.css).
-     Чёрные уголки уже зафикшены через box-shadow:none на .hero__unit в V42 —
-     beam-rotate теперь не даёт чёрного эффекта. */
+  /* V43: оживить beam-обводку калькулятора (orbital orange beam из components.css). */
   .hero__unit-calc.beam-wrap::before,
   .hero__unit::before,
   .hero__unit::after,
@@ -648,7 +634,17 @@ body.has-mobile-nav {
   .hero__unit-result::after {
     display: none !important;
   }
-  /* .hero__unit.beam-wrap::before — остаётся видимым, бегает оранжевая обводка */
+
+  /* V47: beam-rotate использует @property --beam-angle (Houdini), не работает в
+     старых iOS Safari → beam застывает. Перебиваем через transform: rotate. */
+  .hero__unit.beam-wrap::before {
+    display: block !important;
+    animation: beam-rotate-mobile 6s linear infinite !important;
+  }
+  @keyframes beam-rotate-mobile {
+    from { transform: rotate(0deg); }
+    to   { transform: rotate(360deg); }
+  }
 
   /* V42: премиум-карточка калькулятора + убрать тёмную тень .hero__unit (источник чёрных уголков) */
   .hero__unit {
@@ -663,6 +659,9 @@ body.has-mobile-nav {
     border-bottom: 0 !important;
     background: linear-gradient(180deg, #FFFFFF 0%, #FAFCFE 100%) !important;
     order: 1;
+    /* V47: больше объёма — глубокая тень, не сливается с фото-полоской снизу */
+    position: relative;
+    z-index: 2;
     box-shadow:
       0 1px 0 rgba(15, 30, 49, 0.04),
       0 18px 44px -22px rgba(0, 137, 203, 0.22),
