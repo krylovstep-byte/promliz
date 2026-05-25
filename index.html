@@ -126,12 +126,12 @@
   <link rel="preconnect" href="https://mc.yandex.ru" crossorigin>
   <link rel="dns-prefetch" href="https://mc.yandex.ru">
 
-  <link rel="stylesheet" href="styles/tokens.css?v=106">
-  <link rel="stylesheet" href="styles/base.css?v=106">
-  <link rel="stylesheet" href="styles/layout.css?v=106">
-  <link rel="stylesheet" href="styles/components.css?v=106">
-  <link rel="stylesheet" href="styles/sections.css?v=106">
-  <link rel="stylesheet" href="styles/mobile.css?v=106">
+  <link rel="stylesheet" href="styles/tokens.css?v=107">
+  <link rel="stylesheet" href="styles/base.css?v=107">
+  <link rel="stylesheet" href="styles/layout.css?v=107">
+  <link rel="stylesheet" href="styles/components.css?v=107">
+  <link rel="stylesheet" href="styles/sections.css?v=107">
+  <link rel="stylesheet" href="styles/mobile.css?v=107">
 </head>
 <body>
 
@@ -282,7 +282,6 @@
       <ul class="hero__trust-row hero__trust-row--grid">
         <li><strong>25&nbsp;лет</strong><span>на&nbsp;рынке</span></li>
         <li><strong>800+</strong><span>клиентов</span></li>
-        <li><strong>До&nbsp;3&nbsp;дней</strong><span>решение</span></li>
         <li><strong>С&nbsp;и&nbsp;без НДС</strong><span>работаем</span></li>
       </ul>
 
@@ -363,9 +362,20 @@
           </div>
         </div>
 
-        <a href="#apply" class="hero__unit-cta">
-          <span>Получить точный расчёт</span>
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+        <a href="#apply" class="hero__unit-cta hero__unit-cta--fab" aria-label="Получить точный расчёт">
+          <span class="hero__unit-cta-label">Получить точный расчёт</span>
+          <span class="hero__unit-cta-icon" aria-hidden="true">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="4" y="2" width="16" height="20" rx="2"/>
+              <rect x="7" y="5" width="10" height="3.5" rx="0.5" fill="currentColor" opacity="0.25" stroke="none"/>
+              <circle cx="8.5" cy="13" r="0.9" fill="currentColor" stroke="none"/>
+              <circle cx="12" cy="13" r="0.9" fill="currentColor" stroke="none"/>
+              <circle cx="15.5" cy="13" r="0.9" fill="currentColor" stroke="none"/>
+              <circle cx="8.5" cy="16.5" r="0.9" fill="currentColor" stroke="none"/>
+              <circle cx="12" cy="16.5" r="0.9" fill="currentColor" stroke="none"/>
+              <circle cx="15.5" cy="16.5" r="0.9" fill="currentColor" stroke="none"/>
+            </svg>
+          </span>
         </a>
       </div>
     </aside>
@@ -1804,7 +1814,7 @@
   </div>
 </div>
 
-<script src="scripts/calculator.js?v=106" defer></script>
+<script src="scripts/calculator.js?v=107" defer></script>
 <!-- V25: Лайтбокс для категорийных галерей -->
 <div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Галерея фото" hidden>
   <button type="button" class="lightbox__close" aria-label="Закрыть галерею">
@@ -1825,13 +1835,14 @@
   </figure>
 </div>
 
-<script src="scripts/form.js?v=106" defer></script>
-<script src="scripts/faq.js?v=106" defer></script>
-<script src="scripts/cookie.js?v=106" defer></script>
-<script src="scripts/main.js?v=106" defer></script>
-<script src="scripts/mobile-nav.js?v=106" defer></script>
-<script src="scripts/partners-marquee.js?v=106" defer></script>
-<script src="scripts/hero-beam.js?v=106" defer></script>
+<script src="scripts/form.js?v=107" defer></script>
+<script src="scripts/faq.js?v=107" defer></script>
+<script src="scripts/cookie.js?v=107" defer></script>
+<script src="scripts/main.js?v=107" defer></script>
+<script src="scripts/mobile-nav.js?v=107" defer></script>
+<script src="scripts/partners-marquee.js?v=107" defer></script>
+<script src="scripts/hero-beam.js?v=107" defer></script>
+<script src="scripts/haptic.js?v=107" defer></script>
 
 </body>
 </html>
