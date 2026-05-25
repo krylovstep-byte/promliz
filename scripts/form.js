@@ -86,7 +86,7 @@
     e.preventDefault();
 
     let allValid = true;
-    form.querySelectorAll('input[required], select[required]').forEach((field) => {
+    form.querySelectorAll('input[required], select[required], textarea[required]').forEach((field) => {
       if (!validateField(field) || !field.value.trim()) {
         field.classList.add('is-invalid');
         allValid = false;

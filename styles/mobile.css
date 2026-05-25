@@ -1,0 +1,830 @@
+/* ==========================================================================
+   V35: Mobile styles for Промлизинг (≤ 640px)
+   Подключается ПОСЛЕ sections.css. Все правила — внутри одного MQ.
+   ========================================================================== */
+
+/* ============ BURGER + MOBILE NAV — базовые правила (доступны >640px тоже,
+   но скрыты через display:none на десктопе) ============ */
+
+.header__burger {
+  display: none;
+  width: 40px;
+  height: 40px;
+  padding: 0;
+  background: transparent;
+  border: 1px solid var(--color-border);
+  border-radius: 10px;
+  cursor: pointer;
+  place-items: center;
+  align-content: center;
+  justify-content: center;
+  gap: 4px;
+  color: var(--color-text-main);
+  margin-left: auto;
+  transition: background 200ms var(--ease-out), border-color 200ms var(--ease-out);
+}
+
+.header__burger span {
+  display: block;
+  width: 20px;
+  height: 2px;
+  background: currentColor;
+  border-radius: 2px;
+  transform-origin: center;
+  transition: transform 280ms var(--ease-out), opacity 200ms var(--ease-out);
+}
+
+.header__burger:hover {
+  background: var(--color-blue-soft, rgba(0, 148, 222, 0.08));
+  border-color: var(--color-blue-brand);
+}
+
+.header__burger[aria-expanded="true"] span:nth-child(1) {
+  transform: translateY(6px) rotate(45deg);
+}
+.header__burger[aria-expanded="true"] span:nth-child(2) {
+  opacity: 0;
+}
+.header__burger[aria-expanded="true"] span:nth-child(3) {
+  transform: translateY(-6px) rotate(-45deg);
+}
+
+.mobile-nav__overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(6, 24, 39, 0.55);
+  backdrop-filter: blur(2px);
+  -webkit-backdrop-filter: blur(2px);
+  z-index: 199;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 280ms var(--ease-out);
+}
+
+.mobile-nav__overlay.is-open {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.mobile-nav {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: min(88vw, 360px);
+  background: #fff;
+  z-index: 200;
+  display: flex;
+  flex-direction: column;
+  padding: 16px 20px 20px;
+  gap: 16px;
+  transform: translateX(100%);
+  transition: transform 320ms var(--ease-out);
+  box-shadow: -8px 0 32px -8px rgba(6, 24, 39, 0.25);
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.mobile-nav.is-open {
+  transform: translateX(0);
+}
+
+.mobile-nav__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.mobile-nav__logo img {
+  display: block;
+  height: 32px;
+  width: auto;
+}
+
+.mobile-nav__close {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 1px solid var(--color-border);
+  background: transparent;
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+  color: var(--color-text-main);
+  transition: background 200ms;
+}
+
+.mobile-nav__close:hover {
+  background: var(--color-blue-soft, rgba(0, 148, 222, 0.08));
+}
+
+.mobile-nav__links {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.mobile-nav__links a {
+  display: block;
+  padding: 14px 12px;
+  border-radius: 10px;
+  font-size: 16px;
+  font-weight: var(--fw-semibold);
+  color: var(--color-text-main);
+  text-decoration: none;
+  transition: background 180ms;
+}
+
+.mobile-nav__links a:hover,
+.mobile-nav__links a:focus-visible {
+  background: var(--color-blue-soft, rgba(0, 148, 222, 0.08));
+  color: var(--color-blue-brand);
+}
+
+.mobile-nav__contacts {
+  margin-top: auto;
+  padding-top: 16px;
+  border-top: 1px solid var(--color-border);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.mobile-nav__phone {
+  font-family: var(--font-display);
+  font-size: 22px;
+  font-weight: var(--fw-bold);
+  color: var(--color-text-main);
+  text-decoration: none;
+  letter-spacing: -0.01em;
+}
+
+.mobile-nav__hours {
+  font-size: 13px;
+  color: var(--color-text-muted);
+  margin: 0;
+}
+
+.mobile-nav__messengers {
+  display: flex;
+  gap: 10px;
+  margin-top: 8px;
+}
+
+.mobile-nav__msg {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  border: 1px solid var(--color-border);
+  background: #fff;
+  transition: transform 200ms, box-shadow 200ms;
+}
+
+.mobile-nav__msg:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px -4px rgba(6, 24, 39, 0.18);
+}
+
+.mobile-nav__msg--email {
+  color: var(--color-blue-brand);
+}
+
+.mobile-nav__cta {
+  margin-top: 12px;
+}
+
+/* Body lock when nav open */
+body.has-mobile-nav {
+  overflow: hidden;
+}
+
+/* ==========================================================================
+   ОСНОВНОЙ МОБИЛЬНЫЙ MQ — ≤ 640px
+   ========================================================================== */
+
+@media (max-width: 640px) {
+
+  /* === ГЛОБАЛЬНЫЕ === */
+  :root {
+    --container-pad: 16px;
+  }
+
+  html {
+    scroll-padding-top: 64px;
+  }
+
+  section[id] {
+    scroll-margin-top: 64px;
+  }
+
+  .section {
+    padding-block: 32px;
+  }
+
+  .section--tight {
+    padding-block: 24px;
+  }
+
+  h2,
+  .section__head h2 {
+    font-size: 26px;
+    line-height: 1.15;
+  }
+
+  h3 {
+    font-size: 18px;
+  }
+
+  .section__head {
+    margin-bottom: 20px;
+  }
+
+  .section__head .lead,
+  .lead {
+    font-size: 15px;
+    line-height: 1.45;
+  }
+
+  .eyebrow {
+    font-size: 11px;
+  }
+
+  /* === HEADER === */
+  .header__inner {
+    height: 56px;
+    gap: 10px;
+  }
+
+  .header__logo-img {
+    height: 32px;
+    width: auto;
+  }
+
+  .nav,
+  .header__contacts {
+    display: none;
+  }
+
+  .header__burger {
+    display: grid;
+    margin-left: auto;
+  }
+
+  .header__cta {
+    /* Header CTA скрыт на mobile — есть бургер с CTA внутри */
+    display: none;
+  }
+
+  /* === HERO === */
+  .hero {
+    padding-block: 24px 28px;
+  }
+
+  .hero__grid {
+    gap: 20px;
+  }
+
+  .hero__credentials,
+  .hero__legal {
+    display: none;
+  }
+
+  .hero__pill {
+    font-size: 10px;
+    padding: 5px 10px;
+    margin-bottom: 12px;
+  }
+
+  .hero__title {
+    font-size: 28px;
+    line-height: 1.08;
+    letter-spacing: -0.015em;
+  }
+
+  .hero__sub {
+    font-size: 13px;
+    line-height: 1.4;
+    margin-top: 8px;
+  }
+
+  .hero__cta {
+    flex-direction: column;
+    gap: 8px;
+    margin-top: 16px;
+  }
+
+  .hero__cta .btn--ghost {
+    display: none;
+  }
+
+  .hero__cta .btn {
+    width: 100%;
+  }
+
+  .hero__trust-row--grid {
+    grid-template-columns: repeat(4, 1fr) !important;
+    gap: 6px;
+    margin-top: 16px;
+  }
+
+  .hero__trust-row--grid li {
+    padding: 8px 6px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  .hero__trust-row--grid strong {
+    font-size: 12px;
+    line-height: 1.15;
+  }
+
+  .hero__trust-row--grid span {
+    font-size: 9px;
+    line-height: 1.15;
+    letter-spacing: 0.02em;
+  }
+
+  /* На мобиле скрываем фото-ротатор хиро — есть marquee партнёров ниже */
+  .hero__unit-photo {
+    display: none;
+  }
+
+  .hero__unit {
+    margin-top: 4px;
+  }
+
+  .hero__unit-calc {
+    padding: 14px 14px 16px;
+    border-radius: var(--radius-md);
+  }
+
+  .hero__unit-calc-head {
+    margin-bottom: 10px;
+  }
+
+  .hero__unit-calc-head h2 {
+    font-size: 17px;
+  }
+
+  .hero__unit-calc-head .eyebrow {
+    font-size: 10px;
+  }
+
+  .mini-calc {
+    gap: 10px;
+  }
+
+  .mini-calc__field label {
+    font-size: 11px;
+  }
+
+  .mini-calc__field input[type="text"] {
+    padding: 10px 12px;
+    font-size: 15px;
+  }
+
+  .hero__unit-result {
+    padding-top: 10px;
+    gap: 8px;
+  }
+
+  .hero__unit-result-label {
+    font-size: 11px;
+  }
+
+  .hero__unit-result-value,
+  .hero__unit-result-main .money__amount {
+    font-size: 26px;
+  }
+
+  .hero__unit-tax-accent {
+    padding: 12px 14px;
+    gap: 10px;
+  }
+
+  .hero__unit-tax-icon {
+    width: 36px;
+    height: 36px;
+    font-size: 22px;
+  }
+
+  .hero__unit-tax-value {
+    font-size: 20px;
+  }
+
+  .hero__unit-tax-label {
+    font-size: 10px;
+  }
+
+  .hero__unit-result-meta {
+    font-size: 13px;
+  }
+
+  .hero__unit-cta {
+    padding: 12px 18px;
+    font-size: 14px;
+  }
+
+  /* === PARTNERS (marquee) === */
+  .partners {
+    padding-block: 16px;
+  }
+
+  .partners__track img {
+    max-height: 24px;
+    max-width: 100px;
+  }
+
+  /* === CALC (большой) === */
+  .calc__grid {
+    grid-template-columns: 1fr !important;
+    gap: 16px;
+  }
+
+  .calc__form,
+  .calc__result {
+    padding: 16px;
+  }
+
+  .calc__results-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+
+  .calc__result-value,
+  .calc__money,
+  .calc__results-grid .money__amount {
+    font-size: 22px;
+  }
+
+  .calc__chips {
+    gap: 6px;
+  }
+
+  .calc__chips .chip span {
+    font-size: 13px;
+  }
+
+  .step-selector button {
+    padding: 8px 10px;
+    font-size: 13px;
+  }
+
+  /* === APPLY (форма) === */
+  .apply {
+    padding-block: 32px;
+  }
+
+  .apply__bg-logo {
+    display: none;
+  }
+
+  .apply__grid {
+    grid-template-columns: 1fr !important;
+    gap: 24px;
+  }
+
+  .apply__copy h2 {
+    font-size: 24px;
+  }
+
+  .apply__cards {
+    grid-template-columns: 1fr !important;
+    gap: 12px;
+  }
+
+  .apply__card {
+    padding: 14px 16px;
+  }
+
+  .apply__channels {
+    padding: 16px;
+  }
+
+  .apply__channels-phone {
+    font-size: 24px;
+  }
+
+  .apply__form {
+    padding: 20px 16px;
+  }
+
+  .apply__row {
+    grid-template-columns: 1fr !important;
+    gap: 14px;
+  }
+
+  .field input,
+  .field textarea,
+  .field select,
+  .input-suffix input {
+    padding: 12px 14px;
+    font-size: 15px;
+  }
+
+  /* === PROCESS — swipe carousel === */
+  .process {
+    padding-block: 32px;
+  }
+
+  .process-track,
+  .process-track__steps {
+    grid-template-columns: none !important;
+  }
+
+  .process-track__steps {
+    display: flex !important;
+    flex-wrap: nowrap !important;
+    gap: 12px;
+    overflow-x: auto;
+    overflow-y: visible;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    padding: 4px 16px 16px;
+    margin-inline: -16px;
+    scrollbar-width: none;
+  }
+
+  .process-track__steps::-webkit-scrollbar {
+    display: none;
+  }
+
+  .process-step {
+    flex: 0 0 78%;
+    max-width: 280px;
+    scroll-snap-align: start;
+    margin: 0;
+  }
+
+  .process-track__line {
+    display: none;
+  }
+
+  .process__cta {
+    margin-top: 20px;
+  }
+
+  /* === BENEFITS / lease-vs-credit === */
+  .benefits-asymm__grid,
+  .benefits__grid {
+    grid-template-columns: 1fr !important;
+    gap: 16px;
+  }
+
+  .lease-vs-credit {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    margin-inline: -16px;
+    padding-inline: 16px;
+  }
+
+  .lease-vs-credit__table,
+  .lease-vs-credit__grid {
+    min-width: 460px;
+  }
+
+  /* === CASES === */
+  .cases__grid,
+  .cases-grid {
+    grid-template-columns: 1fr !important;
+    gap: 14px;
+  }
+
+  .case-card {
+    padding: 0;
+  }
+
+  .case-card__photo {
+    height: 180px;
+  }
+
+  .case-card__body {
+    padding: 14px 16px 18px;
+    gap: 10px;
+  }
+
+  .case-card h3,
+  .case-card__title {
+    font-size: 17px;
+  }
+
+  .case-card__metrics div span {
+    font-size: 11px;
+  }
+
+  .case-card__metrics div strong {
+    font-size: 15px;
+  }
+
+  blockquote {
+    font-size: 14px;
+  }
+
+  /* === ASSETS === */
+  .assets__grid,
+  .assets-grid {
+    grid-template-columns: 1fr !important;
+    gap: 14px;
+  }
+
+  .card--photo {
+    padding: 0;
+  }
+
+  .card__photo {
+    height: 180px;
+  }
+
+  .card__body {
+    padding: 14px 16px;
+  }
+
+  .card__thumbs {
+    padding: 6px 16px 12px;
+  }
+
+  /* === DOCS === */
+  .docs {
+    padding-block: 32px;
+  }
+
+  .docs__layout,
+  .docs-grid {
+    grid-template-columns: 1fr !important;
+    gap: 20px;
+  }
+
+  .docs__tabs,
+  .docs-tabs {
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    flex-wrap: nowrap;
+    padding-bottom: 6px;
+    margin-inline: -16px;
+    padding-inline: 16px;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+
+  .docs__tabs::-webkit-scrollbar,
+  .docs-tabs::-webkit-scrollbar {
+    display: none;
+  }
+
+  .docs-tab,
+  .docs__tab {
+    flex: 0 0 auto;
+    white-space: nowrap;
+    scroll-snap-align: start;
+    font-size: 13px;
+    padding: 8px 12px;
+  }
+
+  .docs-list li {
+    padding: 10px 0;
+    font-size: 14px;
+  }
+
+  .docs-list li strong {
+    font-size: 14px;
+  }
+
+  /* === FAQ === */
+  .faq-item summary,
+  .faq-item__summary {
+    font-size: 15px;
+    padding: 14px 16px;
+  }
+
+  .faq-item__body,
+  .faq-item[open] > div {
+    padding: 0 16px 14px;
+    font-size: 14px;
+  }
+
+  /* === ARTICLES === */
+  .articles__grid,
+  .articles-grid {
+    grid-template-columns: 1fr !important;
+    gap: 14px;
+  }
+
+  .article-card {
+    padding: 0;
+  }
+
+  .article-card__photo {
+    height: 160px;
+  }
+
+  .article-card__body {
+    padding: 14px 16px 16px;
+  }
+
+  .article-card h3 {
+    font-size: 16px;
+  }
+
+  /* === OFFICE === */
+  .office__grid,
+  .office-grid {
+    grid-template-columns: 1fr !important;
+    gap: 16px;
+  }
+
+  .office__map iframe {
+    height: 240px;
+  }
+
+  .office__info,
+  .office__contacts {
+    padding: 18px;
+  }
+
+  /* === FOOTER === */
+  .footer {
+    padding-block: 32px 20px;
+  }
+
+  .footer__grid {
+    grid-template-columns: 1fr !important;
+    gap: 24px;
+    padding-bottom: 20px;
+  }
+
+  .footer__col h4 {
+    font-size: 14px;
+  }
+
+  .footer__col ul {
+    gap: 6px;
+  }
+
+  .footer__col a,
+  .footer__col li {
+    font-size: 13px;
+  }
+
+  .footer__bottom {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+    font-size: 12px;
+  }
+
+  /* === COOKIE BANNER === */
+  .cookie {
+    left: 12px;
+    right: 12px;
+    bottom: 12px;
+    max-width: none;
+    padding: 14px 16px;
+  }
+
+  .cookie p {
+    font-size: 13px;
+  }
+
+  /* === MESSENGER FAB — чуть ниже чтобы не мешать cookie === */
+  .messenger-fab {
+    right: 12px;
+    bottom: 12px;
+  }
+}
+
+/* ==========================================================================
+   EDGE CASE — iPhone SE / Galaxy S22 (≤ 380px)
+   ========================================================================== */
+
+@media (max-width: 380px) {
+  .hero__title {
+    font-size: 26px;
+  }
+
+  h2,
+  .section__head h2 {
+    font-size: 22px;
+  }
+
+  .hero__trust-row--grid strong {
+    font-size: 13px;
+  }
+
+  .hero__trust-row--grid span {
+    font-size: 10px;
+  }
+
+  .process-step {
+    flex-basis: 82%;
+  }
+}

@@ -4816,65 +4816,112 @@
   color: var(--color-primary);
 }
 
+/* V36: переделанный success-блок */
 .apply__thanks {
+  display: flex;
+  flex-direction: column;
   align-items: center;
   text-align: center;
-  gap: var(--space-4);
+  gap: 14px;
+  padding: 36px 28px 32px;
+  background: #fff;
+  border-radius: var(--radius-lg);
+  box-shadow: 0 24px 60px -20px rgba(6, 24, 39, 0.25),
+              0 4px 12px -2px rgba(6, 24, 39, 0.08);
 }
 
 .apply__thanks-check {
-  color: var(--color-success);
-}
-
-.apply__thanks h3 {
-  font-family: var(--font-display);
-  font-size: 32px;
-  font-weight: var(--fw-medium);
-}
-
-.apply__thanks > p {
-  color: var(--color-text-muted);
-  font-size: var(--fs-body);
-  line-height: var(--lh-relaxed);
-}
-
-.apply__thanks-list {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-3);
-  width: 100%;
-  text-align: left;
-  margin-top: var(--space-3);
-}
-
-.apply__thanks-list li {
-  display: flex;
-  align-items: center;
-  gap: var(--space-3);
-  padding: var(--space-3) var(--space-4);
-  background: var(--color-bg-alt);
-  border-radius: var(--radius-sm);
-  font-size: var(--fs-small);
-}
-
-.apply__thanks-list li span {
-  width: 28px;
-  height: 28px;
-  border-radius: 50%;
-  background: var(--color-primary);
-  color: var(--color-accent);
+  width: 64px;
+  height: 64px;
   display: grid;
   place-items: center;
-  font-family: var(--font-display);
-  font-weight: var(--fw-semibold);
-  font-size: var(--fs-small);
-  flex-shrink: 0;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #18C26E 0%, #129956 100%);
+  color: #fff;
+  box-shadow: 0 10px 24px -8px rgba(24, 194, 110, 0.55);
+  margin-bottom: 4px;
 }
 
-.apply__thanks-meta {
-  font-size: var(--fs-mini);
-  color: var(--color-text-soft);
-  margin-top: var(--space-3);
+.apply__thanks-title {
+  font-family: var(--font-display);
+  font-size: 26px;
+  font-weight: var(--fw-bold);
+  color: var(--color-text-main);
+  margin: 0;
+  letter-spacing: -0.01em;
+}
+
+.apply__thanks-lead {
+  font-size: 15px;
+  line-height: 1.5;
+  color: var(--color-text-body, var(--color-text-muted));
+  margin: 0;
+  max-width: 340px;
+}
+
+.apply__thanks-lead strong {
+  color: var(--color-text-main);
+  font-weight: var(--fw-bold);
+}
+
+.apply__thanks-prep {
+  width: 100%;
+  background: var(--color-blue-soft, rgba(0, 148, 222, 0.08));
+  border-left: 3px solid var(--color-blue-brand);
+  border-radius: var(--radius-sm);
+  padding: 12px 14px;
+  text-align: left;
+  margin-top: 4px;
+}
+
+.apply__thanks-prep-label {
+  display: block;
+  font-size: 11px;
+  font-weight: var(--fw-bold);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--color-blue-brand);
+  margin-bottom: 4px;
+}
+
+.apply__thanks-prep p {
+  margin: 0;
+  font-size: 13.5px;
+  line-height: 1.4;
+  color: var(--color-text-main);
+}
+
+.apply__thanks-phone {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 8px;
+  padding: 10px 18px;
+  border: 1.5px solid var(--color-border);
+  border-radius: var(--radius-pill);
+  font-family: var(--font-display);
+  font-size: 18px;
+  font-weight: var(--fw-bold);
+  color: var(--color-text-main);
+  text-decoration: none;
+  letter-spacing: -0.01em;
+  transition: border-color var(--transition), color var(--transition), transform var(--transition);
+}
+
+.apply__thanks-phone svg {
+  color: var(--color-orange);
+}
+
+.apply__thanks-phone:hover {
+  border-color: var(--color-blue-brand);
+  color: var(--color-blue-brand);
+  transform: translateY(-1px);
+}
+
+.apply__thanks-hours {
+  font-size: 12px;
+  color: var(--color-text-muted);
+  margin: 0;
 }
 
 /* ============ OFFICE (Map block) ============ */

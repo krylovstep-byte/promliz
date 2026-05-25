@@ -9,6 +9,8 @@ _old_susanin/
 
 # Скриншоты и техзадания (не для публикации)
 v*-*.png
+v*-*.jpeg
+v*-*.jpg
 *.png.bak
 tmp_tz.txt
 

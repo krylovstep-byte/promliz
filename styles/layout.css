@@ -259,13 +259,14 @@
   left: var(--space-6);
   right: var(--space-6);
   bottom: var(--space-6);
-  max-width: 480px;
+  max-width: 440px;
   margin-left: auto;
-  background: var(--color-primary);
-  color: var(--color-text-inverse);
-  padding: var(--space-5) var(--space-6);
+  background: var(--color-text-main);
+  color: #fff;
+  padding: var(--space-4) var(--space-5);
   border-radius: var(--radius-md);
-  box-shadow: var(--shadow-xl);
+  box-shadow: 0 14px 40px -10px rgba(6, 24, 39, 0.45),
+              0 4px 12px -2px rgba(6, 24, 39, 0.25);
   z-index: var(--z-toast);
   display: grid;
   grid-template-columns: 1fr auto;
@@ -282,12 +283,18 @@
 }
 
 .cookie p {
+  margin: 0;
   font-size: var(--fs-small);
   line-height: var(--lh-normal);
-  color: var(--color-neutral-300);
+  color: #fff;
 }
 
 .cookie a {
-  color: var(--color-accent);
+  color: var(--color-orange);
   border-bottom: 1px solid currentColor;
+  text-decoration: none;
+}
+
+.cookie a:hover {
+  color: var(--color-orange-hover);
 }
