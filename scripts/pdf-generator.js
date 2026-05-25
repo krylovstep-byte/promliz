@@ -323,41 +323,55 @@
       document.body.appendChild(overlay);
 
       injectStyles();
-      const html2pdf = await loadHtml2pdf();
+      await loadHtml2pdf(); // подгружает в window: html2pdf, html2canvas, jspdf
 
+      const html2canvas = window.html2canvas;
+      const jsPDFCtor = (window.jspdf && window.jspdf.jsPDF) || window.jsPDF;
+      if (!html2canvas || !jsPDFCtor) throw new Error('html2canvas/jsPDF not loaded');
+
+      // Создаём wrap с обеими страницами видимыми (position:fixed top:0 left:0,
+      // под overlay чтобы юзер не видел). Каждая .page имеет фиксированные 1123×794.
       wrap = document.createElement('div');
       wrap.innerHTML = buildHtml(data);
-      wrap.style.cssText = 'position:absolute;top:-20000px;left:0;width:1123px;background:#FFFFFF;pointer-events:none;';
+      wrap.style.cssText = 'position:fixed;top:0;left:0;width:1123px;background:#FFFFFF;pointer-events:none;z-index:1;';
       document.body.appendChild(wrap);
 
-      const pdfRoot = wrap.querySelector('.pdf-doc');
-      if (!pdfRoot) throw new Error('PDF root not found');
+      const pages = wrap.querySelectorAll('.pdf-doc .page');
+      if (!pages || pages.length < 2) throw new Error('Pages not found');
 
+      // Ждём 2 RAF для применения стилей
       await new Promise(r => requestAnimationFrame(() => requestAnimationFrame(r)));
 
-      const fileName = 'Расчет-лизинга-' + todayStr() + '.pdf';
-      await html2pdf().from(pdfRoot).set({
-        margin: 0,
-        filename: fileName,
-        image: { type: 'jpeg', quality: 0.95 },
-        html2canvas: {
+      // Создаём jsPDF с A4 landscape (297×210mm)
+      const pdf = new jsPDFCtor({ unit: 'mm', format: 'a4', orientation: 'landscape', compress: true });
+
+      // Рендерим каждую страницу ОТДЕЛЬНО через html2canvas → addImage
+      for (let i = 0; i < pages.length; i++) {
+        const pageEl = pages[i];
+        const canvas = await html2canvas(pageEl, {
           scale: 2,
           useCORS: true,
           allowTaint: true,
           letterRendering: true,
           backgroundColor: '#FFFFFF',
           width: 1123,
+          height: 794,
           windowWidth: 1123,
+          windowHeight: 794,
           scrollX: 0,
           scrollY: 0,
           logging: false
-        },
-        jsPDF: { unit: 'mm', format: 'a4', orientation: 'landscape', compress: true },
-        pagebreak: { mode: ['css'], before: '.page-2' }
-      }).save();
+        });
+        const imgData = canvas.toDataURL('image/jpeg', 0.95);
+        if (i > 0) pdf.addPage('a4', 'landscape');
+        // addImage(data, format, x, y, width, height) — 297×210mm A4 landscape
+        pdf.addImage(imgData, 'JPEG', 0, 0, 297, 210, undefined, 'FAST');
+      }
+
+      pdf.save('Расчет-лизинга-' + todayStr() + '.pdf');
     } catch (e) {
       console.error('PDF generation failed:', e);
-      alert('Не удалось сгенерировать PDF. Проверьте интернет и попробуйте снова.');
+      alert('Не удалось сгенерировать PDF. Проверьте интернет и попробуйте снова. (' + (e.message || e) + ')');
     } finally {
       if (wrap && wrap.parentNode) wrap.parentNode.removeChild(wrap);
       if (overlay && overlay.parentNode) overlay.parentNode.removeChild(overlay);
