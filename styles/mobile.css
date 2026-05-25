@@ -449,25 +449,9 @@ body.has-mobile-nav {
     text-wrap: balance;
   }
 
-  /* V50: акцент-маркер на слове «Лизинг» — как выделение текстомаркером в книге.
-     Текст navy для контраста, оранжевая полупрозрачная подложка снизу. */
-  .hero__title-accent {
-    background: linear-gradient(
-      180deg,
-      transparent 0%,
-      transparent 55%,
-      rgba(255, 149, 69, 0.32) 55%,
-      rgba(255, 149, 69, 0.32) 92%,
-      transparent 92%
-    );
-    -webkit-background-clip: padding-box;
-    background-clip: padding-box;
-    -webkit-text-fill-color: var(--color-text-main);
-    color: var(--color-text-main);
-    font-weight: 900;
-    padding: 0 0.08em;
-    border-radius: 2px;
-  }
+  /* V57: убран highlight-маркер на слове «Лизинг» (V50 рудимент) — Стёпа сказал
+     не нужен. Слово отображается через базовый .hero__title-accent из sections.css
+     (оранжевый цвет + 600 font-weight) — чисто без подложки. */
 
   .hero__title-tail {
     font-size: 0.72em;
