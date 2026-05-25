@@ -383,13 +383,24 @@ body.has-mobile-nav {
     display: none;
   }
 
-  /* === HERO — компакт, sticky header в потоке = маленький pt === */
+  /* === HERO — V41: жёстко чистый фон + минимум padding === */
   .hero {
-    padding-block: 16px 8px !important;
+    padding-block: 12px 6px !important;
+    background: #FFFFFF !important;
+    overflow: visible;
+  }
+
+  /* V41: скрыть glow/градиенты hero, из-за которых "чёрные уголки" за калькулятором */
+  .hero__glow,
+  .hero::before,
+  .hero::after,
+  .hero__rotator,
+  .hero__unit-tint {
+    display: none !important;
   }
 
   .hero__grid {
-    gap: 12px;
+    gap: 10px;
   }
 
   .hero__credentials,
@@ -415,7 +426,7 @@ body.has-mobile-nav {
     font-size: clamp(22px, 6.5vw, 30px);
     line-height: 1.05;
     letter-spacing: -0.03em;
-    margin-bottom: 12px;
+    margin-bottom: 10px;
     text-wrap: balance;
   }
 
@@ -427,10 +438,10 @@ body.has-mobile-nav {
   }
 
   .hero__sub {
-    font-size: 15px;
-    line-height: 1.4;
+    font-size: 14px;
+    line-height: 1.35;
     margin-top: 0;
-    margin-bottom: 16px;
+    margin-bottom: 12px;
   }
 
   .hero__cta {
@@ -448,24 +459,16 @@ body.has-mobile-nav {
   .hero__cta .btn--primary,
   .hero__cta .btn--accent {
     width: 100%;
-    min-height: 58px;
+    min-height: 52px;
     border-radius: 999px;
     font-size: 16px;
     font-weight: 700;
     margin-bottom: 0;
   }
 
+  /* V41: убираем «Список документов» из hero — он есть в mobile-nav и в секции docs */
   .hero__cta .btn--ghost {
-    background: transparent;
-    border: 0;
-    text-decoration: underline;
-    text-underline-offset: 4px;
-    font-size: 14px;
-    opacity: 0.75;
-    min-height: 0;
-    padding: 6px;
-    width: auto;
-    align-self: center;
+    display: none !important;
   }
 
   /* === HERO STATS 2×2 компакт (V40: ещё меньше) === */
@@ -523,10 +526,11 @@ body.has-mobile-nav {
   }
 
   .hero__unit-calc {
-    padding: 20px 16px !important;
-    border-radius: 24px;
-    border: 1px solid rgba(0, 137, 203, 0.25);
-    box-shadow: 0 12px 32px -16px rgba(15, 30, 49, 0.18);
+    padding: 16px 14px !important;
+    border-radius: 22px;
+    border: 1px solid rgba(0, 137, 203, 0.22);
+    box-shadow: 0 10px 28px -14px rgba(15, 30, 49, 0.16);
+    background: #FFFFFF;
     max-width: 100%;
     overflow: hidden;
   }
@@ -707,24 +711,41 @@ body.has-mobile-nav {
     line-height: 1.15;
   }
 
+  /* V41: антивозражения компактнее */
   .apply__cards {
     grid-template-columns: 1fr !important;
-    gap: 12px;
+    gap: 10px;
   }
 
   .apply__card {
-    padding: 16px;
-    border-radius: 16px;
+    padding: 12px 14px;
+    border-radius: 14px;
+  }
+
+  .apply__card-head {
+    gap: 8px;
+    margin-bottom: 6px;
+  }
+
+  .apply__card-head svg {
+    width: 16px;
+    height: 16px;
   }
 
   .apply__card-head strong {
-    font-size: 15px;
+    font-size: 13px;
+    letter-spacing: 0.02em;
+  }
+
+  .apply__card-list {
+    gap: 4px;
   }
 
   .apply__card-list li {
-    font-size: 14px;
+    font-size: 13px;
     gap: 6px;
-    padding: 4px 0;
+    padding: 2px 0;
+    line-height: 1.35;
   }
 
   .apply__channels {
@@ -733,6 +754,21 @@ body.has-mobile-nav {
 
   .apply__channels-phone {
     font-size: 24px;
+  }
+
+  /* V41: иконки способов связи крупнее (56px) */
+  .apply__channels-icons {
+    gap: 14px !important;
+  }
+
+  .apply__channels-icon {
+    width: 56px !important;
+    height: 56px !important;
+  }
+
+  .apply__channels-icon svg {
+    width: 28px !important;
+    height: 28px !important;
   }
 
   .apply__row {
@@ -852,14 +888,14 @@ body.has-mobile-nav {
   }
 
   /* Tabs */
-  /* V40: tabs wrap на 2 строки, font 12 — все 4 помещаются в 360 */
+  /* V40+V41: tabs wrap + отступ снизу до контента */
   .docs-tabs,
   .docs__tabs {
     display: flex !important;
     flex-wrap: wrap !important;
     gap: 6px !important;
     padding: 0 !important;
-    margin: 0 !important;
+    margin: 0 0 20px !important;
     position: static !important;
     overflow: visible !important;
     width: 100%;
@@ -1388,9 +1424,14 @@ body.has-mobile-nav {
   .cards-grid--3 > .case-card {
     flex: 0 0 calc(100vw - 48px) !important;
     max-width: calc(100vw - 48px);
-    scroll-snap-align: start;
+    scroll-snap-align: center;
+    scroll-snap-stop: always;
     margin: 0 !important;
     padding: 0 !important;
+  }
+
+  .cards-grid--3 {
+    scroll-padding-inline: 16px;
   }
 
   .case-card__photo {
@@ -1532,6 +1573,31 @@ body.has-mobile-nav {
   .office__info,
   .office__contacts {
     padding: 18px;
+  }
+
+  /* V41: «Связаться с менеджером» — фикс текст за пределы кнопки */
+  .office__cta {
+    width: 100%;
+  }
+
+  .office__cta .btn,
+  .office__cta .btn--primary {
+    width: 100%;
+    white-space: normal;
+    font-size: clamp(13px, 3.6vw, 15px);
+    padding: 14px 16px;
+    min-height: 52px;
+    line-height: 1.2;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    box-sizing: border-box;
+  }
+
+  .office__cta .btn svg {
+    flex-shrink: 0;
   }
 
   /* === FOOTER === */
