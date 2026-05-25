@@ -558,12 +558,82 @@ body.has-mobile-nav {
   }
 
   /* === HERO QUICK CALC — soft border, без чёрных граней === */
+  /* V46: фото-полоска техники ВНИЗУ калькулятора (order: 2). Раньше display: none. */
   .hero__unit-photo {
-    display: none;
+    display: block !important;
+    position: relative !important;
+    height: 140px !important;
+    width: 100% !important;
+    order: 2;
+    overflow: hidden;
+    border-radius: 0 0 24px 24px;
+    margin-top: -1px;
+    flex-shrink: 0;
   }
 
+  /* V46: hero__unit = единая карточка (calc + photo стыкуются) */
   .hero__unit {
     margin-top: 4px;
+    display: flex !important;
+    flex-direction: column;
+    border-radius: 24px;
+    overflow: hidden;
+  }
+
+  /* Фото — полноразмерное, объект в фокусе */
+  .hero__rotator {
+    display: block !important;
+    position: absolute !important;
+    inset: 0 !important;
+  }
+  .hero__rotator img {
+    object-position: center 60%;
+    filter: saturate(0.95) contrast(1.05);
+    opacity: 0;
+    transition: opacity 900ms cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .hero__rotator img.is-active {
+    opacity: 1;
+  }
+
+  /* Tint — gradient для читаемости бейджа */
+  .hero__unit-tint {
+    display: block !important;
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      180deg,
+      rgba(0, 60, 90, 0) 30%,
+      rgba(0, 60, 90, 0.55) 80%,
+      rgba(0, 60, 90, 0.75) 100%
+    );
+    pointer-events: none;
+  }
+
+  /* Dots — скрыть на мобиле, полоска маленькая */
+  .hero__rotator-dots {
+    display: none !important;
+  }
+
+  /* Orange pill badge: «Транспорт в лизинг» (синхронизируется JS-ом из main.js) */
+  .hero__unit-category {
+    display: block !important;
+    position: absolute;
+    left: 16px;
+    bottom: 14px;
+    z-index: 3;
+    padding: 6px 12px;
+    background: rgba(255, 149, 69, 0.95);
+    border-radius: 999px;
+    box-shadow: 0 4px 12px -4px rgba(255, 122, 31, 0.5);
+  }
+
+  .hero__unit-category-title {
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+    color: #FFFFFF;
+    text-transform: uppercase;
   }
 
   /* V43: оживить beam-обводку калькулятора (orbital orange beam из components.css).
@@ -588,9 +658,11 @@ body.has-mobile-nav {
 
   .hero__unit-calc {
     padding: 18px 16px !important;
-    border-radius: 24px;
+    border-radius: 24px 24px 0 0 !important;
     border: 1px solid rgba(0, 137, 203, 0.14);
+    border-bottom: 0 !important;
     background: linear-gradient(180deg, #FFFFFF 0%, #FAFCFE 100%) !important;
+    order: 1;
     box-shadow:
       0 1px 0 rgba(15, 30, 49, 0.04),
       0 18px 44px -22px rgba(0, 137, 203, 0.22),
