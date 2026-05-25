@@ -704,17 +704,17 @@ body.has-mobile-nav {
     display: none !important;
   }
 
-  /* «Калькулятор лизинга» — крупный, яркий, главный */
+  /* V49: «Калькулятор лизинга» — ещё крупнее, главный заголовок калькулятора */
   .hero__unit-calc-head__eyebrow--mobile {
     display: inline-block;
-    font-size: 20px;
+    font-size: 26px;
     font-weight: 800;
-    letter-spacing: -0.02em;
+    letter-spacing: -0.025em;
     text-transform: none;
     color: var(--color-blue-brand);
     opacity: 1;
     margin: 0;
-    line-height: 1.1;
+    line-height: 1.05;
   }
 
   .hero__unit-calc-head .eyebrow {

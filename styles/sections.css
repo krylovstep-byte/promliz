@@ -558,7 +558,7 @@
   padding: 15px 24px;
   border-radius: var(--radius-pill);
   background: var(--color-orange);
-  color: var(--color-text-main);
+  color: #FFFFFF;
   font-weight: 700;
   font-size: 15px;
   letter-spacing: -0.005em;
@@ -929,7 +929,7 @@
 
 .step-selector button.is-active {
   background: var(--color-orange);
-  color: var(--color-text-main);
+  color: #FFFFFF;
   box-shadow: 0 2px 8px -2px rgba(255, 149, 69, 0.4);
 }
 
@@ -1900,7 +1900,7 @@
 
 .result__cta .btn--primary {
   background: var(--color-orange);
-  color: var(--color-text-main);
+  color: #FFFFFF;
   font-weight: 700;
 }
 

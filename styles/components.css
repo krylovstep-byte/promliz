@@ -346,7 +346,7 @@
 
 .btn--accent {
   background: var(--color-orange);
-  color: var(--color-text-main);
+  color: #FFFFFF;
   font-weight: 700;
 }
 
