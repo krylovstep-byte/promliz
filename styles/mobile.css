@@ -37,6 +37,11 @@ video {
   display: none;
 }
 
+/* V39: Eyebrow двойной (desktop/mobile) — на десктопе показываем "Быстрый расчёт" */
+.hero__unit-calc-head__eyebrow--mobile {
+  display: none;
+}
+
 /* ============ BURGER + MOBILE NAV (V35 базовые) ============ */
 
 .header__burger {
@@ -407,10 +412,18 @@ body.has-mobile-nav {
   }
 
   .hero__title {
-    font-size: clamp(28px, 8.2vw, 40px);
-    line-height: 1.06;
-    letter-spacing: -0.02em;
-    margin-bottom: 14px;
+    font-size: clamp(22px, 6.5vw, 30px);
+    line-height: 1.05;
+    letter-spacing: -0.03em;
+    margin-bottom: 12px;
+    text-wrap: balance;
+  }
+
+  .hero__title-tail {
+    font-size: 0.72em;
+    opacity: 0.78;
+    display: inline-block;
+    margin-top: 2px;
   }
 
   .hero__sub {
@@ -458,14 +471,14 @@ body.has-mobile-nav {
   /* === HERO STATS 2×2 компакт === */
   .hero__trust-row--grid {
     grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
-    gap: 8px !important;
+    gap: 6px !important;
     margin-top: 0;
-    margin-bottom: 16px;
+    margin-bottom: 14px;
   }
 
   .hero__trust-row--grid li {
-    padding: 8px 8px;
-    min-height: 58px;
+    padding: 6px 8px;
+    min-height: 48px;
     min-width: 0;
     border-radius: 10px;
     text-align: center;
@@ -476,7 +489,7 @@ body.has-mobile-nav {
   }
 
   .hero__trust-row--grid strong {
-    font-size: 20px;
+    font-size: 18px;
     line-height: 1.1;
     letter-spacing: -0.01em;
   }
@@ -496,6 +509,14 @@ body.has-mobile-nav {
     margin-top: 4px;
   }
 
+  /* V39: отключаем beam::before и любые декорации, дающие "чёрные уголки" */
+  .hero__unit.beam-wrap::before,
+  .hero__unit-calc.beam-wrap::before,
+  .hero__unit::before,
+  .hero__unit::after {
+    display: none !important;
+  }
+
   .hero__unit-calc {
     padding: 20px 16px !important;
     border-radius: 24px;
@@ -511,6 +532,22 @@ body.has-mobile-nav {
 
   .hero__unit-calc-head h2 {
     font-size: 17px;
+  }
+
+  /* V39: eyebrow двойной — скрываем desktop вариант, показываем mobile */
+  .hero__unit-calc-head__eyebrow--desktop {
+    display: none !important;
+  }
+
+  .hero__unit-calc-head__eyebrow--mobile {
+    display: inline-block;
+    font-size: 14px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--color-blue-brand);
+    opacity: 1;
+    margin-bottom: 0;
   }
 
   .hero__unit-calc-head .eyebrow {
@@ -590,55 +627,32 @@ body.has-mobile-nav {
     justify-content: center;
   }
 
-  /* === PARTNERS — grid 4×2, без marquee === */
+  /* === PARTNERS — marquee компактный (V39: вернули animation) === */
   .partners {
-    padding-block: 24px;
+    padding-block: 20px;
   }
 
   .partners::before,
   .partners::after {
-    display: none !important;
+    width: 32px;
   }
 
   .partners__viewport {
-    overflow: visible !important;
-    mask-image: none !important;
-    -webkit-mask-image: none !important;
+    overflow: hidden;
   }
 
   .partners__track {
-    display: grid !important;
-    grid-template-columns: repeat(4, 1fr) !important;
-    gap: 14px 12px !important;
-    animation: none !important;
-    transform: none !important;
-    padding: 0 !important;
-    width: 100% !important;
-    list-style: none;
-    place-items: center;
+    gap: var(--space-7);
+    /* animation: partners-marquee 80s linear infinite — оставляем из sections.css */
   }
 
   .partners__track li {
-    width: 100%;
-    height: auto !important;
-    min-width: 0;
-    flex-shrink: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    height: 32px;
   }
 
   .partners__track img {
-    max-height: 24px !important;
-    max-width: 100% !important;
-    width: auto;
-    object-fit: contain;
-    opacity: 0.6;
-    filter: grayscale(0.4);
-  }
-
-  .partners__track > li:nth-child(n+9) {
-    display: none;
+    max-height: 22px;
+    max-width: 92px;
   }
 
   /* === APPLY — форма выше антивозражений === */
@@ -740,6 +754,11 @@ body.has-mobile-nav {
     max-width: 100%;
   }
 
+  #docs > .container,
+  .docs__layout {
+    overflow: hidden;
+  }
+
   #docs .container {
     padding-inline: 16px;
   }
@@ -749,11 +768,14 @@ body.has-mobile-nav {
     gap: 20px;
   }
 
-  /* Downloads card */
+  /* V39: убираем sticky aside на mobile (на десктопе остаётся) */
   .docs-downloads {
+    position: static !important;
     padding: 16px;
     border-radius: 16px;
     width: 100%;
+    max-width: 100%;
+    min-width: 0;
   }
 
   .docs-downloads__title {
@@ -772,6 +794,7 @@ body.has-mobile-nav {
     padding: 12px;
     width: 100%;
     max-width: 100%;
+    min-width: 0;
   }
 
   .docs-download-card__ico {
@@ -782,18 +805,22 @@ body.has-mobile-nav {
 
   .docs-download-card__body {
     min-width: 0;
+    overflow: hidden;
   }
 
+  /* V39: переносы для длинных названий типа «Документы для ЮЛ на УСН/ЕНВД» */
   .docs-download-card__body strong {
     font-size: 15px;
     line-height: 1.3;
     display: block;
-    overflow: hidden;
-    text-overflow: ellipsis;
+    overflow-wrap: anywhere;
+    word-break: break-word;
+    hyphens: auto;
   }
 
   .docs-download-card__body span {
     font-size: 13px;
+    overflow-wrap: anywhere;
   }
 
   /* Tabs */
