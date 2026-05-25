@@ -353,11 +353,41 @@
       const applyForm = document.getElementById('apply-form');
 
       if (action === 'pdf') {
-        if (parseMoney(priceEl.value) <= 0) {
-          alert('Сначала укажите стоимость объекта');
+        const price = parseMoney(priceEl.value);
+        if (price <= 0) {
+          alert('Сначала укажите стоимость предмета лизинга');
           return;
         }
-        alert('График платежей отправим на email после оформления заявки');
+        const r = calculate();
+        if (!r) {
+          alert('Не удалось рассчитать. Проверьте параметры калькулятора');
+          return;
+        }
+        if (!window.generateLeasingPdf) {
+          alert('Генератор PDF ещё загружается, попробуйте через секунду…');
+          return;
+        }
+        const advancePct = parseInt(advanceEl.value, 10);
+        const advance = Math.round(price * advancePct / 100);
+        const n = getCTerm();
+        const mode = getTaxMode();
+        const vatReturn = mode === 'osno' ? Math.round(r.total * 0.22 / 1.22) : 0;
+        const profitSaving = Math.round(r.total * (mode === 'osno' ? 0.25 : 0.15));
+        const years = n / 12;
+        const annualMarkup = (((r.total - price) / price / years) * 100).toFixed(2).replace('.', ',');
+        window.generateLeasingPdf({
+          price: price,
+          advance: advance,
+          advancePct: advancePct,
+          n: n,
+          monthly: r.monthly,
+          total: r.total,
+          vatReturn: vatReturn,
+          profitSaving: profitSaving,
+          taxSaving: r.taxSaving,
+          annualMarkup: annualMarkup,
+          taxMode: mode
+        });
         return;
       }
 
