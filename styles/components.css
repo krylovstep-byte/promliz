@@ -347,6 +347,19 @@
   transform: translateY(-1px);
 }
 
+/* V52: голубая кнопка — для «Скачать график PDF» в большом калькуляторе.
+   Светлее чем btn--primary (#0077B6), яркий бренд-cyan #0094DE. */
+.btn--cyan {
+  background: var(--color-blue-brand);
+  color: #fff;
+}
+
+.btn--cyan:hover {
+  background: var(--color-blue-button);
+  box-shadow: var(--shadow-md);
+  transform: translateY(-1px);
+}
+
 .btn--accent {
   background: var(--color-orange);
   color: #FFFFFF;
