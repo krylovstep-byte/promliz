@@ -75,8 +75,16 @@
     rows.push({ label: 'Всего', val: total, isHeader: true });
     rows.push({ label: 'Первый взнос', val: advance, isHeader: true });
     for (let i = 0; i < n; i++) rows.push({ num: i + 1, date: dates[i], val: monthly });
-    const perCol = Math.ceil(rows.length / 3);
-    return [rows.slice(0, perCol), rows.slice(perCol, perCol * 2), rows.slice(perCol * 2)];
+    // V58: динамическое кол-во колонок чтобы все строки влезли на 1 страницу A4 landscape.
+    // На страницу вмещается ~16 строк (после header+summary+title). Поэтому:
+    // n<=36 → 3 колонки (как в эталоне Стёпы), n=48 → 4, n=60 → 4 (по 16 строк).
+    const cols = Math.max(3, Math.ceil(rows.length / 16));
+    const perCol = Math.ceil(rows.length / cols);
+    const result = [];
+    for (let c = 0; c < cols; c++) {
+      result.push(rows.slice(c * perCol, (c + 1) * perCol));
+    }
+    return result;
   }
 
   function renderSchedRow(r) {
@@ -153,7 +161,7 @@
     '.pdf-doc .pdf-note-line{font-size:10px;font-style:italic;margin-top:6px;color:#5A6B7A;}' +
     /* ====== ГРАФИК ====== */
     '.pdf-doc table.pdf-sched-grid{width:1067px;table-layout:fixed;border-collapse:separate;border-spacing:14px 0;margin-top:2px;margin-left:-7px;}' +
-    '.pdf-doc table.pdf-sched-grid td{vertical-align:top;width:345px;padding:0;border:0;background:transparent;}' +
+    '.pdf-doc table.pdf-sched-grid td{vertical-align:top;padding:0;border:0;background:transparent;}' +
     '.pdf-doc table.pdf-sched{width:100%;table-layout:fixed;border-collapse:collapse;font-size:10px;}' +
     '.pdf-doc table.pdf-sched th{background:#0094DE !important;color:#FFFFFF !important;font-weight:600;padding:5px 4px;font-size:9.5px;border:1px solid #0094DE;text-align:center;line-height:1.2;}' +
     '.pdf-doc table.pdf-sched th.pdf-n{text-align:center;}' +
@@ -268,11 +276,16 @@
           '<p class="pdf-note-line">Для расчета условно принято: 360 дней в году, 30 дней в месяце.</p>' +
 
           '<h2>График лизинговых платежей</h2>' +
-          '<table class="pdf-sched-grid"><tr>' +
-            '<td>' + renderSchedTable(cols[0]) + '</td>' +
-            '<td>' + renderSchedTable(cols[1]) + '</td>' +
-            '<td>' + renderSchedTable(cols[2]) + '</td>' +
-          '</tr></table>' +
+          // V58: цикл по N колонкам (3 для <=36 мес, 4 для 48/60). Inline width = (1067 - gaps) / N.
+          (function () {
+            const n = cols.length;
+            const colW = Math.floor((1067 - (n - 1) * 14) / n);
+            let html = '<table class="pdf-sched-grid"><tr>';
+            for (let i = 0; i < n; i++) {
+              html += '<td style="width:' + colW + 'px">' + renderSchedTable(cols[i]) + '</td>';
+            }
+            return html + '</tr></table>';
+          })() +
 
           buildFooter() +
         '</div>' +
