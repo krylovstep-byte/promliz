@@ -18,10 +18,10 @@
   // пользователя включено prefers-reduced-motion, иначе оставляем CSS-anim.
   if (!isMobile() && !reducedMotion) return;
 
-  // Перебиваем CSS animation
-  track.style.animation = 'none';
-  track.style.willChange = 'transform';
-  track.style.transform = 'translateX(0)';
+  // V42: перебиваем CSS !important через setProperty('...', '...', 'important')
+  track.style.setProperty('animation', 'none', 'important');
+  track.style.setProperty('will-change', 'transform', 'important');
+  track.style.setProperty('transform', 'translateX(0)', 'important');
 
   let offset = 0;
   let half = 0;
@@ -47,7 +47,7 @@
     if (half > 0) {
       offset += speed * dt;
       if (offset >= half) offset -= half;
-      track.style.transform = 'translateX(' + (-offset).toFixed(2) + 'px)';
+      track.style.setProperty('transform', 'translateX(' + (-offset).toFixed(2) + 'px)', 'important');
     }
     rafId = requestAnimationFrame(tick);
   }
