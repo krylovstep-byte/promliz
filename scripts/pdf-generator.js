@@ -1,13 +1,16 @@
-/* V51: PDF-генератор графика лизинговых платежей.
+/* V51c: PDF-генератор графика лизинговых платежей.
    Использует html2pdf.js (HTML → canvas → PDF). Кириллица поддерживается.
    Lib подгружается lazy при первом клике на кнопку «Скачать график PDF».
 
-   Источник данных — большой калькулятор #calc. Шаблон 1:1 как у Промлизинг
-   (Приложение №2, ООО "МБ-Лизинг"): сводная таблица + график 36 платежей
-   в 3 колонки + страница 2 с итоговыми условиями и налоговым эффектом.
-
-   Использование: window.generateLeasingPdf({ price, advance, advancePct, n,
-   monthly, total, vatReturn, profitSaving, taxSaving, annualMarkup, taxMode })
+   КЛЮЧЕВЫЕ ФИКСЫ vs V51:
+   - Стили инжектятся в <head> (не внутри клонируемого элемента) — html2canvas
+     гарантированно видит computed styles через CSSOM.
+   - Настоящие <table>/<tr>/<td> для 3-колонного графика и 2-колонной страницы 2
+     (не div+display:table — это ломается в html2canvas 1.x).
+   - Padding на .page-inner, не на .page — html2pdf не сжимает корень страницы.
+   - Без отрицательных margin (V51 имел margin-left:-15px для border-spacing fix —
+     это уносило контент за левый край PDF).
+   - Видимое позиционирование top:-20000 (не left:-99999, не z-index:-1).
 */
 (function () {
   const HTML2PDF_CDN = 'https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.2/html2pdf.bundle.min.js';
@@ -39,7 +42,7 @@
     const dates = [];
     const now = new Date();
     let y = now.getFullYear();
-    let m = now.getMonth() + 1; // следующий месяц
+    let m = now.getMonth() + 1;
     if (m > 11) { m = 0; y += 1; }
     for (let i = 0; i < n; i++) {
       dates.push(MONTHS_RU[m] + ' ' + y);
@@ -70,7 +73,7 @@
 
   function renderRow(r) {
     if (r.isHeader) {
-      return '<tr class="row-header"><td colspan="2">' + r.label +
+      return '<tr class="row-header"><td class="mes"></td><td class="lbl">' + r.label +
              '</td><td class="num">' + fmt.format(r.val) + ' ₽</td></tr>';
     }
     return '<tr><td class="mes">' + r.num + '</td><td>' + r.date +
@@ -79,184 +82,207 @@
 
   function renderColTable(rows) {
     return '<table class="sched">' +
-      '<thead><tr><th>Мес.</th><th>Дата платежа</th><th>Платеж, в т.ч. НДС</th></tr></thead>' +
+      '<thead><tr><th class="th-mes">Мес.</th><th>Дата платежа</th><th class="th-num">Платеж, в т.ч. НДС</th></tr></thead>' +
       '<tbody>' + rows.map(renderRow).join('') + '</tbody></table>';
   }
 
-  // Inline SVG логотип Промлизинг — стилизованная буква "П" в синем круге + оранжевая полоска
-  const LOGO_SVG = '<svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">' +
+  // Inline SVG логотип Промлизинг — синий квадрат с белой "П" + оранжевая полоска
+  const LOGO_SVG = '<svg width="44" height="44" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">' +
     '<rect width="64" height="64" rx="12" fill="#0094DE"/>' +
     '<path d="M16 16h32v8h-12v24h-8V24H16z" fill="#FFFFFF"/>' +
     '<rect x="16" y="48" width="32" height="3" rx="1.5" fill="#FF9545"/>' +
     '</svg>';
 
+  // CSS — инжектится в <head> при первом рендере. Селекторы все под .pdf-doc,
+  // чтобы не зацепить страницу. Размеры в px (1mm = 3.7795px при 96 dpi).
+  // 297mm = 1123px, 210mm = 794px (A4 landscape).
+  const PDF_CSS =
+    '.pdf-doc{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;color:#04384F;width:1123px;background:#FFFFFF;line-height:1.4;}' +
+    '.pdf-doc *{box-sizing:border-box;}' +
+    '.pdf-doc .page{width:1123px;min-height:794px;background:#FFFFFF;page-break-after:always;position:relative;}' +
+    '.pdf-doc .page:last-child{page-break-after:auto;}' +
+    '.pdf-doc .page-inner{width:1123px;padding:36px 48px 24px;}' +
+    /* header */
+    '.pdf-doc .header{width:100%;display:table;border-bottom:2px solid #0094DE;padding-bottom:10px;}' +
+    '.pdf-doc .header-left{display:table-cell;vertical-align:top;width:60%;}' +
+    '.pdf-doc .header-right{display:table-cell;vertical-align:top;text-align:right;font-size:11px;line-height:1.5;color:#04384F;}' +
+    '.pdf-doc .header-right strong{color:#04384F;font-size:13px;font-weight:700;}' +
+    '.pdf-doc .header-right em{font-style:italic;color:#5A6B7A;}' +
+    '.pdf-doc .logo-row{display:table;width:auto;}' +
+    '.pdf-doc .logo-svg{display:table-cell;vertical-align:middle;padding-right:10px;}' +
+    '.pdf-doc .logo-text{display:table-cell;vertical-align:middle;}' +
+    '.pdf-doc .brand-name{font-weight:800;font-size:22px;color:#0094DE;line-height:1;}' +
+    '.pdf-doc .slogan{font-size:11px;color:#04384F;margin-top:3px;font-weight:600;}' +
+    '.pdf-doc .contacts{font-size:10px;color:#0094DE;margin-top:6px;}' +
+    '.pdf-doc .accent-bar{height:3px;width:100%;background:linear-gradient(90deg,#0094DE 0%,#0094DE 70%,#FF9545 70%,#FF9545 95%,transparent 95%);margin-top:-2px;}' +
+    /* h1 + h2 */
+    '.pdf-doc h1{font-size:22px;text-align:center;margin:18px 0 14px;font-weight:700;color:#04384F;}' +
+    '.pdf-doc h2{font-size:15px;text-align:center;color:#04384F;text-transform:uppercase;letter-spacing:0.06em;margin:18px 0 10px;font-weight:700;}' +
+    /* summary table */
+    '.pdf-doc .summary{width:100%;border-collapse:collapse;}' +
+    '.pdf-doc .summary th{background:#0094DE;color:#FFFFFF;padding:10px 8px;font-size:11px;font-weight:600;text-align:center;border:1px solid #0094DE;}' +
+    '.pdf-doc .summary td{padding:14px 8px;text-align:center;font-weight:700;font-size:13px;background:#F5F9FC;border:1px solid #E0E6EB;color:#04384F;}' +
+    '.pdf-doc .summary td.client{font-weight:600;}' +
+    '.pdf-doc .summary td.tax-benefit{color:#2A8556;font-weight:700;}' +
+    /* note */
+    '.pdf-doc .note-line{font-size:10px;font-style:italic;margin:8px 0 0;color:#5A6B7A;}' +
+    /* schedule grid via real <table> */
+    '.pdf-doc .sched-grid{width:100%;border-collapse:separate;border-spacing:12px 0;margin-top:6px;}' +
+    '.pdf-doc .sched-cell{vertical-align:top;width:33.33%;padding:0;}' +
+    '.pdf-doc .sched{width:100%;border-collapse:collapse;font-size:10px;}' +
+    '.pdf-doc .sched th{background:#F5F9FC;color:#04384F;font-weight:600;padding:5px 4px;font-size:9.5px;border-bottom:1px solid #C0CCD7;text-align:center;}' +
+    '.pdf-doc .sched th.th-mes{width:30px;}' +
+    '.pdf-doc .sched th.th-num{width:90px;text-align:right;padding-right:8px;}' +
+    '.pdf-doc .sched td{padding:4px 6px;border-bottom:1px solid #F0F3F5;color:#04384F;font-size:10px;}' +
+    '.pdf-doc .sched td.mes{text-align:center;color:#5A6B7A;width:30px;}' +
+    '.pdf-doc .sched td.num{text-align:right;font-weight:600;white-space:nowrap;width:90px;}' +
+    '.pdf-doc .sched td.lbl{font-weight:700;color:#0094DE;}' +
+    '.pdf-doc .sched .row-header td{background:#F5F9FC;color:#0094DE;font-weight:700;}' +
+    '.pdf-doc .sched .row-header td.num{color:#0094DE;}' +
+    /* footer */
+    '.pdf-doc .footer{margin-top:20px;padding-top:10px;border-top:1px solid #E0E6EB;text-align:center;font-size:10px;color:#0094DE;font-weight:600;}' +
+    /* page 2: two columns via real table */
+    '.pdf-doc .twocols-grid{width:100%;border-collapse:separate;border-spacing:24px 0;margin-top:12px;}' +
+    '.pdf-doc .twocols-cell{vertical-align:top;width:50%;padding:0;}' +
+    '.pdf-doc .panel-title{font-size:12px;font-weight:700;margin-bottom:10px;color:#04384F;}' +
+    '.pdf-doc .params,.pdf-doc .tax-eff{border-collapse:collapse;width:100%;font-size:11px;}' +
+    '.pdf-doc .params th{background:#E8F1F8;padding:8px;font-weight:700;text-align:center;color:#04384F;border:1px solid #C0CCD7;}' +
+    '.pdf-doc .params td{padding:8px 10px;border:1px solid #E0E6EB;color:#04384F;vertical-align:middle;}' +
+    '.pdf-doc .params td:first-child{font-weight:500;width:45%;}' +
+    '.pdf-doc .params td:last-child{font-weight:600;}' +
+    '.pdf-doc .params tr.highlight td{background:#0094DE;color:#FFFFFF;font-weight:700;border-color:#0094DE;}' +
+    '.pdf-doc .tax-eff th{background:#0094DE;color:#FFFFFF;padding:10px;font-size:11px;font-weight:500;line-height:1.4;border:1px solid #0094DE;}' +
+    '.pdf-doc .tax-eff td{padding:10px;border:1px solid #E0E6EB;vertical-align:middle;}' +
+    '.pdf-doc .tax-eff td.label{width:55%;color:#04384F;font-size:11px;line-height:1.35;}' +
+    '.pdf-doc .tax-eff td.label small{color:#5A6B7A;font-size:9.5px;display:block;margin-top:2px;}' +
+    '.pdf-doc .tax-eff td.value{text-align:right;font-size:14px;font-weight:700;color:#0094DE;white-space:nowrap;}' +
+    '.pdf-doc .tax-eff tr.total td{background:#E8F4EE;}' +
+    '.pdf-doc .tax-eff tr.total td.value{color:#2A8556;font-size:15px;}' +
+    '.pdf-doc .footnote{font-size:9.5px;font-style:italic;color:#5A6B7A;margin-top:10px;line-height:1.4;}';
+
+  function injectStyles() {
+    if (document.getElementById('pdf-doc-styles')) return;
+    const s = document.createElement('style');
+    s.id = 'pdf-doc-styles';
+    s.textContent = PDF_CSS;
+    document.head.appendChild(s);
+  }
+
+  function buildHeader(date, rightHtml, withSlogan) {
+    return (
+      '<div class="header">' +
+        '<div class="header-left">' +
+          '<div class="logo-row">' +
+            '<div class="logo-svg">' + LOGO_SVG + '</div>' +
+            '<div class="logo-text">' +
+              '<div class="brand-name">Промлизинг</div>' +
+              (withSlogan ? '<div class="slogan">Работаем с 2001 года!</div>' : '') +
+            '</div>' +
+          '</div>' +
+          (withSlogan ? '<div class="contacts">promliz.com | promlizing@inbox.ru | т/ф (4852) 77-01-87, 58-50-60</div>' : '') +
+        '</div>' +
+        '<div class="header-right">' + rightHtml + '</div>' +
+      '</div>' +
+      '<div class="accent-bar"></div>'
+    );
+  }
+
+  function buildPage1(d, date, cols) {
+    return (
+      '<div class="page">' +
+        '<div class="page-inner">' +
+          buildHeader(date,
+            '<strong>Приложение №2</strong><br>' +
+            '<em>Конфиденциально</em><br>' +
+            'ООО "МБ-Лизинг"<br>' +
+            'Дата: ' + date,
+            true) +
+
+          '<h1>Предварительный расчет по договору лизинга</h1>' +
+
+          '<table class="summary">' +
+            '<thead><tr>' +
+              '<th>Клиент</th>' +
+              '<th>Стоимость имущества</th>' +
+              '<th>Первый взнос</th>' +
+              '<th>Срок лизинга</th>' +
+              '<th>Потенциальная налоговая выгода</th>' +
+            '</tr></thead>' +
+            '<tbody><tr>' +
+              '<td class="client">ООО______</td>' +
+              '<td>' + fmt.format(d.price) + ' ₽</td>' +
+              '<td>' + fmt.format(d.advance) + ' ₽</td>' +
+              '<td>' + d.n + ' мес.</td>' +
+              '<td class="tax-benefit">' + fmt.format(d.taxSaving) + ' ₽</td>' +
+            '</tr></tbody>' +
+          '</table>' +
+          '<p class="note-line">Для расчета условно принято: 360 дней в году, 30 дней в месяце.</p>' +
+
+          '<h2>График лизинговых платежей</h2>' +
+          '<table class="sched-grid"><tr>' +
+            '<td class="sched-cell">' + renderColTable(cols[0]) + '</td>' +
+            '<td class="sched-cell">' + renderColTable(cols[1]) + '</td>' +
+            '<td class="sched-cell">' + renderColTable(cols[2]) + '</td>' +
+          '</tr></table>' +
+
+          '<div class="footer">т/ф (4852) 77-01-87, 58-50-60 | г. Ярославль, ул. Победы, д. 38/27, оф. 512 | promliz.com | promlizing@inbox.ru</div>' +
+        '</div>' +
+      '</div>'
+    );
+  }
+
+  function buildPage2(d, date) {
+    return (
+      '<div class="page">' +
+        '<div class="page-inner">' +
+          buildHeader(date,
+            '<strong>Условия лизинга - продолжение</strong><br>' +
+            'Дата: ' + date + ' | Конфиденциально',
+            false) +
+
+          '<h1 style="text-align:left;margin-top:20px;font-size:19px;">Итоговые условия и налоговый эффект</h1>' +
+
+          '<table class="twocols-grid"><tr>' +
+            '<td class="twocols-cell">' +
+              '<div class="panel-title">Итоговые условия</div>' +
+              '<table class="params">' +
+                '<thead><tr><th colspan="2">Параметры договора</th></tr></thead>' +
+                '<tbody>' +
+                  '<tr><td>Стоимость предмета лизинга</td><td>' + fmt2.format(d.price) + ' ₽</td></tr>' +
+                  '<tr><td>Авансовый платеж</td><td>' + d.advancePct + '% (' + fmt2.format(d.advance) + ' ₽)</td></tr>' +
+                  '<tr><td>Срок договора лизинга</td><td>' + d.n + ' мес.</td></tr>' +
+                  '<tr><td>Страхование имущества</td><td>Не включено в расчет. Страховые компании: АО СОГАЗ, СК СОГЛАСИЕ</td></tr>' +
+                  '<tr class="highlight"><td>Сумма договора</td><td>' + fmt2.format(d.total) + ' ₽</td></tr>' +
+                  '<tr><td>Выкупная стоимость</td><td>5 000 ₽</td></tr>' +
+                  '<tr><td>Постановка на учет</td><td>Клиент</td></tr>' +
+                  '<tr><td>Годовое удорожание</td><td>' + d.annualMarkup + '%</td></tr>' +
+                '</tbody>' +
+              '</table>' +
+            '</td>' +
+            '<td class="twocols-cell">' +
+              '<div class="panel-title">Налоговый эффект</div>' +
+              '<table class="tax-eff">' +
+                '<thead><tr><th>Приобретайте автотранспорт, спецтехнику и оборудование в лизинг и получайте экономию на налогах в течение срока договора.</th></tr></thead>' +
+                '<tbody>' +
+                  '<tr><td class="label">Возврат НДС 22%<small>со всей суммы договора лизинга</small></td><td class="value">' + fmt2.format(d.vatReturn) + ' ₽</td></tr>' +
+                  '<tr><td class="label">Экономия по налогу на прибыль<small>лизинговые платежи уменьшают налоговую базу</small></td><td class="value">' + fmt2.format(d.profitSaving) + ' ₽</td></tr>' +
+                  '<tr class="total"><td class="label">Потенциальный совокупный налоговый эффект</td><td class="value">' + fmt2.format(d.taxSaving) + ' ₽</td></tr>' +
+                '</tbody>' +
+              '</table>' +
+              '<p class="footnote">Примечание: расчет предварительный. Финальные условия зависят от предмета лизинга, параметров клиента, страхования и условий поставщика.</p>' +
+            '</td>' +
+          '</tr></table>' +
+
+          '<div class="footer">т/ф (4852) 77-01-87, 58-50-60 | г. Ярославль, ул. Победы, д. 38/27, оф. 512 | promliz.com | promlizing@inbox.ru</div>' +
+        '</div>' +
+      '</div>'
+    );
+  }
+
   function buildHtml(d) {
     const date = todayStr();
     const cols = buildScheduleColumns(d.monthly, d.n, d.advance, d.total);
-
-    // 297mm × 210mm A4 landscape = 1123 × 794 px (при 96 dpi: 1mm = 3.7795px)
-    return [
-      '<style>',
-      '.pdf-doc { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; color: #04384F; width: 1123px; background: #FFFFFF; }',
-      '.pdf-doc .page { width: 1123px; height: 794px; padding: 45px 53px; box-sizing: border-box; page-break-after: always; position: relative; background: #FFFFFF; overflow: hidden; }',
-      '.pdf-doc .page:last-child { page-break-after: auto; }',
-      '.pdf-doc .header { display: flex; justify-content: space-between; align-items: flex-start; padding-bottom: 5mm; border-bottom: 2px solid #0094DE; position: relative; }',
-      '.pdf-doc .header::after { content: ""; position: absolute; left: 0; bottom: -2px; width: 72%; height: 2px; background: #0094DE; }',
-      '.pdf-doc .header::before { content: ""; position: absolute; left: 72%; bottom: -2px; width: 18%; height: 2px; background: #FF9545; }',
-      '.pdf-doc .logo-wrap { display: flex; align-items: center; gap: 10px; }',
-      '.pdf-doc .logo-wrap svg { width: 44px; height: 44px; flex-shrink: 0; }',
-      '.pdf-doc .brand-name { font-weight: 800; font-size: 22px; color: #0094DE; line-height: 1; }',
-      '.pdf-doc .slogan { font-size: 11px; color: #04384F; margin-top: 3px; font-weight: 600; }',
-      '.pdf-doc .contacts { font-size: 10px; color: #0094DE; margin-top: 6px; text-decoration: underline; }',
-      '.pdf-doc .header-right { text-align: right; font-size: 11px; line-height: 1.5; color: #04384F; }',
-      '.pdf-doc .header-right strong { color: #04384F; font-size: 13px; font-weight: 700; }',
-      '.pdf-doc .header-right em { font-style: italic; color: #5A6B7A; }',
-      '.pdf-doc h1 { font-size: 22px; text-align: center; margin: 7mm 0 4mm; font-weight: 700; color: #04384F; }',
-      '.pdf-doc h2 { font-size: 15px; text-align: center; color: #04384F; text-transform: uppercase; letter-spacing: 0.06em; margin: 5mm 0 3mm; font-weight: 700; }',
-      '.pdf-doc .summary { width: 100%; border-collapse: separate; border-spacing: 0; margin-top: 2mm; }',
-      '.pdf-doc .summary th { background: #0094DE; color: #FFF; padding: 9px 10px; font-size: 11px; font-weight: 600; text-align: center; border: 1px solid #0094DE; }',
-      '.pdf-doc .summary td { padding: 13px 10px; text-align: center; font-weight: 700; font-size: 14px; background: #F5F9FC; border: 1px solid #E0E6EB; color: #04384F; }',
-      '.pdf-doc .summary td.client { font-weight: 600; }',
-      '.pdf-doc .summary td.tax-benefit { color: #2A8556; font-weight: 700; }',
-      '.pdf-doc .note-line { font-size: 10px; font-style: italic; margin: 2mm 0 0; color: #5A6B7A; }',
-      '.pdf-doc .sched-wrap { display: table; width: 100%; border-collapse: separate; border-spacing: 15px 0; margin-top: 8px; margin-left: -15px; }',
-      '.pdf-doc .sched-wrap > table { display: table-cell; width: 33.33%; vertical-align: top; }',
-      '.pdf-doc .sched { width: 100%; border-collapse: collapse; font-size: 10px; }',
-      '.pdf-doc .sched th { background: #F5F9FC; color: #04384F; font-weight: 600; padding: 5px 4px; font-size: 9.5px; border-bottom: 1px solid #C0CCD7; text-align: center; }',
-      '.pdf-doc .sched th:first-child { width: 28px; }',
-      '.pdf-doc .sched th:last-child { width: 70px; }',
-      '.pdf-doc .sched td { padding: 4px 6px; border-bottom: 1px solid #F0F3F5; color: #04384F; }',
-      '.pdf-doc .sched td.mes { text-align: center; color: #5A6B7A; width: 28px; }',
-      '.pdf-doc .sched td.num { text-align: right; font-weight: 600; white-space: nowrap; }',
-      '.pdf-doc .sched .row-header td { background: #F5F9FC; font-weight: 700; color: #0094DE; text-align: center; }',
-      '.pdf-doc .sched .row-header td.num { color: #0094DE; }',
-      '.pdf-doc .footer { position: absolute; bottom: 7mm; left: 14mm; right: 14mm; text-align: center; font-size: 10px; color: #0094DE; font-weight: 600; }',
-      '.pdf-doc .twocols { display: table; width: 100%; border-collapse: separate; border-spacing: 30px 0; margin-top: 15px; margin-left: -30px; }',
-      '.pdf-doc .twocols > div { display: table-cell; width: 50%; vertical-align: top; }',
-      '.pdf-doc .panel-title { font-size: 12px; font-weight: 700; margin-bottom: 3mm; color: #04384F; }',
-      '.pdf-doc .params, .pdf-doc .tax-eff { border-collapse: separate; border-spacing: 0; width: 100%; font-size: 11px; }',
-      '.pdf-doc .params th { background: #E8F1F8; padding: 8px; font-weight: 700; text-align: center; color: #04384F; border: 1px solid #C0CCD7; }',
-      '.pdf-doc .params td { padding: 7px 10px; border: 1px solid #E0E6EB; color: #04384F; }',
-      '.pdf-doc .params td:first-child { font-weight: 500; }',
-      '.pdf-doc .params td:last-child { font-weight: 600; }',
-      '.pdf-doc .params tr.highlight td { background: #0094DE; color: #FFF; font-weight: 700; border-color: #0094DE; }',
-      '.pdf-doc .tax-eff th { background: #0094DE; color: #FFF; padding: 10px; font-size: 11px; font-weight: 500; line-height: 1.4; border: 1px solid #0094DE; }',
-      '.pdf-doc .tax-eff td { padding: 10px; border: 1px solid #E0E6EB; }',
-      '.pdf-doc .tax-eff td.label { width: 60%; color: #04384F; font-size: 11px; line-height: 1.35; }',
-      '.pdf-doc .tax-eff td.label small { color: #5A6B7A; font-size: 9.5px; }',
-      '.pdf-doc .tax-eff td.value { text-align: right; font-size: 15px; font-weight: 700; color: #0094DE; white-space: nowrap; }',
-      '.pdf-doc .tax-eff tr.total td { background: #E8F4EE; }',
-      '.pdf-doc .tax-eff tr.total td.value { color: #2A8556; font-size: 16px; }',
-      '.pdf-doc .footnote { font-size: 9.5px; font-style: italic; color: #5A6B7A; margin-top: 4mm; line-height: 1.4; }',
-      '.pdf-doc .footer a, .pdf-doc .contacts a { color: #0094DE; text-decoration: underline; }',
-      '</style>',
-
-      '<div class="pdf-doc">',
-
-      // ===== PAGE 1 =====
-      '<div class="page">',
-        '<div class="header">',
-          '<div>',
-            '<div class="logo-wrap">',
-              LOGO_SVG,
-              '<div>',
-                '<div class="brand-name">Промлизинг</div>',
-                '<div class="slogan">Работаем с 2001 года!</div>',
-              '</div>',
-            '</div>',
-            '<div class="contacts">promliz.com | promlizing@inbox.ru | т/ф (4852) 77-01-87, 58-50-60</div>',
-          '</div>',
-          '<div class="header-right">',
-            '<strong>Приложение №2</strong><br>',
-            '<em>Конфиденциально</em><br>',
-            'ООО "МБ-Лизинг"<br>',
-            'Дата: ' + date,
-          '</div>',
-        '</div>',
-
-        '<h1>Предварительный расчет по договору лизинга</h1>',
-
-        '<table class="summary">',
-          '<thead><tr>',
-            '<th>Клиент</th>',
-            '<th>Стоимость имущества</th>',
-            '<th>Первый взнос</th>',
-            '<th>Срок лизинга</th>',
-            '<th>Потенциальная налоговая выгода</th>',
-          '</tr></thead>',
-          '<tbody><tr>',
-            '<td class="client">ООО______</td>',
-            '<td>' + fmt.format(d.price) + ' ₽</td>',
-            '<td>' + fmt.format(d.advance) + ' ₽</td>',
-            '<td>' + d.n + ' мес.</td>',
-            '<td class="tax-benefit">' + fmt.format(d.taxSaving) + ' ₽</td>',
-          '</tr></tbody>',
-        '</table>',
-        '<p class="note-line">Для расчета условно принято: 360 дней в году, 30 дней в месяце.</p>',
-
-        '<h2>График лизинговых платежей</h2>',
-        '<div class="sched-wrap">',
-          renderColTable(cols[0]),
-          renderColTable(cols[1]),
-          renderColTable(cols[2]),
-        '</div>',
-
-        '<div class="footer">т/ф (4852) 77-01-87, 58-50-60 | г. Ярославль, ул. Победы, д. 38/27, оф. 512 | promliz.com | promlizing@inbox.ru</div>',
-      '</div>',
-
-      // ===== PAGE 2 =====
-      '<div class="page">',
-        '<div class="header">',
-          '<div>',
-            '<div class="logo-wrap">',
-              LOGO_SVG,
-              '<div class="brand-name">Промлизинг</div>',
-            '</div>',
-          '</div>',
-          '<div class="header-right">',
-            '<strong>Условия лизинга - продолжение</strong><br>',
-            'Дата: ' + date + ' | Конфиденциально',
-          '</div>',
-        '</div>',
-
-        '<h1 style="text-align:left;margin-top:7mm;font-size:19px;">Итоговые условия и налоговый эффект</h1>',
-
-        '<div class="twocols">',
-          '<div>',
-            '<div class="panel-title">Итоговые условия</div>',
-            '<table class="params">',
-              '<thead><tr><th colspan="2">Параметры договора</th></tr></thead>',
-              '<tbody>',
-                '<tr><td>Стоимость предмета лизинга</td><td>' + fmt2.format(d.price) + ' ₽</td></tr>',
-                '<tr><td>Авансовый платеж</td><td>' + d.advancePct + '% (' + fmt2.format(d.advance) + ' ₽)</td></tr>',
-                '<tr><td>Срок договора лизинга</td><td>' + d.n + ' мес.</td></tr>',
-                '<tr><td>Страхование имущества</td><td>Не включено в расчет. Страховые компании: АО СОГАЗ, СК СОГЛАСИЕ</td></tr>',
-                '<tr class="highlight"><td>Сумма договора</td><td>' + fmt2.format(d.total) + ' ₽</td></tr>',
-                '<tr><td>Выкупная стоимость</td><td>5 000 ₽</td></tr>',
-                '<tr><td>Постановка на учет</td><td>Клиент</td></tr>',
-                '<tr><td>Годовое удорожание</td><td>' + d.annualMarkup + '%</td></tr>',
-              '</tbody>',
-            '</table>',
-          '</div>',
-          '<div>',
-            '<div class="panel-title">Налоговый эффект</div>',
-            '<table class="tax-eff">',
-              '<thead><tr><th>Приобретайте автотранспорт, спецтехнику и оборудование в лизинг и получайте экономию на налогах в течение срока договора.</th></tr></thead>',
-              '<tbody>',
-                '<tr><td class="label">Возврат НДС 22%<br><small>со всей суммы договора лизинга</small></td><td class="value">' + fmt2.format(d.vatReturn) + ' ₽</td></tr>',
-                '<tr><td class="label">Экономия по налогу на прибыль<br><small>лизинговые платежи уменьшают налоговую базу</small></td><td class="value">' + fmt2.format(d.profitSaving) + ' ₽</td></tr>',
-                '<tr class="total"><td class="label">Потенциальный совокупный налоговый эффект</td><td class="value">' + fmt2.format(d.taxSaving) + ' ₽</td></tr>',
-              '</tbody>',
-            '</table>',
-            '<p class="footnote">Примечание: расчет предварительный. Финальные условия зависят от предмета лизинга, параметров клиента, страхования и условий поставщика.</p>',
-          '</div>',
-        '</div>',
-
-        '<div class="footer">т/ф (4852) 77-01-87, 58-50-60 | г. Ярославль, ул. Победы, д. 38/27, оф. 512 | promliz.com | promlizing@inbox.ru</div>',
-      '</div>',
-
-      '</div>'
-    ].join('');
+    return '<div class="pdf-doc">' + buildPage1(d, date, cols) + buildPage2(d, date) + '</div>';
   }
 
   function makeOverlay() {
@@ -278,26 +304,23 @@
     let wrap = null;
     let overlay = null;
     try {
-      // Lazy-load lib пока юзер ждёт спиннер
       overlay = makeOverlay();
       document.body.appendChild(overlay);
 
+      injectStyles();
       const html2pdf = await loadHtml2pdf();
 
-      // Создаём wrap. ВАЖНО: элемент должен быть ВИДИМЫМ (не left:-99999, не z-index:-1,
-      // не visibility:hidden) — иначе html2canvas рендерит белый лист.
-      // Кладём за пределы viewport ВЕРТИКАЛЬНО (top: -20000px). У html2canvas
-      // нет проблем с отрицательным top, в отличие от left.
       wrap = document.createElement('div');
       wrap.innerHTML = buildHtml(data);
-      wrap.style.cssText = 'position:absolute;top:-20000px;left:0;width:1123px;' +
-        'background:#FFFFFF;pointer-events:none;';
+      // Видимое позиционирование за viewport вертикально. БЕЗ left:-99999 и БЕЗ z-index:-1
+      // (то и другое ломает html2canvas — выдаёт пустой canvas).
+      wrap.style.cssText = 'position:absolute;top:-20000px;left:0;width:1123px;background:#FFFFFF;pointer-events:none;';
       document.body.appendChild(wrap);
 
       const pdfRoot = wrap.querySelector('.pdf-doc');
       if (!pdfRoot) throw new Error('PDF root not found');
 
-      // Ждём 2 RAF чтобы стили из inline <style> применились и layout посчитался
+      // 2 RAF чтобы CSS из <head> применился к свежедобавленному элементу
       await new Promise(r => requestAnimationFrame(() => requestAnimationFrame(r)));
 
       const fileName = 'Расчет-лизинга-' + todayStr() + '.pdf';
@@ -312,6 +335,7 @@
           letterRendering: true,
           backgroundColor: '#FFFFFF',
           windowWidth: 1123,
+          width: 1123,
           scrollX: 0,
           scrollY: 0,
           logging: false
