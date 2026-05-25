@@ -1,0 +1,293 @@
+.header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: var(--z-sticky);
+  background: transparent;
+  border-bottom: 1px solid transparent;
+  transition: background var(--transition-slow), border-color var(--transition-slow), backdrop-filter var(--transition-slow);
+}
+
+/* V19.8: отключаем transitions на initial state (когда страница грузится со скроллом) */
+.header--no-transition,
+.header--no-transition *,
+.header--no-transition *::before,
+.header--no-transition *::after {
+  transition: none !important;
+}
+
+.header.is-scrolled {
+  background: rgba(248, 247, 243, 0.92);
+  backdrop-filter: saturate(180%) blur(20px);
+  -webkit-backdrop-filter: saturate(180%) blur(20px);
+  border-bottom-color: rgba(232, 232, 228, 0.6);
+  box-shadow: 0 1px 0 rgba(0, 60, 90, 0.04);
+}
+
+.header__inner {
+  display: flex;
+  align-items: center;
+  gap: var(--space-6);
+  height: 84px;
+  transition: height var(--transition);
+}
+
+.header.is-scrolled .header__inner {
+  height: 64px;
+}
+
+.header__logo {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  color: var(--color-primary);
+  transition: color var(--transition);
+}
+
+/* V15: SVG-лого — увеличил размер для чёткости */
+.header__logo-img {
+  height: 52px;
+  width: auto;
+  display: block;
+  flex-shrink: 0;
+  transition: height var(--transition), transform var(--transition);
+  image-rendering: -webkit-optimize-contrast;
+  image-rendering: crisp-edges;
+}
+
+.header__logo:hover .header__logo-img {
+  transform: translateY(-1px);
+}
+
+.header.is-scrolled .header__logo-img {
+  height: 42px;
+}
+
+/* В футере на тёмном фоне — инвертированный лого */
+.footer__brand .header__logo-img {
+  filter: brightness(0) invert(1);
+  opacity: 0.95;
+  height: 56px;
+}
+
+.nav {
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+  margin-left: var(--space-4);
+}
+
+.nav a {
+  font-size: var(--fs-small);
+  font-weight: var(--fw-medium);
+  color: var(--color-text-muted);
+  position: relative;
+  padding: 8px 12px;
+  border-radius: var(--radius-sm);
+  transition: background var(--transition), color var(--transition);
+  letter-spacing: -0.005em;
+  white-space: nowrap;
+}
+
+.nav a:hover {
+  color: var(--color-primary);
+  background: rgba(255, 149, 69, 0.12);
+}
+
+.header__contacts {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.header__phone {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: 8px 14px 8px 12px;
+  border-radius: var(--radius-pill);
+  border: 1px solid rgba(255, 149, 69, 0.45);
+  background: #FFFFFF;
+  font-size: 14px;
+  font-weight: var(--fw-semibold);
+  color: var(--color-text-main);
+  letter-spacing: -0.01em;
+  transition: background var(--transition), border-color var(--transition), transform var(--transition);
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+}
+
+.header__phone:hover {
+  background: var(--color-orange-soft);
+  border-color: var(--color-orange);
+  transform: translateY(-1px);
+}
+
+.header__phone svg {
+  color: var(--color-orange);
+  flex-shrink: 0;
+}
+
+.header__messengers {
+  display: inline-flex;
+  gap: 6px;
+}
+
+.icon-btn {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  color: var(--color-primary);
+  background: transparent;
+  border: 1px solid var(--color-border-strong);
+  transition: background var(--transition), color var(--transition), border-color var(--transition), transform var(--transition);
+}
+
+.icon-btn:hover {
+  background: var(--color-primary);
+  color: var(--color-accent);
+  border-color: var(--color-primary);
+  transform: translateY(-1px);
+}
+
+/* Брендовые иконки (TG/MAX) — без border, заполняют круг */
+.icon-btn--tg,
+.icon-btn--max {
+  border: none;
+  background: transparent;
+  padding: 0;
+  overflow: hidden;
+}
+
+.icon-btn--tg svg,
+.icon-btn--max svg {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  display: block;
+}
+
+.icon-btn--tg:hover,
+.icon-btn--max:hover {
+  background: transparent;
+  transform: translateY(-2px);
+}
+
+.footer {
+  background: var(--color-bg-dark);
+  color: var(--color-text-inverse);
+  padding-block: var(--space-16) var(--space-8);
+  margin-top: var(--space-16);
+}
+
+.footer__grid {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr 1fr 1fr;
+  gap: var(--space-12);
+  padding-bottom: var(--space-16);
+  border-bottom: 1px solid rgba(244, 244, 242, 0.08);
+}
+
+.footer__brand .header__logo {
+  color: #fff;
+  margin-bottom: var(--space-4);
+}
+
+.footer__brand .header__logo-svg {
+  width: 72px;
+}
+
+.footer__brand .header__logo-svg .logo-base { fill: #fff; }
+.footer__brand .header__logo-svg .logo-arc  { fill: var(--color-accent); }
+
+.footer__brand .header__logo-text {
+  color: #fff;
+}
+
+.footer__about {
+  color: var(--color-neutral-300);
+  font-size: var(--fs-small);
+  line-height: var(--lh-relaxed);
+  max-width: 320px;
+}
+
+.footer__col h4 {
+  font-size: var(--fs-small);
+  font-weight: var(--fw-semibold);
+  letter-spacing: var(--tracking-wide);
+  text-transform: uppercase;
+  color: var(--color-accent);
+  margin-bottom: var(--space-4);
+}
+
+.footer__col ul {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.footer__col a, .footer__col p {
+  color: var(--color-neutral-300);
+  font-size: var(--fs-small);
+  line-height: var(--lh-relaxed);
+}
+
+.footer__col a:hover {
+  color: var(--color-accent);
+}
+
+.footer__bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: var(--space-6);
+  font-size: var(--fs-mini);
+  color: var(--color-neutral-400);
+}
+
+.footer__legal {
+  display: flex;
+  gap: var(--space-6);
+}
+
+.cookie {
+  position: fixed;
+  left: var(--space-6);
+  right: var(--space-6);
+  bottom: var(--space-6);
+  max-width: 480px;
+  margin-left: auto;
+  background: var(--color-primary);
+  color: var(--color-text-inverse);
+  padding: var(--space-5) var(--space-6);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-xl);
+  z-index: var(--z-toast);
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: var(--space-4);
+  align-items: center;
+  transform: translateY(120%);
+  opacity: 0;
+  transition: transform var(--transition-slow), opacity var(--transition-slow);
+}
+
+.cookie.is-visible {
+  transform: translateY(0);
+  opacity: 1;
+}
+
+.cookie p {
+  font-size: var(--fs-small);
+  line-height: var(--lh-normal);
+  color: var(--color-neutral-300);
+}
+
+.cookie a {
+  color: var(--color-accent);
+  border-bottom: 1px solid currentColor;
+}

@@ -1,0 +1,29 @@
+# Служебные папки Claude Code и работы агента
+.claude/
+.improvement/
+.playwright-mcp/
+tmp/
+
+# Старая версия сайта (от предыдущего разработчика)
+_old_susanin/
+
+# Скриншоты и техзадания (не для публикации)
+v*-*.png
+*.png.bak
+tmp_tz.txt
+
+# Системные
+.DS_Store
+Thumbs.db
+desktop.ini
+*.log
+
+# Node (если появятся скрипты)
+node_modules/
+.npm
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo

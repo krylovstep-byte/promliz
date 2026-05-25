@@ -1,0 +1,174 @@
+/* V22: дизайн-система — navy-deep + мягкий оранжевый, деловой тон */
+:root {
+  /* === NAVY шкала (основной текст и тёмные элементы) === */
+  --color-navy-950: #061827;
+  --color-navy-900: #082033;
+  --color-navy-800: #0B2B42;
+  --color-navy-700: #103A56;
+
+  /* === Тёмный синий для крупных фонов === */
+  --color-deep-blue:   #064B6B;
+  --color-deep-blue-2: #04384F;
+  --color-deep-blue-3: #032E42;
+
+  /* === Brand BLUE (интерактив, ссылки, активные состояния) === */
+  --color-blue-50:  #EAF7FC;
+  --color-blue-100: #D8F0FA;
+  --color-blue-500: #0094DE;
+  --color-blue-600: #0084C7;
+  --color-blue-700: #006FA6;
+  --color-blue-800: #075E83;
+  --color-blue-900: #064B6B;
+  --color-blue-950: #04384F;
+
+  /* === V23: Семантические роли BLUE === */
+  --color-blue-brand:  #0094DE;  /* ссылки, иконки, мелкие акценты */
+  --color-blue-button: #0077B6;  /* фон голубых кнопок (.btn--primary, активные табы) */
+  --color-blue-hover:  #006FA6;  /* hover голубых кнопок */
+  --color-blue-soft:   #EAF7FC;  /* мягкий голубой фон (hover, чипы) */
+
+  /* === V23: Семантические роли NAVY === */
+  --color-navy-section: #04384F;  /* большие тёмные секции (apply) */
+  --color-navy-card:    #064B6B;  /* активные карточки на тёмном (process--final, верх calc) */
+
+  /* === Brand ORANGE (CTA, деньги, акценты) — V22 мягкий === */
+  --color-orange-50:   #FFF1E8;
+  --color-orange-100:  #FFE1CC;
+  --color-orange-500:  #FF9545;
+  --color-orange-600:  #E86614;
+  --color-orange-700:  #C94F09;
+  --color-orange-soft: #FFF1E8;
+
+  /* === V23: Семантические роли ORANGE === */
+  --color-orange:        #FF9545;  /* alias var(--color-orange-500), главный CTA-оранжевый */
+  --color-orange-hover:  #FF8730;  /* hover оранжевых CTA (светлее чем 600) */
+  --color-orange-strong: #F47A1F;  /* alias var(--color-orange-600), более насыщенный для иконок */
+
+  /* === Базовые фоны === */
+  --color-bg:             #FFFFFF;
+  --color-bg-page:        #F8F7F3;
+  --color-bg-section:     #FFFFFF;
+  --color-bg-card:        #FFFFFF;
+  --color-bg-alt:         #F8F7F3;
+  --color-bg-soft:        #F3F5F6;
+  --color-bg-blue-soft:   #EAF7FC;
+  --color-bg-orange-soft: #FFF1E8;
+  --color-bg-dark:        var(--color-deep-blue-3);  /* #032E42 — главный тёмный фон */
+  --color-surface:        #FFFFFF;
+
+  /* === Text токены === */
+  --color-text:           #203244;
+  --color-text-main:      var(--color-navy-950);  /* #061827 */
+  --color-text-heading:   var(--color-navy-950);  /* #061827 */
+  --color-text-body:      #203244;
+  --color-text-muted:     #667085;
+  --color-text-soft:      #98A2B3;
+  --color-text-inverse:   #FFFFFF;
+
+  /* === Границы === */
+  --color-border:         #E5E2DA;
+  --color-border-strong:  #D0D5DD;
+
+  /* === Семантические === */
+  --color-success:        #2E7D4F;
+  --color-success-soft:   #EAF6EF;
+  --color-danger:         #D64545;
+  --color-error:          #D64545;
+  --color-warning:        var(--color-orange-500);
+
+  /* === Aliases (обратная совместимость с существующим CSS) === */
+  --color-primary:        var(--color-blue-500);
+  --color-primary-hover:  var(--color-blue-600);
+  --color-primary-soft:   var(--color-blue-50);
+  --color-primary-deep:   var(--color-blue-950);
+  --color-accent:         var(--color-orange-500);
+  --color-accent-hover:   var(--color-orange-600);
+  --color-accent-soft:    var(--color-orange-50);
+
+  /* === Нейтральная шкала (slate) === */
+  --color-neutral-50:     #F8F7F3;
+  --color-neutral-100:    #E5E2DA;
+  --color-neutral-200:    #D0D5DD;
+  --color-neutral-300:    #98A2B3;
+  --color-neutral-400:    #667085;
+  --color-neutral-600:    #4B5563;
+  --color-neutral-800:    #1F2933;
+  --color-neutral-900:    #111827;
+
+  /* === Типографика === */
+  --font-display: 'Bricolage Grotesque', 'Onest', system-ui, sans-serif;
+  --font-sans:    'Onest', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  --font-mono:    'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, monospace;
+
+  --fs-display:   72px;
+  --fs-h1:        56px;
+  --fs-h2:        40px;
+  --fs-h3:        24px;
+  --fs-h4:        20px;
+  --fs-lead:      20px;
+  --fs-body:      16px;
+  --fs-small:     14px;
+  --fs-mini:      12px;
+
+  --lh-tight:     1.08;
+  --lh-snug:      1.2;
+  --lh-normal:    1.5;
+  --lh-relaxed:   1.6;
+
+  --tracking-tight: -0.02em;
+  --tracking-snug:  -0.01em;
+  --tracking-wide:  0.04em;
+
+  --fw-regular:   400;
+  --fw-medium:    500;
+  --fw-semibold:  600;
+  --fw-bold:      700;
+
+  --radius-xs:    4px;
+  --radius-sm:    8px;
+  --radius-md:    12px;
+  --radius-lg:    20px;
+  --radius-xl:    28px;
+  --radius-pill:  999px;
+
+  /* === Тени (нейтральные slate) === */
+  --shadow-xs: 0 1px 2px rgba(6, 24, 39, 0.05);
+  --shadow-sm: 0 1px 3px rgba(6, 24, 39, 0.07), 0 1px 2px rgba(6, 24, 39, 0.04);
+  --shadow-md: 0 8px 24px -8px rgba(6, 24, 39, 0.14), 0 2px 6px rgba(6, 24, 39, 0.05);
+  --shadow-lg: 0 32px 64px -16px rgba(6, 24, 39, 0.20), 0 8px 16px -4px rgba(6, 24, 39, 0.08);
+  --shadow-xl: 0 48px 96px -24px rgba(6, 24, 39, 0.28), 0 16px 32px -8px rgba(6, 24, 39, 0.12);
+  --shadow-amber: 0 12px 32px -8px rgba(255, 149, 69, 0.28);
+  --shadow-inset: inset 0 1px 0 rgba(255, 255, 255, 0.05);
+
+  --space-1:  4px;
+  --space-2:  8px;
+  --space-3:  12px;
+  --space-4:  16px;
+  --space-5:  20px;
+  --space-6:  24px;
+  --space-8:  32px;
+  --space-10: 40px;
+  --space-12: 48px;
+  --space-16: 64px;
+  --space-20: 80px;
+  --space-24: 96px;
+  --space-32: 128px;
+
+  --container:     1240px;
+  --container-pad: 40px;
+
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+  --transition-fast: 160ms var(--ease-out);
+  --transition:      250ms var(--ease-out);
+  --transition-slow: 500ms var(--ease-out);
+
+  --glow-amber:      0 0 40px rgba(255, 149, 69, 0.18);
+  --glow-amber-soft: 0 0 60px rgba(255, 149, 69, 0.08);
+  --glow-primary:    0 0 60px rgba(0, 90, 138, 0.15);
+
+  --z-base:    1;
+  --z-sticky:  100;
+  --z-modal:   200;
+  --z-toast:   300;
+}

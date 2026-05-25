@@ -1,0 +1,51 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" width="1200" height="630">
+  <!-- Background -->
+  <rect width="1200" height="630" fill="#005A8A"/>
+
+  <!-- Subtle radial glow -->
+  <defs>
+    <radialGradient id="glow" cx="50%" cy="40%" r="60%">
+      <stop offset="0%" stop-color="#0094DE" stop-opacity="0.9"/>
+      <stop offset="100%" stop-color="#005A8A" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="accentLine" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#FF9545" stop-opacity="0"/>
+      <stop offset="50%" stop-color="#FF9545" stop-opacity="0.9"/>
+      <stop offset="100%" stop-color="#FF9545" stop-opacity="0"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="630" fill="url(#glow)"/>
+
+  <!-- Grid pattern (subtle) -->
+  <g opacity="0.06" stroke="#F4F4F2" stroke-width="1">
+    <line x1="0" y1="100" x2="1200" y2="100"/>
+    <line x1="0" y1="200" x2="1200" y2="200"/>
+    <line x1="0" y1="300" x2="1200" y2="300"/>
+    <line x1="0" y1="400" x2="1200" y2="400"/>
+    <line x1="0" y1="500" x2="1200" y2="500"/>
+    <line x1="200" y1="0" x2="200" y2="630"/>
+    <line x1="400" y1="0" x2="400" y2="630"/>
+    <line x1="600" y1="0" x2="600" y2="630"/>
+    <line x1="800" y1="0" x2="800" y2="630"/>
+    <line x1="1000" y1="0" x2="1000" y2="630"/>
+  </g>
+
+  <!-- Logo (centered top) -->
+  <g transform="translate(530, 140) scale(1.4)">
+    <path fill="#FF9545" fill-rule="evenodd" clip-rule="evenodd" d="M11.472 47.6373C9.95384 55.062 0.946002 53.3933 0.0684215 47.7891L0 0H115.322C142.215 0.945445 136.173 18.8444 136.874 47.5847C137.03 53.9777 125.682 54.3616 125.448 47.8694C125.093 38.0509 126.193 24.9159 124.961 17.3087C124.409 13.9078 122.863 12.3165 119.009 11.5735C77.4492 11.4525 58.0779 11.0854 11.5702 11.7154L11.472 47.6373Z"/>
+    <path fill="#F4F4F2" fill-rule="evenodd" clip-rule="evenodd" d="M5.57289 60.8765C1.93069 61.2327 0.278651 63.3022 0.261794 66.7863C0.24692 69.9103 2.44533 71.5969 4.46724 72.2368C16.7107 71.8856 27.6403 71.9024 40.4678 72.1147C44.9747 72.1892 50.381 68.0264 52.63 64.2873L68.4275 38.0213L84.8139 64.8261C87.6648 69.5532 91.5321 71.4074 94.981 72.0056H132.179C137.332 72.0056 138.487 61.0035 130.86 61.3498L99.3788 60.9639C97.341 60.9093 95.2725 60.2109 94.1162 58.331L73.2725 22.9428C70.6497 19.4943 67.6629 16.5528 62.5075 24.8575L44.2072 56.449C44.0535 57.6523 39.6151 60.6365 37.3899 60.7566L5.57289 60.8765Z"/>
+  </g>
+
+  <!-- Wordmark -->
+  <text x="600" y="320" font-family="'Bricolage Grotesque', 'Inter', sans-serif" font-size="56" font-weight="700" fill="#F4F4F2" text-anchor="middle" letter-spacing="-0.02em">Промлизинг</text>
+
+  <!-- Tagline -->
+  <text x="600" y="400" font-family="'Onest', sans-serif" font-size="38" font-weight="500" fill="#F4F4F2" fill-opacity="0.92" text-anchor="middle" letter-spacing="-0.01em">Лизинг для бизнеса. 23 года на рынке.</text>
+
+  <!-- Accent line -->
+  <line x1="200" y1="460" x2="1000" y2="460" stroke="url(#accentLine)" stroke-width="2"/>
+
+  <!-- URL + meta -->
+  <text x="600" y="530" font-family="'Onest', sans-serif" font-size="26" font-weight="500" fill="#FF9545" text-anchor="middle" letter-spacing="0.04em">promliz.com</text>
+  <text x="600" y="568" font-family="'Onest', sans-serif" font-size="20" font-weight="400" fill="#F4F4F2" fill-opacity="0.6" text-anchor="middle">Транспорт · Спецтехника · Оборудование · Недвижимость</text>
+</svg>

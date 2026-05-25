@@ -1,0 +1,13 @@
+User-agent: *
+Allow: /
+Disallow: /tmp/
+Disallow: /.improvement/
+
+User-agent: Yandex
+Allow: /
+Disallow: /tmp/
+Disallow: /.improvement/
+Clean-param: utm_source&utm_medium&utm_campaign&utm_term&utm_content
+Host: https://promliz.com
+
+Sitemap: https://promliz.com/sitemap.xml
