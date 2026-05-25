@@ -13,20 +13,38 @@
       Элемент видимо за viewport (top:-20000) + overlay-спиннер для UX.
 */
 (function () {
-  const HTML2PDF_CDN = 'https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.2/html2pdf.bundle.min.js';
+  // html2pdf.bundle не экспортирует html2canvas/jsPDF в window — нужны отдельные CDN
+  const HTML2CANVAS_CDN = 'https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js';
+  const JSPDF_CDN = 'https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js';
   let loadPromise = null;
 
-  function loadHtml2pdf() {
-    if (window.html2pdf) return Promise.resolve(window.html2pdf);
-    if (loadPromise) return loadPromise;
-    loadPromise = new Promise((resolve, reject) => {
+  function loadScript(src) {
+    return new Promise((resolve, reject) => {
       const s = document.createElement('script');
-      s.src = HTML2PDF_CDN;
+      s.src = src;
       s.async = true;
-      s.onload = () => resolve(window.html2pdf);
-      s.onerror = () => { loadPromise = null; reject(new Error('html2pdf failed to load')); };
+      s.onload = () => resolve();
+      s.onerror = () => reject(new Error('Failed to load ' + src));
       document.head.appendChild(s);
     });
+  }
+
+  function getJsPdfCtor() {
+    return (window.jspdf && window.jspdf.jsPDF) || window.jsPDF || null;
+  }
+
+  function loadLibs() {
+    if (window.html2canvas && getJsPdfCtor()) return Promise.resolve();
+    if (loadPromise) return loadPromise;
+    const tasks = [];
+    if (!window.html2canvas) tasks.push(loadScript(HTML2CANVAS_CDN));
+    if (!getJsPdfCtor()) tasks.push(loadScript(JSPDF_CDN));
+    loadPromise = Promise.all(tasks).then(() => {
+      if (!window.html2canvas || !getJsPdfCtor()) {
+        loadPromise = null;
+        throw new Error('libs missing after load');
+      }
+    }).catch(e => { loadPromise = null; throw e; });
     return loadPromise;
   }
 
@@ -323,10 +341,10 @@
       document.body.appendChild(overlay);
 
       injectStyles();
-      await loadHtml2pdf(); // подгружает в window: html2pdf, html2canvas, jspdf
+      await loadLibs(); // подгружает html2canvas и jspdf отдельно
 
       const html2canvas = window.html2canvas;
-      const jsPDFCtor = (window.jspdf && window.jspdf.jsPDF) || window.jsPDF;
+      const jsPDFCtor = getJsPdfCtor();
       if (!html2canvas || !jsPDFCtor) throw new Error('html2canvas/jsPDF not loaded');
 
       // Создаём wrap с обеими страницами видимыми (position:fixed top:0 left:0,
