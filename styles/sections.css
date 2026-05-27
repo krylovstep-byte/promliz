@@ -377,6 +377,11 @@
   margin-bottom: 0;
 }
 
+/* V60.3: «Калькулятор лизинга. Предварительный расчёт» на десктопе — +4px (14→18) */
+.hero__unit-calc-head__eyebrow--desktop {
+  font-size: 18px;
+}
+
 .hero__unit-calc-head h2 {
   font-family: var(--font-display);
   font-size: 22px;
