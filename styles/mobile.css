@@ -295,7 +295,7 @@ body.has-mobile-nav {
   #assets { order: 9; }
   #articles { order: 10; }
   #faq { order: 11; }
-  #office { order: 12; }
+  #contacts { order: 12; }
 
   /* === ГЛОБАЛЬНЫЕ === */
   :root {

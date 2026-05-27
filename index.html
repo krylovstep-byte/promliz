@@ -127,12 +127,12 @@
   <link rel="preconnect" href="https://mc.yandex.ru" crossorigin>
   <link rel="dns-prefetch" href="https://mc.yandex.ru">
 
-  <link rel="stylesheet" href="styles/tokens.css?v=121">
-  <link rel="stylesheet" href="styles/base.css?v=121">
-  <link rel="stylesheet" href="styles/layout.css?v=121">
-  <link rel="stylesheet" href="styles/components.css?v=121">
-  <link rel="stylesheet" href="styles/sections.css?v=121">
-  <link rel="stylesheet" href="styles/mobile.css?v=121">
+  <link rel="stylesheet" href="styles/tokens.css?v=122">
+  <link rel="stylesheet" href="styles/base.css?v=122">
+  <link rel="stylesheet" href="styles/layout.css?v=122">
+  <link rel="stylesheet" href="styles/components.css?v=122">
+  <link rel="stylesheet" href="styles/sections.css?v=122">
+  <link rel="stylesheet" href="styles/mobile.css?v=122">
 </head>
 <body>
 
@@ -158,6 +158,7 @@
       <a href="#docs">Документы</a>
       <a href="#assets">Что финансируем</a>
       <a href="#cases">Кейсы</a>
+      <a href="#contacts">Контакты</a>
     </nav>
 
     <div class="header__contacts">
@@ -229,6 +230,7 @@
     <li><a href="#docs">Документы</a></li>
     <li><a href="#assets">Что финансируем</a></li>
     <li><a href="#cases">Кейсы</a></li>
+    <li><a href="#contacts">Контакты</a></li>
     <li><a href="#faq">FAQ</a></li>
   </ul>
 
@@ -265,11 +267,11 @@
       </div>
 
       <h1 class="hero__title">
-        <span class="hero__title-accent">Лизинг</span> <span class="hero__title-word">техники,</span> <span class="hero__title-word">транспорта,</span> <span class="hero__title-word">оборудования</span> и&nbsp;<span class="hero__title-word">недвижимости</span> <span class="hero__title-tail">для&nbsp;ООО и&nbsp;ИП</span>
+        <span class="hero__title-accent">Лизинг</span> <span class="hero__title-word">легковых</span> и&nbsp;<span class="hero__title-word">коммерческих</span> <span class="hero__title-word">автомобилей,</span> <span class="hero__title-word">спецтехники,</span> <span class="hero__title-word">оборудования</span> и&nbsp;<span class="hero__title-word">недвижимости</span> <span class="hero__title-tail">для&nbsp;юридических лиц и&nbsp;ИП</span>
       </h1>
 
       <p class="hero__sub">
-        Финансируем транспорт, спецтехнику, оборудование и&nbsp;недвижимость для&nbsp;ООО и&nbsp;ИП. Аванс от&nbsp;10%, срок до&nbsp;60&nbsp;месяцев, предварительное решение&nbsp;- до&nbsp;3&nbsp;рабочих дней.
+        Финансируем новый и&nbsp;бывший в&nbsp;употреблении легковой и&nbsp;грузопассажирский транспорт, спецтехнику, промышленное оборудование и&nbsp;недвижимость для&nbsp;юридических лиц и&nbsp;ИП. Аванс от&nbsp;10% стоимости предмета лизинга, срок от&nbsp;12 до&nbsp;60&nbsp;месяцев, предварительное решение&nbsp;- до&nbsp;3&nbsp;рабочих дней.
       </p>
 
       <div class="hero__cta">
@@ -315,7 +317,6 @@
         <div class="hero__unit-calc-head">
           <span class="eyebrow hero__unit-calc-head__eyebrow--desktop">Быстрый расчёт</span>
           <span class="eyebrow hero__unit-calc-head__eyebrow--mobile">Калькулятор лизинга</span>
-          <h2>Предварительный расчёт</h2>
         </div>
 
         <form class="mini-calc" id="mini-calc">
@@ -467,7 +468,6 @@
             <li>Предмет лизинга</li>
             <li>Поставщика</li>
             <li>Компанию</li>
-            <li>График платежей</li>
           </ul>
         </div>
       </div>
@@ -567,29 +567,23 @@
           </div>
         </div>
 
-        <div class="field">
-          <label for="a-email">Почта</label>
-          <input type="email" id="a-email" name="email" required placeholder="ivan@company.ru" autocomplete="email">
+        <div class="apply__row">
+          <div class="field">
+            <label for="a-email">Почта</label>
+            <input type="email" id="a-email" name="email" required placeholder="ivan@company.ru" autocomplete="email">
+          </div>
+
+          <div class="field">
+            <label for="a-inn">ИНН компании</label>
+            <input type="text" id="a-inn" name="inn" required inputmode="numeric" maxlength="12" data-mask="inn" placeholder="10 или 12 цифр">
+          </div>
         </div>
 
         <div class="field">
-          <label for="a-comment">Комментарий</label>
-          <textarea id="a-comment" name="comment" rows="3" required placeholder="Тип имущества, стоимость"></textarea>
+          <label for="a-comment">Комментарий <span class="muted">(необязательно)</span></label>
+          <textarea id="a-comment" name="comment" rows="3" placeholder="Тип имущества, стоимость, предварительный срок лизинга, размер авансового платежа"></textarea>
         </div>
       </div>
-
-      <details class="apply__step apply__step--more">
-        <summary>
-          <span class="apply__step-label">Дополнительно для&nbsp;быстрой проверки</span>
-          <svg class="apply__step-chev" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
-        </summary>
-
-        <div class="field">
-          <label for="a-inn">ИНН компании <span class="muted">(необязательно)</span></label>
-          <input type="text" id="a-inn" name="inn" inputmode="numeric" data-mask="inn" placeholder="10 или 12 цифр">
-          <span class="field-hint">Поможет быстрее проверить компанию</span>
-        </div>
-      </details>
 
       <label class="consent">
         <input type="checkbox" id="a-consent" required>
@@ -611,7 +605,7 @@
 
       <div class="apply__thanks-prep">
         <span class="apply__thanks-prep-label">К звонку пригодится</span>
-        <p>ИНН и&nbsp;реквизиты компании, счёт или&nbsp;КП от&nbsp;поставщика, желаемые сроки</p>
+        <p>ИНН и&nbsp;реквизиты компании, КП от&nbsp;поставщика, желаемые сроки</p>
       </div>
 
       <a href="tel:+74852770187" class="apply__thanks-phone">
@@ -682,14 +676,6 @@
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
         </a>
 
-        <a href="docs/downloads/antikorrupcionnaya-politika.pdf" class="docs-download-card" download>
-          <span class="docs-download-card__ico docs-download-card__ico--pdf" aria-hidden="true">PDF</span>
-          <div class="docs-download-card__body">
-            <strong>Антикоррупционная политика</strong>
-            <span>417&nbsp;КБ · PDF</span>
-          </div>
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
-        </a>
       </aside>
 
       <div class="docs">
@@ -710,7 +696,7 @@
             <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><div><strong>Карточка компании</strong><span>Реквизиты, ОГРН, ИНН, контакты</span></div></li>
             <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><div><strong>Устав и&nbsp;учредительные документы</strong><span>Действующая редакция</span></div></li>
             <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><div><strong>Бухгалтерская отчётность</strong><span>За&nbsp;последний отчётный период</span></div></li>
-            <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><div><strong>Декларация по&nbsp;налогу на&nbsp;прибыль или&nbsp;УСН</strong><span>За&nbsp;последний год</span></div></li>
+            <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><div><strong>Налоговые декларации</strong><span>Годовые и&nbsp;за&nbsp;последний отчётный период</span></div></li>
             <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><div><strong>Паспорт директора и&nbsp;учредителей</strong><span>С&nbsp;долей более&nbsp;25%</span></div></li>
             <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><div><strong>Выписка по&nbsp;расчётному счёту</strong><span>За&nbsp;6&nbsp;месяцев</span></div></li>
             <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><div><strong>Коммерческое предложение от&nbsp;поставщика</strong><span>Развёрнутое КП лучше&nbsp;- с&nbsp;моделью, комплектацией, ценой и&nbsp;сроком поставки</span></div></li>
@@ -725,9 +711,9 @@
           <ul class="docs-list">
             <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><div><strong>Карточка ИП с&nbsp;ОГРНИП</strong><span>Реквизиты и&nbsp;контакты</span></div></li>
             <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><div><strong>Паспорт предпринимателя</strong><span>Все страницы с&nbsp;отметками</span></div></li>
-            <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><div><strong>Декларация УСН</strong><span>За&nbsp;последний год</span></div></li>
+            <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><div><strong>Налоговые декларации</strong><span>Годовые и&nbsp;за&nbsp;последний отчётный период</span></div></li>
             <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><div><strong>Выписка по&nbsp;счёту</strong><span>За&nbsp;6&nbsp;месяцев</span></div></li>
-            <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><div><strong>Счёт от&nbsp;поставщика</strong><span>Или&nbsp;коммерческое предложение</span></div></li>
+            <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><div><strong>Коммерческое предложение от&nbsp;поставщика</strong><span>Развёрнутое КП лучше&nbsp;- с&nbsp;моделью, комплектацией, ценой и&nbsp;сроком поставки</span></div></li>
           </ul>
         </div>
 
@@ -741,7 +727,7 @@
             <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><div><strong>Бизнес-план или&nbsp;модель доходов</strong><span>Кратко: что планируете, источник выручки</span></div></li>
             <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><div><strong>Опыт учредителей в&nbsp;отрасли</strong><span>Резюме или&nbsp;подтверждение от&nbsp;прошлых компаний</span></div></li>
             <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><div><strong>Договор поручительства</strong><span>От&nbsp;учредителя связанной компании, ведущей деятельность не&nbsp;менее года</span></div></li>
-            <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><div><strong>Счёт от&nbsp;поставщика</strong><span>На&nbsp;конкретный предмет лизинга</span></div></li>
+            <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><div><strong>Коммерческое предложение от&nbsp;поставщика</strong><span>На&nbsp;конкретный предмет лизинга</span></div></li>
           </ul>
         </div>
 
@@ -770,7 +756,7 @@
   <div class="container">
     <div class="section__head">
       <span class="eyebrow">Как проходит сделка</span>
-      <h2>От&nbsp;заявки до&nbsp;передачи имущества - за&nbsp;3–7 рабочих дней</h2>
+      <h2>От&nbsp;заявки до&nbsp;передачи имущества - от&nbsp;3 до&nbsp;7 рабочих дней</h2>
       <p class="lead">Прозрачный путь: вы&nbsp;всегда знаете, какой шаг идёт и&nbsp;что нужно от&nbsp;вас.</p>
     </div>
 
@@ -903,40 +889,10 @@
         </div>
 
         <fieldset class="field">
-          <legend>Тип имущества</legend>
-          <div class="chips">
-            <label class="chip"><input type="radio" name="c-type" value="transport" checked><span>Транспорт</span></label>
-            <label class="chip"><input type="radio" name="c-type" value="special"><span>Спецтехника</span></label>
-            <label class="chip"><input type="radio" name="c-type" value="agro"><span>Сельхоз</span></label>
-            <label class="chip"><input type="radio" name="c-type" value="equipment"><span>Оборудование</span></label>
-            <label class="chip"><input type="radio" name="c-type" value="realty"><span>Недвижимость</span></label>
-            <label class="chip"><input type="radio" name="c-type" value="used"><span>Б/у техника</span></label>
-          </div>
-        </fieldset>
-
-        <fieldset class="field">
           <legend>График платежей</legend>
           <div class="chips chips--compact">
             <label class="chip"><input type="radio" name="c-schedule" value="annuity" checked><span>Аннуитет</span></label>
             <label class="chip"><input type="radio" name="c-schedule" value="decreasing"><span>Убывающий</span></label>
-            <label class="chip"><input type="radio" name="c-schedule" value="seasonal"><span>Сезонный</span></label>
-          </div>
-        </fieldset>
-
-        <fieldset class="field calc__tax-field">
-          <legend>
-            Налогообложение
-            <button type="button" class="calc__help-trigger" data-popover-trigger="tax" aria-label="Объяснить" aria-expanded="false">?</button>
-          </legend>
-          <div class="step-selector step-selector--light step-selector--wide" id="c-tax-mode" role="radiogroup" aria-label="Режим налогообложения">
-            <button type="button" data-value="osno" class="is-active" aria-pressed="true">ОСНО (с&nbsp;НДС)</button>
-            <button type="button" data-value="usn" aria-pressed="false">УСН (без&nbsp;НДС)</button>
-          </div>
-          <div class="calc__popover" data-popover="tax" hidden>
-            <strong>Как режим влияет на&nbsp;расчёт</strong>
-            <p><b>ОСНО</b>&nbsp;- возвращаете НДС&nbsp;20% и&nbsp;относите лизинговые платежи в&nbsp;расходы (снижение налога на&nbsp;прибыль 20%).</p>
-            <p><b>УСН «Доходы минус расходы»</b>&nbsp;- НДС не&nbsp;возмещается, но&nbsp;платежи целиком в&nbsp;расходах (снижение налога 15%).</p>
-            <p class="calc__popover-note">Точный расчёт по&nbsp;вашему режиму сделает менеджер после&nbsp;заявки.</p>
           </div>
         </fieldset>
       </form>
@@ -969,16 +925,19 @@
         </div>
 
         <div class="result__brief">
-          <span class="result__brief-item">Ставка <strong id="r-rate">-</strong></span>
+          <span class="result__brief-item">Удорожание <strong id="r-rate">-</strong></span>
           <span class="result__brief-dot">·</span>
           <span class="result__brief-item">Аванс <strong id="r-advance">-</strong></span>
           <span class="result__brief-dot">·</span>
           <span class="result__brief-item">Срок <strong id="r-term">-</strong></span>
           <span class="result__brief-dot">·</span>
-          <span class="result__brief-item">Имущество <strong id="r-type">-</strong></span>
-          <span class="result__brief-dot">·</span>
           <span class="result__brief-item">График <strong id="r-schedule">-</strong></span>
         </div>
+
+        <p class="result__tax-note">
+          <strong>Возмещение НДС</strong>&nbsp;- возврат НДС со&nbsp;всей суммы договора лизинга.<br>
+          <strong>Экономия по&nbsp;налогу на&nbsp;прибыль</strong>&nbsp;- лизинговые платежи учитываются в&nbsp;составе расходов, уменьшают налог на&nbsp;прибыль.
+        </p>
 
         <div class="result__cta">
           <button type="button" class="btn btn--primary btn--block" data-action="precise">
@@ -1613,23 +1572,35 @@
   </div>
 </section>
 
-<section class="section office" id="office">
+<section class="section office" id="contacts">
   <div class="container office__grid">
     <div class="office__info">
       <div class="section__head">
-        <span class="eyebrow">Главный офис</span>
-        <h2>Ярославль · работаем по&nbsp;всей России</h2>
-        <p class="lead">Сделки оформляем дистанционно через ЭДО. Офис открыт для&nbsp;встреч и&nbsp;подписания документов&nbsp;- по&nbsp;записи.</p>
+        <span class="eyebrow">Контакты</span>
+        <h2>Контакты и&nbsp;реквизиты</h2>
+        <p class="lead">ООО «МБ-Лизинг» (МБЛ)&nbsp;- лизинговая компания из&nbsp;Ярославля. Работаем с&nbsp;2001&nbsp;года, финансируем юридические лица и&nbsp;ИП по&nbsp;всей России. Сделки оформляем дистанционно через ЭДО, офис открыт для&nbsp;встреч по&nbsp;записи.</p>
       </div>
 
       <ul class="office__list">
         <li>
           <span class="office__label">Юридическое лицо</span>
-          <strong>ООО «МБЛ»</strong>
+          <strong>Общество с&nbsp;ограниченной ответственностью «МБ-Лизинг» (ООО «МБЛ»)</strong>
+        </li>
+        <li>
+          <span class="office__label">ИНН&nbsp;/ КПП&nbsp;/ ОГРН</span>
+          <strong>7604191382&nbsp;/ 760401001&nbsp;/ 1107604017586</strong>
         </li>
         <li>
           <span class="office__label">Адрес головного офиса</span>
           <strong>150040, г.&nbsp;Ярославль, ул.&nbsp;Победы, 38/27,<br>БЦ&nbsp;«Бутусовский», 5&nbsp;этаж, офис&nbsp;512<br><span style="font-size:13px;color:var(--color-text-soft);font-weight:400">Вход со&nbsp;стороны ул.&nbsp;Победы</span></strong>
+        </li>
+        <li>
+          <span class="office__label">Банковские реквизиты</span>
+          <strong>
+            Р/с 40701810202910000059<br>
+            в&nbsp;АО «Альфа-Банк»<br>
+            К/с 30101810200000000593, БИК 044525593
+          </strong>
         </li>
         <li>
           <span class="office__label">Часы работы</span>
@@ -1645,6 +1616,13 @@
         <li>
           <span class="office__label">Email</span>
           <strong><a href="mailto:promlizing@inbox.ru">promlizing@inbox.ru</a></strong>
+        </li>
+        <li>
+          <span class="office__label">Мессенджеры</span>
+          <strong>
+            <a href="https://t.me/+79038223424" target="_blank" rel="noopener">Telegram</a> ·
+            <a href="https://max.ru/u/f9LHodD0cOI_5O3vk_FA1tkaxt5uylEXrkVGGFHNDP2xKzNybuV1hxbcuY4" target="_blank" rel="noopener">MAX</a>
+          </strong>
         </li>
         <li>
           <span class="office__label">Клиенты</span>
@@ -1740,6 +1718,7 @@
       <div class="footer__legal">
         <a href="docs/privacy-policy.html">Политика ПДн</a>
         <a href="docs/consent.html">Согласие на&nbsp;обработку</a>
+        <a href="docs/downloads/antikorrupcionnaya-politika.pdf" target="_blank" rel="noopener">Антикоррупционная политика</a>
       </div>
     </div>
   </div>
@@ -1810,7 +1789,7 @@
   </div>
 </div>
 
-<script src="scripts/calculator.js?v=121" defer></script>
+<script src="scripts/calculator.js?v=122" defer></script>
 <!-- V25: Лайтбокс для категорийных галерей -->
 <div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Галерея фото" hidden>
   <button type="button" class="lightbox__close" aria-label="Закрыть галерею">
@@ -1831,14 +1810,14 @@
   </figure>
 </div>
 
-<script src="scripts/form.js?v=121" defer></script>
-<script src="scripts/faq.js?v=121" defer></script>
-<script src="scripts/cookie.js?v=121" defer></script>
-<script src="scripts/main.js?v=121" defer></script>
-<script src="scripts/mobile-nav.js?v=121" defer></script>
-<script src="scripts/partners-marquee.js?v=121" defer></script>
-<script src="scripts/hero-beam.js?v=121" defer></script>
-<script src="scripts/haptic.js?v=121" defer></script>
+<script src="scripts/form.js?v=122" defer></script>
+<script src="scripts/faq.js?v=122" defer></script>
+<script src="scripts/cookie.js?v=122" defer></script>
+<script src="scripts/main.js?v=122" defer></script>
+<script src="scripts/mobile-nav.js?v=122" defer></script>
+<script src="scripts/partners-marquee.js?v=122" defer></script>
+<script src="scripts/hero-beam.js?v=122" defer></script>
+<script src="scripts/haptic.js?v=122" defer></script>
 <!-- V56: pdf-generator.js загружается лениво в calculator.js при первом клике на «Скачать график PDF» — экономия 28KB initial JS -->
 
 </body>

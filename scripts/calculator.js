@@ -246,12 +246,12 @@
     const advance = price * advancePct;
     const principal = price - advance;
     const n = getCTerm();
-    const type = getSelected('c-type');
     const schedule = getSelected('c-schedule');
     const mode = getTaxMode();
 
-    const baseRate = RATES[type] || 0.17;
-    const rate = baseRate * SCHEDULE_FACTOR[schedule];
+    // V60: убран выбор типа техники — используем одну усреднённую внутреннюю ставку
+    const BASE_RATE = 0.20;
+    const rate = BASE_RATE * (SCHEDULE_FACTOR[schedule] || 1.0);
     const i = rate / 12;
 
     const monthly = principal * (i * Math.pow(1 + i, n)) / (Math.pow(1 + i, n) - 1);
@@ -308,13 +308,16 @@
 
     setMoneyValue(monthlyOut, result.monthly);
     setMoneyValue(totalOut, result.total);
-    rateOut.innerHTML = `<span class="money">${fmtPct.format(result.rate * 100)}%</span>`;
+    // V60: вместо "ставки" показываем удорожание в % годовых (стандартный показатель для лизинга)
+    const price = parseMoney(priceEl.value);
+    const years = getCTerm() / 12;
+    const annualMarkup = (price > 0 && years > 0) ? (((result.total - price) / price / years) * 100) : 0;
+    rateOut.textContent = fmtPct.format(annualMarkup) + '%';
     setMoneyValue(taxOut, result.taxSaving, '~');
     if (benefitOut) setMoneyValue(benefitOut, result.leasingBenefit, '~');
 
     if (advanceOutBig)  advanceOutBig.textContent = advanceEl.value + '%';
     if (termOutBig)     termOutBig.textContent = getCTerm() + ' мес';
-    if (typeOutBig)     typeOutBig.textContent = TYPE_LABEL[getSelected('c-type')] || '—';
     if (scheduleOutBig) scheduleOutBig.textContent = SCHEDULE_LABEL[getSelected('c-schedule')] || '—';
 
     drawChart(result.monthly, getCTerm(), getSelected('c-schedule'));
