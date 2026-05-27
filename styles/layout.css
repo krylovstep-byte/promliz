@@ -37,21 +37,21 @@
   height: 64px;
 }
 
-/* V60: brand-блок — лого + ссылка "Контакты" под ним.
-   V60.4: padding-top 4px — Стёпа просил весь блок ниже относительно центра хедера. */
+/* V60.5: brand-блок — padding-top 8px (на 4px ещё ниже чем V60.4) */
 .header__brand {
   display: inline-flex;
   flex-direction: column;
   align-items: flex-start;
   gap: 2px;
   flex-shrink: 0;
-  padding-top: 4px;
+  padding-top: 8px;
 }
 
+/* V60.5: «Контакты» — синий + жирнее + 15px (+10% от 14px) */
 .header__brand-link {
-  font-size: var(--fs-small);
-  font-weight: var(--fw-medium);
-  color: var(--color-text-muted);
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--color-blue-button);
   padding: 2px 4px;
   border-radius: var(--radius-sm);
   letter-spacing: -0.005em;
@@ -59,8 +59,8 @@
 }
 
 .header__brand-link:hover {
-  color: var(--color-primary);
-  background: rgba(255, 149, 69, 0.12);
+  color: var(--color-blue-hover);
+  background: rgba(0, 148, 222, 0.12);
 }
 
 .header__logo {
@@ -71,9 +71,9 @@
   transition: color var(--transition);
 }
 
-/* V60.2: лого 40px (было 52) — компенсация для brand-блока с надписью «Контакты» под ним */
+/* V60.5: лого 40 → 37 (~−8% по запросу Стёпы) */
 .header__logo-img {
-  height: 40px;
+  height: 37px;
   width: auto;
   display: block;
   flex-shrink: 0;
@@ -87,7 +87,7 @@
 }
 
 .header.is-scrolled .header__logo-img {
-  height: 32px;
+  height: 29px;
 }
 
 /* В футере на тёмном фоне — инвертированный лого */
