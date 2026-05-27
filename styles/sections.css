@@ -239,8 +239,6 @@
   pointer-events: none;
 }
 
-/* V56: .hero__unit-tag удалён — HTML-класс убран в V12, CSS был мёртвым */
-
 .hero__unit-chips {
   position: absolute;
   left: var(--space-4);
@@ -892,8 +890,6 @@
   flex-shrink: 0;
 }
 
-/* V56: .live-pill удалён — HTML-класс не используется */
-
 .mini-calc {
   display: flex;
   flex-direction: column;
@@ -1187,8 +1183,6 @@
   line-height: var(--lh-snug);
   letter-spacing: 0.01em;
 }
-
-/* V56: .trust-strip удалён — HTML-секция была убрана в V13 C, CSS был мёртвым */
 
 /* ============ PROCESS TRACK (КАК ПРОХОДИТ СДЕЛКА) ============ */
 .process-track {
