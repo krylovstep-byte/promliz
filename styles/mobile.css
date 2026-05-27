@@ -392,6 +392,27 @@ body.has-mobile-nav {
     margin-left: auto;
   }
 
+  /* V60.8: компактная оранжевая кнопка «Заявка» в шапке на мобиле */
+  .header__mobile-cta {
+    display: inline-flex !important;
+    align-items: center;
+    justify-content: center;
+    background: var(--color-orange) !important;
+    color: #FFFFFF !important;
+    font-weight: 700;
+    font-size: 13px;
+    padding: 8px 14px;
+    border-radius: var(--radius-pill);
+    letter-spacing: -0.005em;
+    white-space: nowrap;
+    margin-left: 12px;
+    box-shadow: 0 4px 10px -2px rgba(255, 149, 69, 0.4);
+    transition: background var(--transition);
+  }
+  .header__mobile-cta:active {
+    background: var(--color-orange-hover) !important;
+  }
+
   .header__cta {
     display: none;
   }

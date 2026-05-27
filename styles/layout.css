@@ -63,6 +63,11 @@
   background: rgba(0, 148, 222, 0.12);
 }
 
+/* V60.8: компактная кнопка «Заявка» в шапке — видна ТОЛЬКО на мобиле */
+.header__mobile-cta {
+  display: none;
+}
+
 .header__logo {
   display: inline-flex;
   align-items: center;
