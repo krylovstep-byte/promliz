@@ -515,11 +515,11 @@
   display: flex;
   justify-content: flex-start;
   align-items: center;
-  gap: 12px;
-  font-size: 16px;
+  gap: 14px;
+  font-size: 18px;
   color: var(--color-text-muted);
   flex-wrap: wrap;
-  padding-top: var(--space-3);
+  padding-top: var(--space-2);
   border-top: 1px solid var(--color-border);
 }
 
@@ -534,7 +534,7 @@
   color: var(--color-text-main);
   font-weight: var(--fw-bold);
   font-variant-numeric: tabular-nums;
-  font-size: 19px;
+  font-size: 22px;
   font-family: var(--font-display);
   letter-spacing: -0.005em;
 }
@@ -543,12 +543,12 @@
 .hero__unit-pdf-btn {
   display: inline-flex;
   align-items: center;
-  gap: 6px;
-  padding: 7px 12px;
+  gap: 7px;
+  padding: 9px 14px;
   border-radius: var(--radius-sm);
   background: var(--color-blue-button);
   color: #FFFFFF;
-  font-size: 13px;
+  font-size: 14px;
   font-weight: 600;
   letter-spacing: 0.02em;
   border: none;
@@ -1451,24 +1451,21 @@
   align-items: stretch;
 }
 
-/* V61.5: PDF-кнопка перенесена из правой колонки в левую (после формы),
-   чтобы колонки выровнялись по высоте. Кнопка компактная (не btn--block). */
+/* V61.7: левая колонка получила обе CTA-кнопки (Получить расчёт + PDF) и disclaimer.
+   Кнопки на всю ширину колонки (btn--block), одна над другой. */
 .calc__form-actions {
   display: flex;
-  justify-content: flex-start;
-  padding-top: var(--space-3);
+  flex-direction: column;
+  gap: var(--space-2);
+  padding-top: var(--space-4);
   margin-top: auto;
 }
 
-.btn--cyan.btn--compact {
+.calc__form-actions .btn--cyan {
   display: inline-flex;
   align-items: center;
-  gap: 6px;
-  padding: 10px 16px;
-  font-size: 13px;
-  font-weight: 600;
-  letter-spacing: 0.02em;
-  width: auto;
+  justify-content: center;
+  gap: 8px;
 }
 
 .calc__form {

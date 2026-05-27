@@ -355,7 +355,9 @@
     if (chartEndMonth) chartEndMonth.textContent = n + ' мес';
   }
 
-  document.querySelectorAll('.result__cta [data-action]').forEach((btn) => {
+  // V61.7: обработчик ловит [data-action] и в .result__cta, и в .calc__form-actions
+  // (после переноса «Получить точный расчёт» + PDF в левую колонку под формой).
+  document.querySelectorAll('#calc [data-action]').forEach((btn) => {
     btn.addEventListener('click', async (e) => {
       const action = btn.dataset.action;
       const applyForm = document.getElementById('apply-form');

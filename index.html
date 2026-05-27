@@ -127,12 +127,12 @@
   <link rel="preconnect" href="https://mc.yandex.ru" crossorigin>
   <link rel="dns-prefetch" href="https://mc.yandex.ru">
 
-  <link rel="stylesheet" href="styles/tokens.css?v=136">
-  <link rel="stylesheet" href="styles/base.css?v=136">
-  <link rel="stylesheet" href="styles/layout.css?v=136">
-  <link rel="stylesheet" href="styles/components.css?v=136">
-  <link rel="stylesheet" href="styles/sections.css?v=136">
-  <link rel="stylesheet" href="styles/mobile.css?v=136">
+  <link rel="stylesheet" href="styles/tokens.css?v=137">
+  <link rel="stylesheet" href="styles/base.css?v=137">
+  <link rel="stylesheet" href="styles/layout.css?v=137">
+  <link rel="stylesheet" href="styles/components.css?v=137">
+  <link rel="stylesheet" href="styles/sections.css?v=137">
+  <link rel="stylesheet" href="styles/mobile.css?v=137">
 </head>
 <body>
 
@@ -365,7 +365,7 @@
 
           <div class="hero__unit-result-meta">
             <button type="button" class="hero__unit-pdf-btn" id="m-pdf-btn" aria-label="Скачать график платежей в PDF">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                 <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/>
               </svg>
               Скачать график платежей в pdf
@@ -908,13 +908,18 @@
         </fieldset>
 
         <div class="calc__form-actions">
-          <button type="button" class="btn btn--cyan btn--compact" data-action="pdf">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <button type="button" class="btn btn--primary btn--block" data-action="precise">
+            Получить точный расчёт
+          </button>
+          <button type="button" class="btn btn--cyan btn--block" data-action="pdf">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
               <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/>
             </svg>
             Скачать график PDF
           </button>
         </div>
+
+        <p class="calc__note">Расчёт предварительный. Точные параметры зависят от&nbsp;предмета лизинга, поставщика и&nbsp;скоринга.</p>
       </form>
 
       <aside class="calc__result beam-wrap beam-wrap--slow">
@@ -959,13 +964,6 @@
           <strong>Экономия по&nbsp;налогу на&nbsp;прибыль</strong>&nbsp;- лизинговые платежи учитываются в&nbsp;составе расходов, уменьшают налог на&nbsp;прибыль.
         </p>
 
-        <div class="result__cta">
-          <button type="button" class="btn btn--primary btn--block" data-action="precise">
-            Получить точный расчёт
-          </button>
-        </div>
-
-        <p class="calc__note">Расчёт предварительный. Точные параметры зависят от&nbsp;предмета лизинга, поставщика и&nbsp;скоринга.</p>
       </aside>
     </div>
   </div>
@@ -1849,7 +1847,7 @@
   </div>
 </div>
 
-<script src="scripts/calculator.js?v=136" defer></script>
+<script src="scripts/calculator.js?v=137" defer></script>
 <!-- V25: Лайтбокс для категорийных галерей -->
 <div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Галерея фото" hidden>
   <button type="button" class="lightbox__close" aria-label="Закрыть галерею">
@@ -1870,14 +1868,14 @@
   </figure>
 </div>
 
-<script src="scripts/form.js?v=136" defer></script>
-<script src="scripts/faq.js?v=136" defer></script>
-<script src="scripts/cookie.js?v=136" defer></script>
-<script src="scripts/main.js?v=136" defer></script>
-<script src="scripts/mobile-nav.js?v=136" defer></script>
-<script src="scripts/partners-marquee.js?v=136" defer></script>
-<script src="scripts/hero-beam.js?v=136" defer></script>
-<script src="scripts/haptic.js?v=136" defer></script>
+<script src="scripts/form.js?v=137" defer></script>
+<script src="scripts/faq.js?v=137" defer></script>
+<script src="scripts/cookie.js?v=137" defer></script>
+<script src="scripts/main.js?v=137" defer></script>
+<script src="scripts/mobile-nav.js?v=137" defer></script>
+<script src="scripts/partners-marquee.js?v=137" defer></script>
+<script src="scripts/hero-beam.js?v=137" defer></script>
+<script src="scripts/haptic.js?v=137" defer></script>
 <!-- V56: pdf-generator.js загружается лениво в calculator.js при первом клике на «Скачать график PDF» — экономия 28KB initial JS -->
 
 </body>
