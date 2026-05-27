@@ -163,6 +163,8 @@
   display: flex;
   flex-direction: column;
   isolation: isolate;
+  /* V61.8: hero-калькулятор на 10px выше по расположению (только на десктопе). */
+  margin-top: -10px;
 }
 
 .hero__unit-photo {
