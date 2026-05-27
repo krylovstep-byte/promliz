@@ -76,9 +76,14 @@
     rows.push({ label: 'Первый взнос', val: advance, isHeader: true });
     for (let i = 0; i < n; i++) rows.push({ num: i + 1, date: dates[i], val: monthly });
     // V58: динамическое кол-во колонок чтобы все строки влезли на 1 страницу A4 landscape.
-    // На страницу вмещается ~16 строк (после header+summary+title). Поэтому:
-    // n<=36 → 3 колонки (как в эталоне Стёпы), n=48 → 4, n=60 → 4 (по 16 строк).
-    const cols = Math.max(3, Math.ceil(rows.length / 16));
+    // V60.6: при 60 мес (rows>50) — 5 колонок × 13 строк = ~338px вместо 416px (4×16) → footer влезает.
+    // 12-48 мес: 3-4 колонки по формуле (как было).
+    let cols;
+    if (rows.length > 50) {
+      cols = 5;
+    } else {
+      cols = Math.max(3, Math.ceil(rows.length / 16));
+    }
     const perCol = Math.ceil(rows.length / cols);
     const result = [];
     for (let c = 0; c < cols; c++) {
@@ -148,8 +153,9 @@
     /* Полоска под хедером */
     '.pdf-doc .pdf-accent-bar{height:3px;width:1067px;background:linear-gradient(90deg,#0094DE 0%,#0094DE 66%,#FF9545 66%,#FF9545 78%,transparent 78%) !important;}' +
     /* ====== ЗАГОЛОВКИ ====== */
-    /* V60.4: H1 margin-top 20→8 (Стёпа просил выше на 12px) */
-    '.pdf-doc h1{font-size:24px;text-align:center;margin:8px 0 12px;font-weight:700;color:#04384F;}' +
+    /* V60.4: H1 margin-top 20→8 (Стёпа просил выше на 12px)
+       V60.6: margin-bottom 12→24 (+12px воздуха между H1 и таблицей .pdf-summary) */
+    '.pdf-doc h1{font-size:24px;text-align:center;margin:8px 0 24px;font-weight:700;color:#04384F;}' +
     '.pdf-doc h1.pdf-h1-left{text-align:left;margin:14px 0 12px;font-size:22px;color:#04384F;}' +
     /* V60.4: H2 без верхнего регистра (читабельнее) */
     '.pdf-doc h2{font-size:16px;text-align:center;color:#04384F;letter-spacing:0.02em;margin:10px 0 16px;font-weight:700;}' +
