@@ -1446,9 +1446,29 @@
 /* V60.7: правая колонка (результат) шире — выровнять с левой по высоте */
 .calc__grid {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 1.3fr);
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
   gap: var(--space-6);
-  align-items: start;
+  align-items: stretch;
+}
+
+/* V61.5: PDF-кнопка перенесена из правой колонки в левую (после формы),
+   чтобы колонки выровнялись по высоте. Кнопка компактная (не btn--block). */
+.calc__form-actions {
+  display: flex;
+  justify-content: flex-start;
+  padding-top: var(--space-3);
+  margin-top: auto;
+}
+
+.btn--cyan.btn--compact {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 10px 16px;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  width: auto;
 }
 
 .calc__form {
