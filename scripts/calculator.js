@@ -521,6 +521,52 @@
     setRangeFill(mAdv);
     setTerm(currentTerm);
 
+    // V60.2: PDF-кнопка в hero mini-calc (рядом с "Сумма договора")
+    const mPdfBtn = document.getElementById('m-pdf-btn');
+    if (mPdfBtn) {
+      mPdfBtn.addEventListener('click', async () => {
+        const price = parseMoney(mPrice.value);
+        if (price <= 0) { alert('Сначала укажите стоимость предмета лизинга'); return; }
+        const advancePct = parseInt(mAdv.value, 10);
+        const advance = Math.round(price * advancePct / 100);
+        const principal = price - advance;
+        const n = getTerm();
+        const i = 0.20 / 12;
+        const monthly = principal * (i * Math.pow(1 + i, n)) / (Math.pow(1 + i, n) - 1);
+        const total = monthly * n + advance;
+        const vatReturn = total * 0.22 / 1.22;
+        const profitSaving = (total - vatReturn) * 0.25;
+        const taxSaving = vatReturn + profitSaving;
+        const years = n / 12;
+        const annualMarkup = (((total - price) / price / years) * 100).toFixed(2).replace('.', ',');
+
+        // Lazy-load pdf-generator (как в большом калькуляторе)
+        if (!window.generateLeasingPdf) {
+          const cacheVer = (document.querySelector('script[src*="calculator.js?"]')?.src || '').match(/v=(\d+)/)?.[1] || '1';
+          await new Promise((resolve, reject) => {
+            const s = document.createElement('script');
+            s.src = 'scripts/pdf-generator.js?v=' + cacheVer;
+            s.onload = resolve;
+            s.onerror = () => reject(new Error('Не удалось загрузить генератор PDF'));
+            document.head.appendChild(s);
+          }).catch((err) => {
+            alert(err.message || 'Не удалось загрузить генератор PDF. Проверьте интернет.');
+          });
+          if (!window.generateLeasingPdf) return;
+        }
+        window.generateLeasingPdf({
+          price, advance, advancePct, n,
+          monthly: Math.round(monthly),
+          total: Math.round(total),
+          vatReturn: Math.round(vatReturn * 100) / 100,
+          profitSaving: Math.round(profitSaving * 100) / 100,
+          taxSaving: Math.round(taxSaving * 100) / 100,
+          annualMarkup,
+          taxMode: 'osno'
+        });
+      });
+    }
+
     document.querySelector('.hero__unit-cta')?.addEventListener('click', (e) => {
       e.preventDefault();
       // sync big calc in background

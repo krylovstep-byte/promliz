@@ -69,9 +69,9 @@
   transition: color var(--transition);
 }
 
-/* V15: SVG-лого — увеличил размер для чёткости */
+/* V60.2: лого 40px (было 52) — компенсация для brand-блока с надписью «Контакты» под ним */
 .header__logo-img {
-  height: 52px;
+  height: 40px;
   width: auto;
   display: block;
   flex-shrink: 0;
@@ -85,7 +85,7 @@
 }
 
 .header.is-scrolled .header__logo-img {
-  height: 42px;
+  height: 32px;
 }
 
 /* В футере на тёмном фоне — инвертированный лого */

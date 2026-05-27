@@ -347,6 +347,7 @@
   gap: var(--space-4);
   background: #FFFFFF;
   color: var(--color-text-main);
+  flex: 1 0 auto;  /* V60.2: растянуть калькулятор на всю оставшуюся высоту .hero__unit — убрать тёмно-синий просвет снизу */
 }
 
 .hero__unit-calc::before {
@@ -507,8 +508,9 @@
 
 .hero__unit-result-meta {
   display: flex;
-  justify-content: space-between;
-  gap: var(--space-3);
+  justify-content: flex-start;
+  align-items: center;
+  gap: 10px;
   font-size: 15px;
   color: var(--color-text-muted);
   flex-wrap: wrap;
@@ -530,6 +532,61 @@
   font-size: 17px;
   font-family: var(--font-display);
   letter-spacing: -0.005em;
+}
+
+/* V60.2: компактная PDF-кнопка в hero mini-calc (как .btn--cyan в большом калькуляторе) */
+.hero__unit-pdf-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 5px 10px;
+  border-radius: var(--radius-sm);
+  background: var(--color-blue-button);
+  color: #FFFFFF;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  border: none;
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: background var(--transition), transform var(--transition);
+}
+.hero__unit-pdf-btn:hover {
+  background: var(--color-blue-hover);
+  transform: translateY(-1px);
+}
+.hero__unit-pdf-btn svg {
+  flex-shrink: 0;
+}
+
+/* V60.2: иконки мессенджеров в секции #contacts (Telegram + MAX) */
+.contacts-msgs {
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  font-weight: var(--fw-medium);
+}
+.contacts-msg {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 14px 6px 6px;
+  border-radius: var(--radius-pill);
+  background: rgba(0, 148, 222, 0.06);
+  border: 1px solid rgba(0, 148, 222, 0.15);
+  color: var(--color-text-main);
+  font-size: 14px;
+  font-weight: var(--fw-medium);
+  transition: background var(--transition), transform var(--transition);
+}
+.contacts-msg:hover {
+  background: rgba(0, 148, 222, 0.13);
+  transform: translateY(-1px);
+}
+.contacts-msg svg {
+  flex-shrink: 0;
+  border-radius: 50%;
+  display: block;
 }
 
 .hero__unit-cta {
