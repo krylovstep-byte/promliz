@@ -1,0 +1,16 @@
+{
+  "name": "promliz",
+  "version": "61.3.0",
+  "private": true,
+  "type": "module",
+  "description": "Промлизинг — лендинг и SEO-страницы. Build = минификация CSS/JS/HTML.",
+  "scripts": {
+    "build": "node scripts/build.mjs",
+    "clean": "node -e \"import('node:fs').then(fs=>fs.promises.rm('dist',{recursive:true,force:true}))\""
+  },
+  "devDependencies": {
+    "esbuild": "^0.24.0",
+    "html-minifier-terser": "^7.2.0",
+    "lightningcss": "^1.27.0"
+  }
+}

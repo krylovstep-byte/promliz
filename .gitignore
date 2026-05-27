@@ -20,9 +20,10 @@ Thumbs.db
 desktop.ini
 *.log
 
-# Node (если появятся скрипты)
+# Node (build pipeline)
 node_modules/
 .npm
+dist/
 
 # IDE
 .vscode/
