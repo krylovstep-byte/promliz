@@ -862,7 +862,7 @@ body.has-mobile-nav {
   .partners__track {
     display: flex !important;
     width: max-content !important;
-    gap: 48px !important;
+    gap: 24px !important;
     animation: partners-marquee 35s linear infinite;
     padding: 0 !important;
     margin: 0 !important;
@@ -1838,8 +1838,8 @@ body.has-mobile-nav {
     gap: 16px;
   }
 
-  .office__map iframe {
-    height: 240px;
+  .office__map-frame {
+    height: 200px;
   }
 
   .office__info,

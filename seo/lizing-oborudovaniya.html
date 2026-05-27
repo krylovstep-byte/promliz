@@ -25,11 +25,11 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,600;12..96,700&family=Onest:wght@400;500;600;700&display=swap" rel="stylesheet">
 
-<link rel="stylesheet" href="../styles/tokens.css?v=127">
-<link rel="stylesheet" href="../styles/base.css?v=127">
-<link rel="stylesheet" href="../styles/layout.css?v=127">
-<link rel="stylesheet" href="../styles/components.css?v=127">
-<link rel="stylesheet" href="../styles/sections.css?v=127"><script type="application/ld+json">
+<link rel="stylesheet" href="../styles/tokens.css?v=129">
+<link rel="stylesheet" href="../styles/base.css?v=129">
+<link rel="stylesheet" href="../styles/layout.css?v=129">
+<link rel="stylesheet" href="../styles/components.css?v=129">
+<link rel="stylesheet" href="../styles/sections.css?v=129"><script type="application/ld+json">
 {
   "@context": "https://schema.org",
   "@type": "BreadcrumbList",
@@ -53,17 +53,91 @@
 </head>
 <body>
 
-<header class="header header--simple">
+<header class="header" id="header">
   <div class="container header__inner">
     <div class="header__brand">
       <a href="../index.html" class="header__logo" aria-label="Промлизинг - главная">
-        <img src="../assets/logo.svg" alt="Промлизинг" class="header__logo-img" width="200" height="44">
+        <img src="../assets/logo.svg?v=129" alt="Промлизинг" class="header__logo-img" width="200" height="44">
       </a>
       <a href="../index.html#contacts" class="header__brand-link">Контакты</a>
     </div>
-    <a href="../#apply" class="btn btn--accent btn--sm shine-on-hover">Оставить заявку</a>
+
+    <button type="button" class="header__burger" aria-label="Открыть меню" aria-expanded="false" aria-controls="mobile-nav">
+      <span></span><span></span><span></span>
+    </button>
+
+    <nav class="nav" aria-label="Основное меню">
+      <a href="../index.html#calc">Калькулятор</a>
+      <a href="../index.html#docs">Документы</a>
+      <a href="../index.html#assets">Что финансируем</a>
+      <a href="../index.html#cases">Кейсы</a>
+    </nav>
+
+    <div class="header__contacts">
+      <a href="tel:+74852770187" class="header__phone" title="Звонок в офис Промлизинга, Ярославль">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.37 1.9.72 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.35 1.85.59 2.81.72A2 2 0 0 1 22 16.92z"/></svg>
+        <span>+7&nbsp;(4852)&nbsp;77-01-87</span>
+      </a>
+
+      <div class="header__messengers">
+        <a href="https://max.ru/u/f9LHodD0cOI_5O3vk_FA1tkaxt5uylEXrkVGGFHNDP2xKzNybuV1hxbcuY4" class="icon-btn icon-btn--max" aria-label="MAX мессенджер">
+          <svg width="16" height="16" viewBox="0 0 1000 1000" aria-hidden="true">
+            <defs>
+              <linearGradient id="max-hdr-a"><stop offset="0" stop-color="#4cf"/><stop offset=".662" stop-color="#53e"/><stop offset="1" stop-color="#93d"/></linearGradient>
+              <linearGradient id="max-hdr-c" x1="117.847" x2="1000" y1="760.536" y2="500" gradientUnits="userSpaceOnUse" href="#max-hdr-a"/>
+            </defs>
+            <rect width="1000" height="1000" fill="url(#max-hdr-c)" ry="249.681"/>
+            <path fill="#fff" fill-rule="evenodd" clip-rule="evenodd" d="M508.211 878.328c-75.007 0-109.864-10.95-170.453-54.75-38.325 49.275-159.686 87.783-164.979 21.9 0-49.456-10.95-91.248-23.36-136.873-14.782-56.21-31.572-118.807-31.572-209.508 0-216.626 177.754-379.597 388.357-379.597 210.785 0 375.947 171.001 375.947 381.604.707 207.346-166.595 376.118-373.94 377.224m3.103-571.585c-102.564-5.292-182.499 65.7-200.201 177.024-14.6 92.162 11.315 204.398 33.397 210.238 10.585 2.555 37.23-18.98 53.837-35.587a189.8 189.8 0 0 0 92.71 33.032c106.273 5.112 197.08-75.794 204.215-181.95 4.154-106.382-77.67-196.486-183.958-202.574Z"/>
+          </svg>
+        </a>
+        <a href="https://t.me/+79038223424" class="icon-btn icon-btn--tg" aria-label="Telegram">
+          <svg width="16" height="16" viewBox="0 0 240 240" aria-hidden="true">
+            <defs>
+              <linearGradient id="tg-hdr-bg" x1="-683.305" y1="534.845" x2="-693.305" y2="511.512" gradientTransform="matrix(6 0 0 -6 4255 3247)" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#37aee2"/><stop offset="1" stop-color="#1e96c8"/></linearGradient>
+            </defs>
+            <path fill="url(#tg-hdr-bg)" d="M240 120c0 66.3-53.7 120-120 120S0 186.3 0 120 53.7 0 120 0s120 53.7 120 120z"/>
+            <path fill="#fff" d="M100 144.4l48.4 35.7c5.5 3 9.5 1.5 10.9-5.1L179 82.2c2-8.1-3.1-11.7-8.4-9.3L55 117.5c-7.9 3.2-7.8 7.6-1.4 9.5l29.7 9.3L152 93c3.2-2 6.2-.9 3.8 1.3L100 144.4z"/>
+          </svg>
+        </a>
+      </div>
+
+      <a href="../index.html#apply" class="btn btn--accent shine-on-hover header__cta">Оставить заявку</a>
+    </div>
   </div>
 </header>
+
+<div class="mobile-nav__overlay" id="mobile-nav-overlay" hidden></div>
+<nav class="mobile-nav" id="mobile-nav" aria-label="Мобильное меню" hidden>
+  <div class="mobile-nav__head">
+    <a href="../index.html" class="mobile-nav__logo" aria-label="Промлизинг">
+      <img src="../assets/logo.svg?v=129" alt="Промлизинг" width="160" height="36">
+    </a>
+    <button type="button" class="mobile-nav__close" aria-label="Закрыть меню">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M18 6L6 18M6 6l12 12"/></svg>
+    </button>
+  </div>
+
+  <ul class="mobile-nav__links">
+    <li><a href="../index.html#calc">Калькулятор</a></li>
+    <li><a href="../index.html#docs">Документы</a></li>
+    <li><a href="../index.html#assets">Что финансируем</a></li>
+    <li><a href="../index.html#cases">Кейсы</a></li>
+    <li><a href="../index.html#contacts">Контакты</a></li>
+    <li><a href="../index.html#faq">FAQ</a></li>
+  </ul>
+
+  <div class="mobile-nav__contacts">
+    <a href="tel:+74852770187" class="mobile-nav__phone">+7&nbsp;(4852)&nbsp;77-01-87</a>
+    <p class="mobile-nav__hours">Пн-Пт, 9:00-18:00 (МСК)</p>
+    <div class="mobile-nav__messengers">
+      <a href="https://t.me/+79038223424" class="mobile-nav__msg" target="_blank" rel="noopener" aria-label="Telegram"><svg width="22" height="22" viewBox="0 0 240 240" aria-hidden="true"><path fill="#37aee2" d="M120 0C53.7 0 0 53.7 0 120s53.7 120 120 120 120-53.7 120-120S186.3 0 120 0z"/><path fill="#fff" d="M100 144.4l48.4 35.7c5.5 3 9.5 1.5 10.9-5.1L179 82.2c2-8.1-3.1-11.7-8.4-9.3L55 117.5c-7.9 3.2-7.8 7.6-1.4 9.5l29.7 9.3L152 93c3.2-2 6.2-.9 3.8 1.3L100 144.4z"/></svg></a>
+      <a href="https://max.ru/u/f9LHodD0cOI_5O3vk_FA1tkaxt5uylEXrkVGGFHNDP2xKzNybuV1hxbcuY4" class="mobile-nav__msg" target="_blank" rel="noopener" aria-label="MAX"><svg width="22" height="22" viewBox="0 0 1000 1000" aria-hidden="true"><defs><linearGradient id="max-mn-a" x1="117.847" x2="1000" y1="760.536" y2="500" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#4cf"/><stop offset=".662" stop-color="#53e"/><stop offset="1" stop-color="#93d"/></linearGradient></defs><rect width="1000" height="1000" fill="url(#max-mn-a)" ry="249.681"/><path fill="#fff" fill-rule="evenodd" clip-rule="evenodd" d="M508.211 878.328c-75.007 0-109.864-10.95-170.453-54.75-38.325 49.275-159.686 87.783-164.979 21.9 0-49.456-10.95-91.248-23.36-136.873-14.782-56.21-31.572-118.807-31.572-209.508 0-216.626 177.754-379.597 388.357-379.597 210.785 0 375.947 171.001 375.947 381.604.707 207.346-166.595 376.118-373.94 377.224m3.103-571.585c-102.564-5.292-182.499 65.7-200.201 177.024-14.6 92.162 11.315 204.398 33.397 210.238 10.585 2.555 37.23-18.98 53.837-35.587a189.8 189.8 0 0 0 92.71 33.032c106.273 5.112 197.08-75.794 204.215-181.95 4.154-106.382-77.67-196.486-183.958-202.574Z"/></svg></a>
+      <a href="mailto:promlizing@inbox.ru" class="mobile-nav__msg mobile-nav__msg--email" aria-label="Email"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg></a>
+    </div>
+  </div>
+
+  <a href="../index.html#apply" class="btn btn--accent btn--block mobile-nav__cta shine-on-hover">Оставить заявку</a>
+</nav>
 
 <main>
 
@@ -155,5 +229,6 @@
 
 <script src="../scripts/faq.js"></script>
 
+<script defer src="../scripts/mobile-nav.js?v=129"></script>
 </body>
 </html>

@@ -38,7 +38,7 @@
 .partners__track {
   display: flex;
   align-items: center;
-  gap: var(--space-10);
+  gap: var(--space-6);
   list-style: none;
   padding: 0;
   margin: 0;
@@ -1449,9 +1449,10 @@
 }
 
 /* ============ CALC ============ */
+/* V60.7: правая колонка (результат) шире — выровнять с левой по высоте */
 .calc__grid {
   display: grid;
-  grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.3fr);
   gap: var(--space-6);
   align-items: start;
 }
@@ -4975,17 +4976,24 @@
   min-width: 180px;
 }
 
+/* V60.7: .office__map теперь flex-контейнер с картой и блоком реквизитов */
 .office__map {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.office__map-frame {
   position: relative;
   border-radius: var(--radius-lg);
   overflow: hidden;
   background: var(--color-bg-alt);
   border: 1px solid var(--color-border);
-  min-height: 460px;
+  height: 150px;
   box-shadow: 0 20px 40px -16px rgba(0, 60, 90, 0.18);
 }
 
-.office__map iframe {
+.office__map-frame iframe {
   position: absolute;
   inset: 0;
   width: 100%;
@@ -4994,12 +5002,37 @@
   display: block;
 }
 
+/* V60.7: блок «Банковские реквизиты» под картой */
+.office__details {
+  padding: 20px 22px;
+  background: var(--color-bg);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--color-border);
+}
+.office__details .office__label {
+  display: block;
+  font-size: 11px;
+  font-weight: var(--fw-medium);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--color-accent);
+  margin-bottom: 8px;
+}
+.office__details strong {
+  display: block;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--color-text-main);
+  font-variant-numeric: tabular-nums;
+}
+
 @media (max-width: 900px) {
   .office__grid {
     grid-template-columns: 1fr;
     gap: var(--space-6);
   }
-  .office__map { min-height: 360px; }
+  .office__map-frame { height: 200px; }
   .office__cta .btn { min-width: 0; }
 }
 
