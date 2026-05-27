@@ -37,13 +37,15 @@
   height: 64px;
 }
 
-/* V60: brand-блок — лого + ссылка "Контакты" под ним */
+/* V60: brand-блок — лого + ссылка "Контакты" под ним.
+   V60.4: padding-top 4px — Стёпа просил весь блок ниже относительно центра хедера. */
 .header__brand {
   display: inline-flex;
   flex-direction: column;
   align-items: flex-start;
   gap: 2px;
   flex-shrink: 0;
+  padding-top: 4px;
 }
 
 .header__brand-link {

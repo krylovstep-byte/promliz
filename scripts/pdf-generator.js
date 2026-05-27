@@ -148,9 +148,11 @@
     /* Полоска под хедером */
     '.pdf-doc .pdf-accent-bar{height:3px;width:1067px;background:linear-gradient(90deg,#0094DE 0%,#0094DE 66%,#FF9545 66%,#FF9545 78%,transparent 78%) !important;}' +
     /* ====== ЗАГОЛОВКИ ====== */
-    '.pdf-doc h1{font-size:24px;text-align:center;margin:20px 0 12px;font-weight:700;color:#04384F;}' +
+    /* V60.4: H1 margin-top 20→8 (Стёпа просил выше на 12px) */
+    '.pdf-doc h1{font-size:24px;text-align:center;margin:8px 0 12px;font-weight:700;color:#04384F;}' +
     '.pdf-doc h1.pdf-h1-left{text-align:left;margin:14px 0 12px;font-size:22px;color:#04384F;}' +
-    '.pdf-doc h2{font-size:16px;text-align:center;color:#04384F;text-transform:uppercase;letter-spacing:0.08em;margin:10px 0 16px;font-weight:700;}' +
+    /* V60.4: H2 без верхнего регистра (читабельнее) */
+    '.pdf-doc h2{font-size:16px;text-align:center;color:#04384F;letter-spacing:0.02em;margin:10px 0 16px;font-weight:700;}' +
     /* ====== СВОДНАЯ ТАБЛИЦА ====== */
     '.pdf-doc table.pdf-summary{width:1067px;table-layout:fixed;border-collapse:collapse;}' +
     '.pdf-doc table.pdf-summary th{background:#0094DE !important;color:#FFFFFF !important;padding:11px 8px;font-size:12px;font-weight:600;text-align:center;border:1px solid #0094DE;line-height:1.35;}' +
@@ -242,7 +244,6 @@
       '<div class="pdf-page pdf-page-1">' +
         '<div class="pdf-page-inner">' +
           buildHeader(date,
-            '<strong>Приложение №2</strong>' +
             '<em>Конфиденциально</em>' +
             'ООО "МБ-Лизинг"<br>' +
             'Дата: ' + date,
@@ -328,7 +329,7 @@
               '<div class="pdf-panel-title">Налоговый эффект</div>' +
               '<table class="pdf-tax-eff">' +
                 '<colgroup><col class="pdf-c1"><col class="pdf-c2"></colgroup>' +
-                '<thead><tr><th colspan="2">Приобретайте автотранспорт, спецтехнику и оборудование в лизинг и получайте экономию на налогах в течение срока договора.</th></tr></thead>' +
+                '<thead><tr><th colspan="2">Дополнительная выгода через налоговые льготы</th></tr></thead>' +
                 '<tbody>' +
                   '<tr><td class="pdf-lbl">Возврат НДС 22%<small>со всей суммы договора лизинга</small></td><td class="pdf-val">' + fmt2.format(d.vatReturn) + ' ₽</td></tr>' +
                   '<tr><td class="pdf-lbl">Экономия по налогу на прибыль<small>лизинговые платежи уменьшают налоговую базу</small></td><td class="pdf-val">' + fmt2.format(d.profitSaving) + ' ₽</td></tr>' +
