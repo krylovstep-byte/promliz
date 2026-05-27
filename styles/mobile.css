@@ -372,6 +372,11 @@ body.has-mobile-nav {
     width: auto;
   }
 
+  /* V60.1: на мобиле ссылка "Контакты" под лого не нужна — она есть в бургер-меню */
+  .header__brand-link {
+    display: none !important;
+  }
+
   .header__burger {
     width: 42px !important;
     height: 42px !important;
