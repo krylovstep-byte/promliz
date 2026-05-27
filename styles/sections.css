@@ -515,11 +515,11 @@
   display: flex;
   justify-content: flex-start;
   align-items: center;
-  gap: 10px;
-  font-size: 15px;
+  gap: 12px;
+  font-size: 16px;
   color: var(--color-text-muted);
   flex-wrap: wrap;
-  padding-top: var(--space-2);
+  padding-top: var(--space-3);
   border-top: 1px solid var(--color-border);
 }
 
@@ -534,7 +534,7 @@
   color: var(--color-text-main);
   font-weight: var(--fw-bold);
   font-variant-numeric: tabular-nums;
-  font-size: 17px;
+  font-size: 19px;
   font-family: var(--font-display);
   letter-spacing: -0.005em;
 }
@@ -543,12 +543,12 @@
 .hero__unit-pdf-btn {
   display: inline-flex;
   align-items: center;
-  gap: 5px;
-  padding: 5px 10px;
+  gap: 6px;
+  padding: 7px 12px;
   border-radius: var(--radius-sm);
   background: var(--color-blue-button);
   color: #FFFFFF;
-  font-size: 12px;
+  font-size: 13px;
   font-weight: 600;
   letter-spacing: 0.02em;
   border: none;
