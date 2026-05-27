@@ -5002,12 +5002,19 @@
   display: block;
 }
 
-/* V60.7: блок «Банковские реквизиты» под картой */
+/* V60.7+: блок с реквизитами под картой (Юр.лицо / ИНН / Банк / Клиенты) */
 .office__details {
-  padding: 20px 22px;
+  padding: 8px 22px;
   background: var(--color-bg);
   border-radius: var(--radius-lg);
   border: 1px solid var(--color-border);
+}
+.office__details-row {
+  padding: 14px 0;
+  border-bottom: 1px solid var(--color-border);
+}
+.office__details-row:last-child {
+  border-bottom: none;
 }
 .office__details .office__label {
   display: block;
@@ -5016,13 +5023,13 @@
   text-transform: uppercase;
   letter-spacing: 0.06em;
   color: var(--color-accent);
-  margin-bottom: 8px;
+  margin-bottom: 6px;
 }
 .office__details strong {
   display: block;
   font-weight: 500;
   font-size: 14px;
-  line-height: 1.6;
+  line-height: 1.55;
   color: var(--color-text-main);
   font-variant-numeric: tabular-nums;
 }
