@@ -29,7 +29,7 @@ jobs:
       - name: Build (minify CSS/JS/HTML → dist/)
         run: npm run build
 
-      - name: Deploy dist/ to REG.RU via FTPS
+      - name: Deploy dist/ (статика сайта) to REG.RU via FTPS
         uses: SamKirkland/FTP-Deploy-Action@v4.3.5
         with:
           server: ${{ secrets.FTP_HOST }}
@@ -48,4 +48,24 @@ jobs:
             **/data/**
             **/test123.php
             **/.htaccess
+            **/.env*
+
+      - name: Deploy admin/ (PHP-админка) to REG.RU via FTPS
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        with:
+          server: ${{ secrets.FTP_HOST }}
+          username: ${{ secrets.FTP_USER }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          protocol: ftps
+          port: 21
+          local-dir: ./admin/
+          server-dir: /www/promliz.com/admin/
+          # Не заливать приватный конфиг (он в .gitignore, но на всякий)
+          # и одноразовый migration-скрипт (запускается вручную при надобности)
+          exclude: |
+            **/.git*
+            **/.git*/**
+            **/inc/config.php
+            **/inc/_migrate-statuses.php
+            **/data/**
             **/.env*
