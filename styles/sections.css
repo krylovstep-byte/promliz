@@ -4711,6 +4711,29 @@
   text-align: center;
 }
 
+/* Сообщение об ошибке отправки заявки (Web3Forms) — запасной канал связи */
+.apply__error {
+  margin-top: var(--space-3);
+  padding: var(--space-3) var(--space-4);
+  border: 1px solid var(--color-error);
+  background: rgba(214, 69, 69, 0.07);
+  border-radius: var(--radius-lg);
+  color: var(--color-error);
+  font-size: var(--fs-small);
+  line-height: var(--lh-normal);
+  text-align: center;
+}
+
+.apply__error[hidden] {
+  display: none;
+}
+
+.apply__error a {
+  color: var(--color-error);
+  font-weight: var(--fw-bold);
+  text-decoration: underline;
+}
+
 /* === APPLY STEPS (V11 — progress bar removed) === */
 .apply__step {
   display: flex;
@@ -5514,7 +5537,7 @@
 
 /* Статья блога */
 .article {
-  padding: var(--space-8) 0;
+  padding: 120px 0 var(--space-8);
 }
 
 .article__wrap {

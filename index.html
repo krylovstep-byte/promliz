@@ -131,7 +131,7 @@
   <link rel="stylesheet" href="styles/base.css?v=141">
   <link rel="stylesheet" href="styles/layout.css?v=141">
   <link rel="stylesheet" href="styles/components.css?v=141">
-  <link rel="stylesheet" href="styles/sections.css?v=141">
+  <link rel="stylesheet" href="styles/sections.css?v=142">
   <link rel="stylesheet" href="styles/mobile.css?v=141">
 </head>
 <body>
@@ -146,7 +146,7 @@
 <header class="header" id="header">
   <div class="container header__inner">
     <div class="header__brand">
-      <a href="#" class="header__logo" aria-label="Промлизинг - главная">
+      <a href="/" class="header__logo" aria-label="Промлизинг - главная">
         <img decoding="async" src="assets/logo.svg?v=7" alt="Промлизинг" class="header__logo-img" width="200" height="44">
       </a>
       <a href="#contacts" class="header__brand-link">Контакты</a>
@@ -221,7 +221,7 @@
 <div class="mobile-nav__overlay" id="mobile-nav-overlay" hidden></div>
 <nav class="mobile-nav" id="mobile-nav" aria-label="Мобильное меню" hidden>
   <div class="mobile-nav__head">
-    <a href="#" class="mobile-nav__logo" aria-label="Промлизинг">
+    <a href="/" class="mobile-nav__logo" aria-label="Промлизинг">
       <img decoding="async" src="assets/logo.svg?v=7" alt="Промлизинг" width="160" height="36">
     </a>
     <button type="button" class="mobile-nav__close" aria-label="Закрыть меню">
@@ -600,10 +600,16 @@
         <span>Даю&nbsp;<a href="docs/consent.html" target="_blank">согласие на&nbsp;обработку персональных данных</a> и&nbsp;принимаю&nbsp;<a href="docs/privacy-policy.html" target="_blank">политику конфиденциальности</a></span>
       </label>
 
+      <input type="checkbox" name="botcheck" tabindex="-1" autocomplete="off" aria-hidden="true" style="display:none">
+
       <button type="submit" class="btn btn--accent btn--lg btn--block apply__submit" id="a-submit" disabled>
         Отправить заявку
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
       </button>
+
+      <p class="apply__error" id="apply-error" role="alert" hidden>
+        Не&nbsp;удалось отправить заявку. Позвоните <a href="tel:+74852770187">+7&nbsp;(4852)&nbsp;77-01-87</a> или напишите в&nbsp;<a href="https://t.me/+79038223424" target="_blank" rel="noopener">Telegram</a>.
+      </p>
     </form>
 
     <div class="apply__thanks" id="apply-thanks" hidden>
@@ -1584,7 +1590,7 @@
     </div>
 
     <div class="articles__cta">
-      <a href="blog/index.html" class="btn btn--ghost btn--lg">Все статьи →</a>
+      <a href="blog/" class="btn btn--ghost btn--lg">Все статьи →</a>
     </div>
   </div>
 </section>
@@ -1720,7 +1726,7 @@
   <div class="container">
     <div class="footer__grid">
       <div class="footer__brand">
-        <a href="#" class="header__logo" aria-label="Промлизинг - главная">
+        <a href="/" class="header__logo" aria-label="Промлизинг - главная">
           <img decoding="async" src="assets/logo.svg?v=7" alt="Промлизинг" class="header__logo-img" width="200" height="44">
         </a>
         <p class="footer__about">Лизинг транспорта, техники, оборудования и&nbsp;недвижимости для&nbsp;бизнеса. На&nbsp;рынке с&nbsp;2001&nbsp;года, работаем с&nbsp;ООО и&nbsp;ИП. Клиенты в&nbsp;10&nbsp;городах России.</p>
@@ -1870,7 +1876,7 @@
   </figure>
 </div>
 
-<script src="scripts/form.js?v=141" defer></script>
+<script src="scripts/form.js?v=142" defer></script>
 <script src="scripts/faq.js?v=141" defer></script>
 <script src="scripts/cookie.js?v=141" defer></script>
 <script src="scripts/main.js?v=141" defer></script>

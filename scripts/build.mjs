@@ -34,6 +34,7 @@ const IGNORE = new Set([
   '.improvement', '.playwright-mcp', 'tmp', '_old_susanin',
   'package.json', 'package-lock.json',
   'build.mjs', // сам билдер не публикуем
+  'admin', 'data', // PHP-админка и SQLite — только на REG.RU, в GH Pages не катятся
 ]);
 
 // ────────────────────────────────────────────────────────────────────────────
