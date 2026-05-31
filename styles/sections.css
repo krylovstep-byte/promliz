@@ -1086,6 +1086,7 @@
   color: var(--color-text-muted) !important;
 }
 
+.mini-calc__field input:not([type]),
 .mini-calc__field input[type="text"] {
   width: 100%;
   padding: 10px 14px;
@@ -1101,6 +1102,7 @@
   transition: border-color var(--transition), background var(--transition), box-shadow var(--transition);
 }
 
+.mini-calc__field input:not([type]):focus,
 .mini-calc__field input[type="text"]:focus {
   border-color: var(--color-orange);
   background: #FFFFFF;

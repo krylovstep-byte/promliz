@@ -123,7 +123,10 @@ async function processHtml(srcAbs) {
       collapseWhitespace: true,
       conservativeCollapse: false,
       removeComments: true,
-      removeRedundantAttributes: true,
+      // removeRedundantAttributes: НЕ ставим true — он удаляет type="text" с <input>,
+      // из-за чего ломаются CSS-селекторы input[type="text"]. Получаем поля без стилей,
+      // с дефолтной браузерной рамкой 2px inset. Цена сохранения: ~50 байт на HTML.
+      removeRedundantAttributes: false,
       removeScriptTypeAttributes: true,
       removeStyleLinkTypeAttributes: true,
       minifyCSS: true,

@@ -756,6 +756,7 @@ body.has-mobile-nav {
     font-size: 12px;
   }
 
+  .mini-calc__field input:not([type]),
   .mini-calc__field input[type="text"] {
     min-height: 52px;
     padding: 12px 14px;
@@ -1478,6 +1479,7 @@ body.has-mobile-nav {
   }
 
   /* Inputs */
+  .calc__form input:not([type]),
   .calc__form input[type="text"],
   .calc__form .input-suffix input {
     min-height: 52px;

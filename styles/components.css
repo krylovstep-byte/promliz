@@ -443,6 +443,7 @@
   line-height: 1;
 }
 
+input:not([type]),
 input[type="text"],
 input[type="tel"],
 input[type="email"],
