@@ -1,0 +1,44 @@
+# Локальный запуск админки для разработки/проверки.
+# Использование:
+#   1. Запустить Docker Desktop
+#   2. cd admin
+#   3. docker compose up
+#   4. Открыть http://localhost:8088/admin/
+#
+# Пароль для теста: test1234 (задаётся в config.local.php при первом запуске).
+# В прод этот compose НЕ нужен — там FTP + Apache на REG.RU.
+
+services:
+  web:
+    image: php:8.3-cli
+    working_dir: /app
+    command: >
+      sh -c "
+        if [ ! -f /app/admin/inc/config.php ]; then
+          echo '⚙ Создаю admin/inc/config.php с тестовыми кредами...';
+          HASH=$$(php -r \"echo password_hash('test1234', PASSWORD_BCRYPT, ['cost' => 12]);\");
+          cat > /app/admin/inc/config.php <<EOF
+        <?php
+        return [
+            'admin_username'      => 'admin',
+            'admin_password_hash' => '$$HASH',
+            'app_secret'          => 'local-dev-secret-not-for-production-32chars',
+            'db_path'             => __DIR__ . '/../../data/orders.sqlite',
+            'notify_email'        => '',
+            'notify_from'         => 'no-reply@localhost',
+            'allowed_origins'     => ['http://localhost:8088'],
+            'cookie_secure'       => false,
+            'timezone'            => 'Europe/Moscow',
+        ];
+        EOF
+          echo '✅ admin/inc/config.php создан. Логин: admin / пароль: test1234'
+        fi
+        echo '🚀 Старт PHP-сервера на http://localhost:8088'
+        echo '   Админка:    http://localhost:8088/admin/'
+        echo '   Главная:    http://localhost:8088/'
+        php -d display_errors=on -d error_reporting=E_ALL -S 0.0.0.0:8088 -t /app
+      "
+    ports:
+      - "8088:8088"
+    volumes:
+      - ../:/app
