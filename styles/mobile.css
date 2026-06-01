@@ -739,17 +739,30 @@ body.has-mobile-nav {
     display: none !important;
   }
 
-  /* V49: «Калькулятор лизинга» — ещё крупнее, главный заголовок калькулятора */
+  /* V62: «Калькулятор лизинга» — крупнее + акцентная оранжевая линия снизу
+     (больше и заметнее на мобилке). */
   .hero__unit-calc-head__eyebrow--mobile {
     display: inline-block;
-    font-size: 26px;
+    position: relative;
+    font-size: 30px;
     font-weight: 800;
-    letter-spacing: -0.025em;
+    letter-spacing: -0.03em;
     text-transform: none;
     color: var(--color-blue-brand);
     opacity: 1;
     margin: 0;
-    line-height: 1.05;
+    line-height: 1.1;
+    padding-bottom: 7px;
+  }
+  .hero__unit-calc-head__eyebrow--mobile::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 40px;
+    height: 3px;
+    border-radius: 2px;
+    background: var(--color-accent);
   }
 
   .hero__unit-calc-head .eyebrow {
