@@ -28,6 +28,7 @@ const DIST = path.join(ROOT, 'dist');
 const COPY_DIRS = ['assets', 'docs', 'blog', 'seo', 'styles', 'scripts'];
 const COPY_FILES = [
   'index.html', 'robots.txt', 'sitemap.xml', 'favicon.ico',
+  '404.html', // кастомная страница ошибки (ErrorDocument 404 в .htaccess ссылается на неё)
   // Verification-файлы поисковиков (Яндекс.Вебмастер / Google Search Console).
   // Их НЕ минифицируем — поисковик проверяет точное содержимое (см. isVerificationFile).
   'yandex_be53450d3d6c6795.html',

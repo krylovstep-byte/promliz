@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#032E42">
+<title>Страница не найдена — Промлизинг</title>
+<meta name="description" content="Страница не найдена. Вернитесь на главную или выберите нужный раздел сайта Промлизинг — лизинг транспорта, спецтехники и оборудования.">
+<meta name="robots" content="noindex, follow">
+<link rel="icon" type="image/x-icon" href="/favicon.ico?v=147">
+<link rel="icon" type="image/png" sizes="256x256" href="/assets/favicon.png?v=147">
+<link rel="apple-touch-icon" sizes="256x256" href="/assets/favicon.png?v=147">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700&family=Onest:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/styles/tokens.css?v=147">
+<link rel="stylesheet" href="/styles/base.css?v=147">
+<link rel="stylesheet" href="/styles/layout.css?v=147">
+<link rel="stylesheet" href="/styles/components.css?v=147">
+<style>
+  .nf {
+    min-height: 70vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 64px 20px;
+  }
+  .nf__inner { max-width: 640px; }
+  .nf__code {
+    font-family: var(--font-display, 'Bricolage Grotesque', sans-serif);
+    font-weight: 700;
+    font-size: clamp(96px, 22vw, 180px);
+    line-height: 1;
+    letter-spacing: -0.03em;
+    color: var(--color-blue-brand, #0094DE);
+    margin: 0;
+  }
+  .nf__title {
+    font-family: var(--font-display, 'Bricolage Grotesque', sans-serif);
+    font-weight: 700;
+    font-size: clamp(24px, 5vw, 34px);
+    color: var(--color-navy-950, #061827);
+    margin: 8px 0 12px;
+    letter-spacing: -0.02em;
+  }
+  .nf__lead {
+    font-size: clamp(15px, 2.2vw, 18px);
+    color: var(--color-text-muted, #667085);
+    line-height: 1.55;
+    margin: 0 auto 28px;
+    max-width: 480px;
+  }
+  .nf__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    justify-content: center;
+    margin-bottom: 36px;
+  }
+  .nf__links {
+    border-top: 1px solid var(--color-border, #E5E2DA);
+    padding-top: 24px;
+  }
+  .nf__links-title {
+    font-size: 13px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--color-text-soft, #98A2B3);
+    margin: 0 0 14px;
+  }
+  .nf__links-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px 18px;
+    justify-content: center;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  .nf__links-grid a {
+    color: var(--color-blue-brand, #0094DE);
+    text-decoration: none;
+    font-size: 15px;
+    font-weight: 500;
+  }
+  .nf__links-grid a:hover { text-decoration: underline; }
+
+  /* Минимальная шапка для страницы 404 */
+  .nf-header {
+    background: var(--color-navy-800, #0B2B42);
+    border-bottom: 2px solid var(--color-blue-brand, #0094DE);
+  }
+  .nf-header__inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 14px 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+  }
+  .nf-header__phone {
+    color: #fff;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 15px;
+    white-space: nowrap;
+  }
+  .nf-header__phone:hover { color: var(--color-blue-brand, #0094DE); }
+  .nf-footer {
+    text-align: center;
+    padding: 24px 20px 40px;
+    color: var(--color-text-soft, #98A2B3);
+    font-size: 13px;
+  }
+  .nf-footer a { color: var(--color-text-muted, #667085); text-decoration: none; }
+  .nf-footer a:hover { text-decoration: underline; }
+</style>
+</head>
+<body>
+
+<header class="nf-header">
+  <div class="nf-header__inner">
+    <a href="/" aria-label="Промлизинг — на главную">
+      <img decoding="async" src="/assets/logo.svg?v=147" alt="Промлизинг" width="180" height="40">
+    </a>
+    <a href="tel:+74852770187" class="nf-header__phone">+7&nbsp;(4852)&nbsp;77-01-87</a>
+  </div>
+</header>
+
+<main class="nf">
+  <div class="nf__inner">
+    <p class="nf__code">404</p>
+    <h1 class="nf__title">Страница не найдена</h1>
+    <p class="nf__lead">Похоже, страница переехала или её больше нет. Это не&nbsp;страшно&nbsp;— вернитесь на&nbsp;главную или&nbsp;выберите нужный раздел ниже.</p>
+
+    <div class="nf__actions">
+      <a href="/" class="btn btn--accent btn--lg">На главную</a>
+      <a href="/#calc" class="btn btn--ghost btn--lg">Калькулятор</a>
+      <a href="/#apply" class="btn btn--ghost btn--lg">Оставить заявку</a>
+    </div>
+
+    <nav class="nf__links" aria-label="Разделы сайта">
+      <p class="nf__links-title">Возможно, вы искали</p>
+      <ul class="nf__links-grid">
+        <li><a href="/seo/lizing-transporta.html">Лизинг транспорта</a></li>
+        <li><a href="/seo/lizing-spectehniki.html">Лизинг спецтехники</a></li>
+        <li><a href="/seo/lizing-oborudovaniya.html">Лизинг оборудования</a></li>
+        <li><a href="/seo/lizing-nedvizhimosti.html">Лизинг недвижимости</a></li>
+        <li><a href="/seo/lizing-dlya-ip.html">Лизинг для ИП</a></li>
+        <li><a href="/seo/lizing-yaroslavl.html">Лизинг в Ярославле</a></li>
+        <li><a href="/blog/">Блог</a></li>
+      </ul>
+    </nav>
+  </div>
+</main>
+
+<footer class="nf-footer">
+  <span>© 2001–2026 ООО «МБЛ» · <a href="/">promliz.com</a></span>
+</footer>
+
+</body>
+</html>

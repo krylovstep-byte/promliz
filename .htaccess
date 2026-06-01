@@ -1,0 +1,27 @@
+# BEGIN PROMLIZ-REDIRECTS
+# Этот блок управляется автоматически через scripts/upload-htaccess.py.
+# Всё что ВЫШЕ и НИЖЕ маркеров (SSL-редирект, прочие правила хостинга) — не трогается.
+
+# Кастомная страница 404 вместо дефолтной страницы хостинга REG.RU
+ErrorDocument 404 /404.html
+
+# 301-редиректы со старого MODX-сайта на релевантные страницы нового сайта.
+# Матчим по стабильному началу пути (RedirectMatch), т.к. старые ЧПУ длинные
+# и содержат спецсимволы. Хвосты (?ysclid=...) Apache сохраняет автоматически.
+<IfModule mod_alias.c>
+  RedirectMatch 301 ^/about-lising/?$                              https://promliz.com/
+  RedirectMatch 301 ^/calculator/?$                                https://promliz.com/#calc
+  RedirectMatch 301 ^/legkij-kommercheskij-transport/?$            https://promliz.com/seo/lizing-transporta.html
+  RedirectMatch 301 ^/avtobusyi-i-passazhirskij-transport/?$       https://promliz.com/seo/lizing-transporta.html
+  RedirectMatch 301 ^/kak-lizing-gruzovoj                          https://promliz.com/seo/lizing-transporta.html
+  RedirectMatch 301 ^/uvelichili-pribyil                           https://promliz.com/seo/lizing-transporta.html
+  RedirectMatch 301 ^/uralskij-divizion                            https://promliz.com/seo/lizing-transporta.html
+  RedirectMatch 301 ^/lizing-specztexniki                          https://promliz.com/seo/lizing-spectehniki.html
+  RedirectMatch 301 ^/avtomobil-sedelnyij-tyagach                  https://promliz.com/seo/lizing-spectehniki.html
+  RedirectMatch 301 ^/osobennosti-oformleniya-lizinga-dlya-startapov https://promliz.com/seo/lizing-dlya-ooo.html
+  RedirectMatch 301 ^/kak-proverit-lizingovuyu                     https://promliz.com/blog/proverit-lizingovuyu.html
+  RedirectMatch 301 ^/lizing-v-raznyh-otraslyah                    https://promliz.com/blog/
+  RedirectMatch 301 ^/izvestnyie-rossijskie                        https://promliz.com/blog/
+  RedirectMatch 301 ^/ponovee-v-lizing                             https://promliz.com/blog/
+</IfModule>
+# END PROMLIZ-REDIRECTS
