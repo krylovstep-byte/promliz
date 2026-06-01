@@ -3916,6 +3916,25 @@
   color: var(--color-accent);
 }
 
+/* «Наш документ» — реквизиты компании Промлизинг, выделяем фирменным синим */
+.docs-download-card--own {
+  background: var(--color-blue-soft);
+  border-color: var(--color-blue-brand);
+}
+.docs-download-card--own:hover {
+  background: var(--color-blue-100);
+  border-color: var(--color-blue-brand);
+  transform: translateX(2px);
+}
+.docs-download-card--own .docs-download-card__body span {
+  color: var(--color-blue-700);
+  font-weight: var(--fw-semibold);
+}
+.docs-download-card--own svg,
+.docs-download-card--own:hover svg {
+  color: var(--color-blue-brand);
+}
+
 @media (max-width: 900px) {
   .docs__layout {
     grid-template-columns: 1fr;
