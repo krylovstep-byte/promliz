@@ -9,17 +9,49 @@ ErrorDocument 404 /404.html
 # Матчим по стабильному началу пути (RedirectMatch), т.к. старые ЧПУ длинные
 # и содержат спецсимволы. Хвосты (?ysclid=...) Apache сохраняет автоматически.
 <IfModule mod_alias.c>
+  # --- Категории старого сайта (по виду техники) ---
+  RedirectMatch 301 ^/oborudovanie                                 https://promliz.com/seo/lizing-oborudovaniya.html
+  RedirectMatch 301 ^/legkovoj-transport                           https://promliz.com/seo/lizing-transporta.html
+  RedirectMatch 301 ^/legkij-kommercheskij-transport               https://promliz.com/seo/lizing-transporta.html
+  RedirectMatch 301 ^/avtobusyi-i-passazhirskij-transport          https://promliz.com/seo/lizing-transporta.html
+  RedirectMatch 301 ^/gruzovaya-texnika                            https://promliz.com/seo/lizing-transporta.html
+  RedirectMatch 301 ^/specztexnika                                 https://promliz.com/seo/lizing-spectehniki.html
+  RedirectMatch 301 ^/dorozhnaya-stroitelnaya-texnika              https://promliz.com/seo/lizing-spectehniki.html
+  RedirectMatch 301 ^/selxoztexnika                                https://promliz.com/seo/lizing-selhoztehniki.html
+
+  # --- Карточки конкретной техники из старого каталога ---
+  RedirectMatch 301 ^/kp-                                          https://promliz.com/seo/lizing-transporta.html
+  RedirectMatch 301 ^/forland                                      https://promliz.com/seo/lizing-transporta.html
+  RedirectMatch 301 ^/foton                                        https://promliz.com/seo/lizing-transporta.html
+  RedirectMatch 301 ^/mercedes-benz-actros                         https://promliz.com/seo/lizing-transporta.html
+  RedirectMatch 301 ^/avtomobil-sedelnyij-tyagach                  https://promliz.com/seo/lizing-spectehniki.html
+  RedirectMatch 301 ^/magistralnyij-sedelnyij-tyagach              https://promliz.com/seo/lizing-transporta.html
+
+  # --- Разделы старого сайта ---
   RedirectMatch 301 ^/about-lising/?$                              https://promliz.com/
   RedirectMatch 301 ^/calculator/?$                                https://promliz.com/#calc
-  RedirectMatch 301 ^/legkij-kommercheskij-transport/?$            https://promliz.com/seo/lizing-transporta.html
-  RedirectMatch 301 ^/avtobusyi-i-passazhirskij-transport/?$       https://promliz.com/seo/lizing-transporta.html
+  RedirectMatch 301 ^/catalog                                      https://promliz.com/
+  RedirectMatch 301 ^/cases                                        https://promliz.com/blog/
+  RedirectMatch 301 ^/akczii-i-speczpredlozheniya                  https://promliz.com/
+  RedirectMatch 301 ^/subsidiya-minpromtorga                       https://promliz.com/
+  RedirectMatch 301 ^/lizing/?$                                    https://promliz.com/
+  RedirectMatch 301 ^/kontaktyi                                    https://promliz.com/#contacts
+
+  # --- Статьи старого блога с прямыми аналогами на новом сайте ---
+  RedirectMatch 301 ^/sravnenie-lizing-kredit                      https://promliz.com/blog/lizing-vs-kredit.html
+  RedirectMatch 301 ^/kak-proverit-lizingovuyu                     https://promliz.com/blog/proverit-lizingovuyu.html
+  RedirectMatch 301 ^/refinansirovanie-lizinga                     https://promliz.com/seo/refinansirovanie-lizinga.html
+  RedirectMatch 301 ^/lizing-nedvizhimosti                         https://promliz.com/seo/lizing-nedvizhimosti.html
+  RedirectMatch 301 ^/lizing-selxoztexniki                         https://promliz.com/seo/lizing-selhoztehniki.html
+  RedirectMatch 301 ^/lizing-medicinskogo-oborudovaniya            https://promliz.com/seo/lizing-oborudovaniya.html
+  RedirectMatch 301 ^/lizing-mediczinskogo-oborudovaniya           https://promliz.com/seo/lizing-oborudovaniya.html
+  RedirectMatch 301 ^/elektromobili-v-lizing                       https://promliz.com/seo/lizing-transporta.html
+  RedirectMatch 301 ^/innovazii-v-lizinge                          https://promliz.com/blog/
+  RedirectMatch 301 ^/lizing-specztexniki                          https://promliz.com/seo/lizing-spectehniki.html
+  RedirectMatch 301 ^/osobennosti-oformleniya-lizinga-dlya-startapov https://promliz.com/seo/lizing-dlya-ooo.html
   RedirectMatch 301 ^/kak-lizing-gruzovoj                          https://promliz.com/seo/lizing-transporta.html
   RedirectMatch 301 ^/uvelichili-pribyil                           https://promliz.com/seo/lizing-transporta.html
   RedirectMatch 301 ^/uralskij-divizion                            https://promliz.com/seo/lizing-transporta.html
-  RedirectMatch 301 ^/lizing-specztexniki                          https://promliz.com/seo/lizing-spectehniki.html
-  RedirectMatch 301 ^/avtomobil-sedelnyij-tyagach                  https://promliz.com/seo/lizing-spectehniki.html
-  RedirectMatch 301 ^/osobennosti-oformleniya-lizinga-dlya-startapov https://promliz.com/seo/lizing-dlya-ooo.html
-  RedirectMatch 301 ^/kak-proverit-lizingovuyu                     https://promliz.com/blog/proverit-lizingovuyu.html
   RedirectMatch 301 ^/lizing-v-raznyh-otraslyah                    https://promliz.com/blog/
   RedirectMatch 301 ^/izvestnyie-rossijskie                        https://promliz.com/blog/
   RedirectMatch 301 ^/ponovee-v-lizing                             https://promliz.com/blog/
