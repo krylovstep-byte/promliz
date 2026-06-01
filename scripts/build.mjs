@@ -26,7 +26,20 @@ const DIST = path.join(ROOT, 'dist');
 
 // Что копировать. Папки и файлы относительно ROOT.
 const COPY_DIRS = ['assets', 'docs', 'blog', 'seo', 'styles', 'scripts'];
-const COPY_FILES = ['index.html', 'robots.txt', 'sitemap.xml', 'favicon.ico'];
+const COPY_FILES = [
+  'index.html', 'robots.txt', 'sitemap.xml', 'favicon.ico',
+  // Verification-файлы поисковиков (Яндекс.Вебмастер / Google Search Console).
+  // Их НЕ минифицируем — поисковик проверяет точное содержимое (см. isVerificationFile).
+  'yandex_be53450d3d6c6795.html',
+];
+
+// Файлы подтверждения прав в поисковиках. Копируются как есть, без минификации,
+// чтобы Яндекс/Google увидели ровно тот код, что они выдали.
+// Паттерн: yandex_xxx.html, googleXXXX.html
+function isVerificationFile(absPath) {
+  const name = path.basename(absPath).toLowerCase();
+  return /^(yandex_[a-z0-9]+\.html|google[a-z0-9]+\.html)$/.test(name);
+}
 
 // Что игнорировать при копировании всегда
 const IGNORE = new Set([
@@ -179,7 +192,9 @@ async function main() {
   const queue = { html: [], css: [], js: [], other: [] };
   for (const f of sources) {
     const ext = path.extname(f).toLowerCase();
-    if (ext === '.html') queue.html.push(f);
+    // Verification-файлы поисковиков — копируем как есть, без минификации
+    if (isVerificationFile(f)) queue.other.push(f);
+    else if (ext === '.html') queue.html.push(f);
     else if (ext === '.css') queue.css.push(f);
     else if (ext === '.js' || ext === '.mjs') queue.js.push(f);
     else queue.other.push(f);
