@@ -6031,7 +6031,11 @@
    V17: LEGAL PAGE (privacy policy + consent)
    ============================================================ */
 .legal-page {
-  padding-block: var(--space-9) var(--space-10);
+  /* Верхний отступ перекрывает фиксированный хедер (.header__inner = 84px) + воздух,
+     иначе заголовок подныривает под шапку. На legal-страницах mobile.css не подключён,
+     поэтому хедер тут всегда fixed 84px. Используем существующие токены (--space-9
+     в шкале отсутствует, поэтому исходный var(--space-9) и схлопывал padding в 0). */
+  padding-block: calc(84px + var(--space-8)) var(--space-12);
   background: var(--color-bg);
 }
 
