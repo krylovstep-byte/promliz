@@ -55,5 +55,11 @@ ErrorDocument 404 /404.html
   RedirectMatch 301 ^/lizing-v-raznyh-otraslyah                    https://promliz.com/blog/
   RedirectMatch 301 ^/izvestnyie-rossijskie                        https://promliz.com/blog/
   RedirectMatch 301 ^/ponovee-v-lizing                             https://promliz.com/blog/
+
+  # --- Хвост: непокрытые карточки/акции старого каталога (по выгрузке 4xx из Вебмастера, июнь 2026) ---
+  RedirectMatch 301 ^/model-                                       https://promliz.com/
+  RedirectMatch 301 ^/avtobetonosmesitel                           https://promliz.com/seo/lizing-spectehniki.html
+  RedirectMatch 301 ^/bortovoj                                     https://promliz.com/seo/lizing-transporta.html
+  RedirectMatch 301 ^/vremya-posmotret                             https://promliz.com/
 </IfModule>
 # END PROMLIZ-REDIRECTS
