@@ -26,3 +26,32 @@
   .seo-hero__calculator .hero__unit-result-main { flex-wrap: wrap; gap: 8px; }
   .seo-hero__calculator .hero__unit-pdf-btn { white-space: normal; }
 }
+
+/* Compact, wider card only on SEO landing pages. */
+@media (min-width: 1001px) {
+  .seo-hero > .container { max-width: 1400px; }
+  .seo-hero__grid { grid-template-columns: minmax(300px, 0.75fr) minmax(0, 1.25fr); gap: 32px; }
+}
+@media (min-width: 641px) {
+  .seo-hero__calculator .hero__unit-photo { height: 170px; }
+  .seo-hero__calculator .hero__unit-calc { padding: 18px 22px; gap: 12px; }
+  .seo-hero__calculator .hero__unit-calc-head { flex-wrap: nowrap; }
+  .seo-hero__calculator .hero__unit-calc-head .hero__unit-calc-head__eyebrow--desktop {
+    white-space: nowrap; font-size: clamp(12px, 1.15vw, 15px); letter-spacing: 0.025em;
+  }
+  .seo-hero__calculator .mini-calc { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.15fr); gap: 10px 20px; }
+  .seo-hero__calculator .mini-calc__field { min-width: 0; }
+  .seo-hero__calculator .mini-calc__field:first-child { grid-column: 1 / -1; }
+  .seo-hero__calculator .mini-calc__field label output { font-size: 20px; }
+  .seo-hero__calculator .hero__unit-result { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); align-items: center; gap: 10px 16px; padding-top: 10px; }
+  .seo-hero__calculator .hero__unit-result-main { flex-direction: column; align-items: flex-start; gap: 4px; }
+  .seo-hero__calculator .hero__unit-result-value { font-size: 34px; }
+  .seo-hero__calculator .hero__unit-result-label { font-size: 11px; }
+  .seo-hero__calculator .hero__unit-tax-accent { margin: 0; padding: 10px 12px; gap: 10px; }
+  .seo-hero__calculator .hero__unit-tax-icon { width: 34px; height: 34px; font-size: 22px; }
+  .seo-hero__calculator .hero__unit-tax-value { font-size: 23px; }
+  .seo-hero__calculator .hero__unit-result-meta { grid-column: 1 / -1; font-size: 14px; gap: 10px; }
+  .seo-hero__calculator .hero__unit-result-meta strong { font-size: 19px; }
+  .seo-hero__calculator .hero__unit-pdf-btn { font-size: 12px; padding: 8px 10px; }
+  .seo-hero__calculator .hero__unit-cta { padding: 12px 20px; }
+}
