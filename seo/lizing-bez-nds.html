@@ -228,8 +228,29 @@
       <li><strong>До&nbsp;60&nbsp;мес</strong><span>срок</span></li>
     </ul>
     </div>
-    <aside class="hero__unit seo-hero__calculator" id="calc" aria-label="Калькулятор лизинга">
-<div class="hero__unit-calc">
+    <aside class="hero__unit beam-wrap reveal seo-hero__calculator" id="calc" aria-label="Быстрый расчёт лизинга">
+      <div class="hero__unit-photo">
+        <div class="hero__rotator" data-rotator>
+          <img src="../assets/photos/hero-rotator/1.webp" alt="Спецтехника в лизинг" class="is-active" loading="eager" width="1200" height="900">
+          <img decoding="async" src="../assets/photos/hero-rotator/2.webp" alt="Оборудование в лизинг" loading="lazy" width="1200" height="800">
+          <img decoding="async" src="../assets/photos/hero-rotator/3.webp" alt="Грузовой транспорт в лизинг" loading="lazy" width="1200" height="900">
+          <img decoding="async" src="../assets/photos/hero-rotator/4.webp" alt="Оборудование в лизинг" loading="lazy" style="object-position: center 75%;" width="1600" height="1068">
+          <img decoding="async" src="../assets/photos/hero-rotator/5.webp" alt="Спецтехника в лизинг" loading="lazy" style="object-position: center 55%;" width="1200" height="900">
+        </div>
+        <div class="hero__unit-tint" aria-hidden="true"></div>
+        <div class="hero__rotator-dots" role="tablist" aria-label="Предметы лизинга">
+          <button type="button" class="is-active" data-dot="0" aria-label="Спецтехника"></button>
+          <button type="button" data-dot="1" aria-label="Оборудование"></button>
+          <button type="button" data-dot="2" aria-label="Грузовой транспорт"></button>
+          <button type="button" data-dot="3" aria-label="Оборудование"></button>
+          <button type="button" data-dot="4" aria-label="Спецтехника"></button>
+        </div>
+        <div class="hero__unit-category" aria-live="polite">
+          <strong class="hero__unit-category-title" data-category-title>Транспорт в лизинг</strong>
+        </div>
+      </div>
+
+      <div class="hero__unit-calc">
         <div class="hero__unit-calc-head">
           <span class="eyebrow hero__unit-calc-head__eyebrow--desktop">Калькулятор лизинга. Предварительный расчёт</span>
           <span class="eyebrow hero__unit-calc-head__eyebrow--mobile">Калькулятор лизинга</span>
@@ -270,7 +291,7 @@
           <div class="hero__unit-tax-accent">
             <span class="hero__unit-tax-icon" aria-hidden="true">₽</span>
             <div class="hero__unit-tax-accent-body">
-              <span class="hero__unit-tax-label">Экономия на&nbsp;налогах</span>
+              <span class="hero__unit-tax-label">Экономия на&nbsp;НДС</span>
               <strong id="m-tax" class="hero__unit-tax-value">1&nbsp;135&nbsp;031&nbsp;₽</strong>
             </div>
           </div>
@@ -394,5 +415,7 @@
 
 <script defer src="../scripts/mobile-nav.js?v=151"></script>
 <script defer src="../scripts/calculator.js?v=152"></script>
+<script defer src="../scripts/main.js?v=153"></script>
+<script defer src="../scripts/hero-beam.js?v=153"></script>
 </body>
 </html>
