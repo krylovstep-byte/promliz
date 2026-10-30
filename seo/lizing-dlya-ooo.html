@@ -110,6 +110,7 @@
   </script>
   <noscript><div><img src="https://mc.yandex.ru/watch/109552650" style="position:absolute; left:-9999px;" alt="" width="1" height="1" /></div></noscript>
   <!-- /Yandex.Metrika counter -->
+<link rel="stylesheet" href="../styles/seo-calculator.css?v=152">
 </head>
 <body>
 
@@ -129,7 +130,7 @@
     </button>
 
     <nav class="nav" aria-label="Основное меню">
-      <a href="../#calc">Калькулятор</a>
+      <a href="#calc">Калькулятор</a>
       <a href="../#docs">Документы</a>
       <a href="../#assets">Что финансируем</a>
       <a href="../#cases">Кейсы</a>
@@ -180,7 +181,7 @@
   </div>
 
   <ul class="mobile-nav__links">
-    <li><a href="../#calc">Калькулятор</a></li>
+    <li><a href="#calc">Калькулятор</a></li>
     <li><a href="../#docs">Документы</a></li>
     <li><a href="../#assets">Что финансируем</a></li>
     <li><a href="../#cases">Кейсы</a></li>
@@ -210,12 +211,14 @@
       <a href="../#assets">Лизинг</a><span class="breadcrumbs__sep">/</span>
       <span>Лизинг для ООО</span>
     </nav>
+    <div class="seo-hero__grid">
+    <div class="seo-hero__copy">
     <span class="seo-hero__eyebrow">Для ООО</span>
     <h1>Лизинг для&nbsp;юридических лиц&nbsp;(ООО)</h1>
     <p class="lead">Лизинг транспорта, спецтехники, оборудования и&nbsp;недвижимости для&nbsp;ООО на&nbsp;ОСНО и&nbsp;УСН. Возврат НДС, учёт всей суммы в&nbsp;расходах. Решение до&nbsp;3&nbsp;рабочих дней.</p>
     <div class="seo-hero__cta-row">
       <a href="../#apply" class="btn btn--accent btn--lg shine-on-hover">Получить расчёт</a>
-      <a href="../#calc" class="btn btn--ghost btn--lg">Посчитать самому</a>
+      <a href="#calc" class="btn btn--ghost btn--lg">Посчитать самому</a>
     </div>
 
     <ul class="hero__trust-row hero__trust-row--grid" style="margin-top:32px">
@@ -224,6 +227,83 @@
       <li><strong>Возврат НДС</strong><span>на&nbsp;ОСНО</span></li>
       <li><strong>В расходы</strong><span>налог на&nbsp;прибыль</span></li>
     </ul>
+    </div>
+    <aside class="hero__unit seo-hero__calculator" id="calc" aria-label="Калькулятор лизинга">
+<div class="hero__unit-calc">
+        <div class="hero__unit-calc-head">
+          <span class="eyebrow hero__unit-calc-head__eyebrow--desktop">Калькулятор лизинга. Предварительный расчёт</span>
+          <span class="eyebrow hero__unit-calc-head__eyebrow--mobile">Калькулятор лизинга</span>
+        </div>
+
+        <form class="mini-calc" id="mini-calc">
+          <div class="mini-calc__field">
+            <label for="m-price">Стоимость имущества, ₽</label>
+            <input type="text" id="m-price" inputmode="numeric" value="3 500 000" autocomplete="off">
+          </div>
+
+          <div class="mini-calc__field">
+            <label for="m-advance">Аванс <output id="m-advance-out">20%</output></label>
+            <input type="range" id="m-advance" class="range range--advance" min="10" max="49" step="1" value="20">
+          </div>
+
+          <div class="mini-calc__field">
+            <label>Срок <output id="m-term-out">36 месяцев</output></label>
+            <div class="step-selector step-selector--light" id="m-term-steps" role="radiogroup" aria-label="Срок лизинга">
+              <button type="button" data-value="12">12</button>
+              <button type="button" data-value="24">24</button>
+              <button type="button" class="is-active" data-value="36" aria-pressed="true">36</button>
+              <button type="button" data-value="48">48</button>
+              <button type="button" data-value="60">60</button>
+            </div>
+          </div>
+        </form>
+
+        <div class="hero__unit-result">
+          <div class="hero__unit-result-main">
+            <span class="hero__unit-result-label">Ежемесячный платёж</span>
+            <span id="m-monthly" class="money hero__unit-result-value">
+              <span class="money__amount">98&nbsp;440</span>
+              <small class="money__suffix">₽ / мес</small>
+            </span>
+          </div>
+
+          <div class="hero__unit-tax-accent">
+            <span class="hero__unit-tax-icon" aria-hidden="true">₽</span>
+            <div class="hero__unit-tax-accent-body">
+              <span class="hero__unit-tax-label">Экономия на&nbsp;налогах</span>
+              <strong id="m-tax" class="hero__unit-tax-value">1&nbsp;135&nbsp;031&nbsp;₽</strong>
+            </div>
+          </div>
+
+          <div class="hero__unit-result-meta">
+            <button type="button" class="hero__unit-pdf-btn" id="m-pdf-btn" aria-label="Скачать график платежей в PDF">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/>
+              </svg>
+              Скачать график платежей в pdf
+            </button>
+            <span>Сумма договора <strong id="m-total"><span class="money">4&nbsp;243&nbsp;829&nbsp;₽</span></strong></span>
+          </div>
+        </div>
+
+        <a href="../#apply" class="hero__unit-cta hero__unit-cta--fab" aria-label="Получить точный расчёт">
+          <span class="hero__unit-cta-label">Получить точный расчёт</span>
+          <span class="hero__unit-cta-icon" aria-hidden="true">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="4" y="2" width="16" height="20" rx="2"/>
+              <rect x="7" y="5" width="10" height="3.5" rx="0.5" fill="currentColor" opacity="0.25" stroke="none"/>
+              <circle cx="8.5" cy="13" r="0.9" fill="currentColor" stroke="none"/>
+              <circle cx="12" cy="13" r="0.9" fill="currentColor" stroke="none"/>
+              <circle cx="15.5" cy="13" r="0.9" fill="currentColor" stroke="none"/>
+              <circle cx="8.5" cy="16.5" r="0.9" fill="currentColor" stroke="none"/>
+              <circle cx="12" cy="16.5" r="0.9" fill="currentColor" stroke="none"/>
+              <circle cx="15.5" cy="16.5" r="0.9" fill="currentColor" stroke="none"/>
+            </svg>
+          </span>
+        </a>
+      </div>
+    </aside>
+    </div>
   </div>
 </section>
 
@@ -248,7 +328,7 @@
       <p>Для&nbsp;экспресс-скоринга достаточно <strong>карточки компании</strong> и&nbsp;<strong>счёта от&nbsp;поставщика</strong>. Полный пакет запрашиваем только после&nbsp;предварительного одобрения - это экономит ваше время. <a href="../#docs">Полный список документов&nbsp;→</a></p>
 
       <h2>Налоговая выгода</h2>
-      <p>На&nbsp;ОСНО возвращаете НДС&nbsp;20% с&nbsp;каждого платежа и&nbsp;уменьшаете налог на&nbsp;прибыль (платёж целиком в&nbsp;расходах). На&nbsp;УСН «Доходы минус расходы» (15%) - лизинговый платёж снижает налогооблагаемую базу. <a href="../#calc">Посчитайте экономию на&nbsp;калькуляторе&nbsp;→</a></p>
+      <p>На&nbsp;ОСНО возвращаете НДС&nbsp;20% с&nbsp;каждого платежа и&nbsp;уменьшаете налог на&nbsp;прибыль (платёж целиком в&nbsp;расходах). На&nbsp;УСН «Доходы минус расходы» (15%) - лизинговый платёж снижает налогооблагаемую базу. <a href="#calc">Посчитайте экономию на&nbsp;калькуляторе&nbsp;→</a></p>
     </article>
 
     <aside class="seo-content__side">
@@ -260,7 +340,7 @@
           <div class="seo-cta-box__stat"><strong>До&nbsp;3&nbsp;дней</strong><span>решение</span></div>
         </div>
         <a href="../#apply" class="btn btn--accent btn--block shine-on-hover">Оставить заявку</a>
-        <a href="../#calc" class="btn btn--ghost btn--block" style="margin-top:8px">Открыть калькулятор</a>
+        <a href="#calc" class="btn btn--ghost btn--block" style="margin-top:8px">Открыть калькулятор</a>
       </div>
     </aside>
   </div>
@@ -315,5 +395,6 @@
 <script defer src="../scripts/faq.js?v=151"></script>
 
 <script defer src="../scripts/mobile-nav.js?v=151"></script>
+<script defer src="../scripts/calculator.js?v=152"></script>
 </body>
 </html>

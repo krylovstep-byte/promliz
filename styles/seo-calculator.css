@@ -1,0 +1,28 @@
+/* Shared home-page calculator in SEO page heroes. */
+.seo-hero__grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr);
+  gap: 40px;
+  align-items: start;
+}
+.seo-hero__copy { min-width: 0; padding-top: 16px; }
+.seo-hero__calculator.hero__unit {
+  min-width: 0;
+  width: 100%;
+  margin: 0;
+  align-self: start;
+  scroll-margin-top: 100px;
+}
+.seo-hero__calculator .hero__unit-calc { width: 100%; }
+.seo-hero__calculator .hero__unit-result-meta { flex-wrap: wrap; }
+.seo-hero__calculator .hero__unit-result-meta > span { white-space: normal; }
+.seo-hero__calculator .hero__unit-calc-head .eyebrow { white-space: normal; }
+.seo-hero__copy .hero__trust-row--grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+@media (max-width: 1000px) {
+  .seo-hero__grid { grid-template-columns: minmax(0, 1fr); gap: 28px; }
+  .seo-hero__calculator.hero__unit { max-width: 680px; justify-self: center; }
+}
+@media (max-width: 480px) {
+  .seo-hero__calculator .hero__unit-result-main { flex-wrap: wrap; gap: 8px; }
+  .seo-hero__calculator .hero__unit-pdf-btn { white-space: normal; }
+}

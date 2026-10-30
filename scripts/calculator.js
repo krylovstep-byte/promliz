@@ -88,7 +88,10 @@
   }
 
   const form = document.getElementById('calc-form');
-  if (!form) return;
+  if (!form) {
+    initMiniCalc();
+    return;
+  }
 
   const priceEl    = document.getElementById('c-price');
   const advanceEl  = document.getElementById('c-advance');
@@ -379,7 +382,7 @@
           const cacheVer = (document.querySelector('script[src*="calculator.js?"]')?.src || '').match(/v=(\d+)/)?.[1] || '1';
           await new Promise((resolve, reject) => {
             const s = document.createElement('script');
-            s.src = 'scripts/pdf-generator.js?v=' + cacheVer;
+            s.src = new URL('pdf-generator.js?v=' + cacheVer, document.querySelector('script[src*="calculator.js"]').src).href;
             s.onload = resolve;
             s.onerror = () => reject(new Error('Не удалось загрузить генератор PDF'));
             document.head.appendChild(s);
@@ -443,149 +446,156 @@
   maskMoney(priceEl);
   update();
 
-  // ============ MINI CALC IN HERO ============
-  const miniForm = document.getElementById('mini-calc');
-  if (miniForm) {
-    const mPrice = document.getElementById('m-price');
-    const mAdv = document.getElementById('m-advance');
-    const mTermSteps = document.getElementById('m-term-steps');
-    const mAdvOut = document.getElementById('m-advance-out');
-    const mTermOut = document.getElementById('m-term-out');
-    const mMonthly = document.getElementById('m-monthly');
-    const mTotal = document.getElementById('m-total');
-    const mTax = document.getElementById('m-tax');
+  initMiniCalc();
 
-    let currentTerm = 36;
+  function initMiniCalc() {
+    // ============ MINI CALC IN HERO ============
+    const miniForm = document.getElementById('mini-calc');
+    if (miniForm) {
+      miniForm.addEventListener('submit', (e) => e.preventDefault());
+      const mPrice = document.getElementById('m-price');
+      const mAdv = document.getElementById('m-advance');
+      const mTermSteps = document.getElementById('m-term-steps');
+      const mAdvOut = document.getElementById('m-advance-out');
+      const mTermOut = document.getElementById('m-term-out');
+      const mMonthly = document.getElementById('m-monthly');
+      const mTotal = document.getElementById('m-total');
+      const mTax = document.getElementById('m-tax');
 
-    function getTerm() {
-      return currentTerm;
-    }
+      let currentTerm = 36;
 
-    function setTerm(value) {
-      currentTerm = parseInt(value, 10) || 36;
-      if (mTermSteps) {
-        mTermSteps.querySelectorAll('button').forEach((b) => {
-          const active = parseInt(b.dataset.value, 10) === currentTerm;
-          b.classList.toggle('is-active', active);
-          b.setAttribute('aria-pressed', active ? 'true' : 'false');
-        });
+      function getTerm() {
+        return currentTerm;
       }
-      if (mTermOut) mTermOut.textContent = currentTerm + (currentTerm === 1 ? ' месяц' : (currentTerm < 5 ? ' месяца' : ' месяцев'));
-    }
 
-    function miniCalc() {
-      const price = parseMoney(mPrice.value);
-      if (price <= 0) {
-        mMonthly.textContent = '—';
-        mTotal.textContent = '—';
-        mTax.textContent = '—';
-        return;
+      function setTerm(value) {
+        currentTerm = parseInt(value, 10) || 36;
+        if (mTermSteps) {
+          mTermSteps.querySelectorAll('button').forEach((b) => {
+            const active = parseInt(b.dataset.value, 10) === currentTerm;
+            b.classList.toggle('is-active', active);
+            b.setAttribute('aria-pressed', active ? 'true' : 'false');
+          });
+        }
+        if (mTermOut) mTermOut.textContent = currentTerm + (currentTerm === 1 ? ' месяц' : (currentTerm < 5 ? ' месяца' : ' месяцев'));
       }
-      const advancePct = parseInt(mAdv.value, 10) / 100;
-      const advance = price * advancePct;
-      const principal = price - advance;
-      const n = getTerm();
-      const i = 0.20 / 12;
-      const monthly = principal * (i * Math.pow(1 + i, n)) / (Math.pow(1 + i, n) - 1);
-      const total = monthly * n + advance;
-      // V55: HERO mini-calc — те же актуальные формулы (предполагаем ОСНО),
-      // profitSaving = (total - vatReturn) × 0.25 (правильная бух-логика)
-      const vatRet = total * 0.22 / 1.22;
-      const taxSaving = vatRet + (total - vatRet) * 0.25;
 
-      setSimpleMoney(mMonthly, Math.round(monthly), '<small class="money__suffix">₽ / мес</small>');
-      setMoneyValue(mTotal, Math.round(total));
-      mTax.textContent = fmt.format(Math.round(taxSaving)) + ' ₽';
-      pulse(mMonthly);
-    }
-
-    mPrice.addEventListener('input', () => {
-      const num = parseMoney(mPrice.value);
-      mPrice.value = num === 0 ? '' : fmt.format(num);
-      miniCalc();
-    });
-
-    mAdv.addEventListener('input', () => {
-      mAdvOut.textContent = mAdv.value + '%';
-      setRangeFill(mAdv);
-      miniCalc();
-    });
-
-    if (mTermSteps) {
-      mTermSteps.querySelectorAll('button').forEach((btn) => {
-        btn.addEventListener('click', () => {
-          setTerm(btn.dataset.value);
-          miniCalc();
-        });
-      });
-    }
-
-    setRangeFill(mAdv);
-    setTerm(currentTerm);
-
-    // V60.2: PDF-кнопка в hero mini-calc (рядом с "Сумма договора")
-    const mPdfBtn = document.getElementById('m-pdf-btn');
-    if (mPdfBtn) {
-      mPdfBtn.addEventListener('click', async () => {
+      function miniCalc() {
         const price = parseMoney(mPrice.value);
-        if (price <= 0) { alert('Сначала укажите стоимость предмета лизинга'); return; }
-        const advancePct = parseInt(mAdv.value, 10);
-        const advance = Math.round(price * advancePct / 100);
+        if (price <= 0) {
+          mMonthly.textContent = '—';
+          mTotal.textContent = '—';
+          mTax.textContent = '—';
+          return;
+        }
+        const advancePct = parseInt(mAdv.value, 10) / 100;
+        const advance = price * advancePct;
         const principal = price - advance;
         const n = getTerm();
         const i = 0.20 / 12;
         const monthly = principal * (i * Math.pow(1 + i, n)) / (Math.pow(1 + i, n) - 1);
         const total = monthly * n + advance;
-        const vatReturn = total * 0.22 / 1.22;
-        const profitSaving = (total - vatReturn) * 0.25;
-        const taxSaving = vatReturn + profitSaving;
-        const years = n / 12;
-        const annualMarkup = (((total - price) / price / years) * 100).toFixed(2).replace('.', ',');
+        // V55: HERO mini-calc — те же актуальные формулы (предполагаем ОСНО),
+        // profitSaving = (total - vatReturn) × 0.25 (правильная бух-логика)
+        const vatRet = total * 0.22 / 1.22;
+        const taxSaving = vatRet + (total - vatRet) * 0.25;
 
-        // Lazy-load pdf-generator (как в большом калькуляторе)
-        if (!window.generateLeasingPdf) {
-          const cacheVer = (document.querySelector('script[src*="calculator.js?"]')?.src || '').match(/v=(\d+)/)?.[1] || '1';
-          await new Promise((resolve, reject) => {
-            const s = document.createElement('script');
-            s.src = 'scripts/pdf-generator.js?v=' + cacheVer;
-            s.onload = resolve;
-            s.onerror = () => reject(new Error('Не удалось загрузить генератор PDF'));
-            document.head.appendChild(s);
-          }).catch((err) => {
-            alert(err.message || 'Не удалось загрузить генератор PDF. Проверьте интернет.');
-          });
-          if (!window.generateLeasingPdf) return;
-        }
-        window.generateLeasingPdf({
-          price, advance, advancePct, n,
-          monthly: Math.round(monthly),
-          total: Math.round(total),
-          vatReturn: Math.round(vatReturn * 100) / 100,
-          profitSaving: Math.round(profitSaving * 100) / 100,
-          taxSaving: Math.round(taxSaving * 100) / 100,
-          annualMarkup,
-          taxMode: 'osno'
-        });
+        setSimpleMoney(mMonthly, Math.round(monthly), '<small class="money__suffix">₽ / мес</small>');
+        setMoneyValue(mTotal, Math.round(total));
+        mTax.textContent = fmt.format(Math.round(taxSaving)) + ' ₽';
+        pulse(mMonthly);
+      }
+
+      mPrice.addEventListener('input', () => {
+        const num = parseMoney(mPrice.value);
+        mPrice.value = num === 0 ? '' : fmt.format(num);
+        miniCalc();
       });
+
+      mAdv.addEventListener('input', () => {
+        mAdvOut.textContent = mAdv.value + '%';
+        setRangeFill(mAdv);
+        miniCalc();
+      });
+
+      if (mTermSteps) {
+        mTermSteps.querySelectorAll('button').forEach((btn) => {
+          btn.addEventListener('click', () => {
+            setTerm(btn.dataset.value);
+            miniCalc();
+          });
+        });
+      }
+
+      setRangeFill(mAdv);
+      setTerm(currentTerm);
+
+      // V60.2: PDF-кнопка в hero mini-calc (рядом с "Сумма договора")
+      const mPdfBtn = document.getElementById('m-pdf-btn');
+      if (mPdfBtn) {
+        mPdfBtn.addEventListener('click', async () => {
+          const price = parseMoney(mPrice.value);
+          if (price <= 0) { alert('Сначала укажите стоимость предмета лизинга'); return; }
+          const advancePct = parseInt(mAdv.value, 10);
+          const advance = Math.round(price * advancePct / 100);
+          const principal = price - advance;
+          const n = getTerm();
+          const i = 0.20 / 12;
+          const monthly = principal * (i * Math.pow(1 + i, n)) / (Math.pow(1 + i, n) - 1);
+          const total = monthly * n + advance;
+          const vatReturn = total * 0.22 / 1.22;
+          const profitSaving = (total - vatReturn) * 0.25;
+          const taxSaving = vatReturn + profitSaving;
+          const years = n / 12;
+          const annualMarkup = (((total - price) / price / years) * 100).toFixed(2).replace('.', ',');
+
+          // Lazy-load pdf-generator (как в большом калькуляторе)
+          if (!window.generateLeasingPdf) {
+            const cacheVer = (document.querySelector('script[src*="calculator.js?"]')?.src || '').match(/v=(\d+)/)?.[1] || '1';
+            await new Promise((resolve, reject) => {
+              const s = document.createElement('script');
+              s.src = new URL('pdf-generator.js?v=' + cacheVer, document.querySelector('script[src*="calculator.js"]').src).href;
+              s.onload = resolve;
+              s.onerror = () => reject(new Error('Не удалось загрузить генератор PDF'));
+              document.head.appendChild(s);
+            }).catch((err) => {
+              alert(err.message || 'Не удалось загрузить генератор PDF. Проверьте интернет.');
+            });
+            if (!window.generateLeasingPdf) return;
+          }
+          window.generateLeasingPdf({
+            price, advance, advancePct, n,
+            monthly: Math.round(monthly),
+            total: Math.round(total),
+            vatReturn: Math.round(vatReturn * 100) / 100,
+            profitSaving: Math.round(profitSaving * 100) / 100,
+            taxSaving: Math.round(taxSaving * 100) / 100,
+            annualMarkup,
+            taxMode: 'osno'
+          });
+        });
+      }
+
+      document.querySelector('.hero__unit-cta')?.addEventListener('click', (e) => {
+        // SEO pages use the link's native navigation to the home application.
+        if (!form) return;
+        e.preventDefault();
+        // sync big calc in background
+        priceEl.value = mPrice.value;
+        advanceEl.value = mAdv.value;
+        setCTerm(getTerm());
+        document.getElementById('c-advance-out').textContent = mAdv.value + '%';
+        setRangeFill(advanceEl);
+        update();
+        // prefill apply form
+        const aPrice = document.getElementById('a-price');
+        if (aPrice && parseMoney(mPrice.value) > 0) aPrice.value = mPrice.value;
+        document.getElementById('apply')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        const nameField = document.getElementById('a-name');
+        if (nameField) setTimeout(() => nameField.focus({ preventScroll: true }), 600);
+      });
+
+      miniCalc();
     }
-
-    document.querySelector('.hero__unit-cta')?.addEventListener('click', (e) => {
-      e.preventDefault();
-      // sync big calc in background
-      priceEl.value = mPrice.value;
-      advanceEl.value = mAdv.value;
-      setCTerm(getTerm());
-      document.getElementById('c-advance-out').textContent = mAdv.value + '%';
-      setRangeFill(advanceEl);
-      update();
-      // prefill apply form
-      const aPrice = document.getElementById('a-price');
-      if (aPrice && parseMoney(mPrice.value) > 0) aPrice.value = mPrice.value;
-      document.getElementById('apply')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      const nameField = document.getElementById('a-name');
-      if (nameField) setTimeout(() => nameField.focus({ preventScroll: true }), 600);
-    });
-
-    miniCalc();
   }
 })();
